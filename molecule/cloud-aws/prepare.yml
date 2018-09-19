@@ -1,0 +1,10 @@
+---
+- name: "Prepare"
+  hosts: all
+  gather_facts: False
+  tasks: []
+
+- name: "Prepare oracle-java"
+  hosts: jenkins_master
+  roles:
+    - role: lean_delivery.java

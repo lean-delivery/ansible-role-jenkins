@@ -1,0 +1,13 @@
+import hudson.model.*;
+import jenkins.model.*;
+import hudson.tools.*;
+import hudson.util.Secret;
+
+// Constants
+def instance = Jenkins.getInstance()
+def mailServer = instance.getDescriptor("hudson.tasks.Mailer")
+def jenkinsLocationConfiguration = JenkinsLocationConfiguration.get()
+def extmailServer = instance.getDescriptor("hudson.plugins.emailext.ExtendedEmailPublisher")
+
+//Extended-Email
+println(extmailServer.smtpHost)

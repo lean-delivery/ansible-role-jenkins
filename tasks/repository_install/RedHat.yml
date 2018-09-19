@@ -1,0 +1,33 @@
+---
+- name: "Choose stable Jenkins"
+  set_fact:
+    key_value: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    base_url: https://pkg.jenkins.io/redhat-stable
+  when: jenkins2.release_line=="stable"
+
+- name: "Choose recent Jenkins"
+  set_fact:
+    key_value: https://pkg.jenkins.io/redhat/jenkins.io.key
+    base_url: https://pkg.jenkins.io/redhat
+  when: jenkins2.release_line=="latest"
+
+- name: "Jenkins Key"
+  environment:
+    http_proxy: "{{ jenkins2_proxy.url }}"
+    HTTP_PROXY: "{{ jenkins2_proxy.url }}"
+    https_proxy: "{{ jenkins2_proxy.url }}"
+    HTTPS_PROXY: "{{ jenkins2_proxy.url }}"
+  rpm_key:
+    key: "{{ key_value }}"
+    validate_certs: "{{ jenkins2.key_validate_certs }}"
+    state: present
+  become: True
+
+- name: "Jenkins Repository"
+  yum_repository:
+    name: jenkinsrepo
+    description: Jenkins YUM Repository
+    baseurl: "{{ base_url }}"
+    gpgcheck: True
+    state: present
+  become: True

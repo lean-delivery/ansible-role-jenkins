@@ -1,0 +1,21 @@
+---
+- name: "Load a variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+
+- name: "Become section"
+  block:
+    - name: "Enable EPEL repository"
+      yum:
+        name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+        state: "present"
+
+    - name: "Install requirements"
+      package:
+        name: "{{ package }}"
+        state: "present"
+      loop: "{{ requirements }}"
+      loop_control:
+        loop_var: package
+  become: True

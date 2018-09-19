@@ -1,0 +1,49 @@
+---
+# included file
+- name: "Apply Jenkins configuration file"
+  template:
+    src: "{{ ansible_os_family }}_configuration.j2"
+    dest: /etc/default/jenkins
+    owner: "root"
+    group: "root"
+    mode: "0644"
+    backup: True
+  become: True
+  notify:
+    - Restart Jenkins
+
+- name: "Add unlock script directory"
+  file:
+    path: "{{ jenkins2_config.home_directory }}/init.groovy.d"
+    owner: "{{ jenkins2.user }}"
+    group: "{{ jenkins2.user }}"
+    state: directory
+  become: True
+
+- name: "Add script for unlock disabling"
+  template:
+    src: "disable_unlock.groovy.j2"
+    dest: "{{ jenkins2_config.home_directory }}/init.groovy.d/basic-security.groovy"
+    owner: "{{ jenkins2.user }}"
+    group: "{{ jenkins2.user }}"
+    mode: "0744"
+  become: True
+
+- name: "Wait for Jenkins starts"
+  wait_for:
+    path: "{{ jenkins2_config.home_directory }}/config.xml"
+
+- name: "Force all notified handlers to run"
+  meta: flush_handlers
+
+- name: "Remove unlock script"
+  file:
+    path: "{{ jenkins2_config.home_directory }}/init.groovy.d/basic-security.groovy"
+    state: absent
+  become: True
+
+- name: "Restart Jenkins"
+  service:
+    name: jenkins
+    state: restarted
+  become: True

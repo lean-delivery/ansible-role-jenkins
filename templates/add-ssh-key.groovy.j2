@@ -1,0 +1,46 @@
+import jenkins.model.*
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.common.*
+import com.cloudbees.plugins.credentials.domains.*
+import com.cloudbees.jenkins.plugins.sshcredentials.impl.*
+import hudson.plugins.sshslaves.*
+
+global_domain = Domain.global()
+credentials_store = Jenkins.instance.getExtensionList(
+          'com.cloudbees.plugins.credentials.SystemCredentialsProvider'
+          )[0].getStore()
+credentials = new BasicSSHUserPrivateKey(
+          CredentialsScope.GLOBAL,
+          'planets-homepage_id_rsa',
+          'planets-homepage_id_rsa',
+          new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource("""-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAusA++2f/aYERNdC8GFWKu3uOhO7HOS+CURT5Wxa1yMWIXpMv
+g1pz0e7tylO3ZoBItXPpW3N9sHxNfzxSFd+RbGSvSza8PYKz7NOGUFHgxBU56m2l
+/KTFrLWqL1v+88yeqFu8O6HIH1bvEJnKGzueFS1NdrGiZseuCMGF10hz03tru22a
+lxLQjuCI0j97aLrcCbHANwtIPROOvOrPywYGwalC/yJAGZkHmavQRLAvMjJ44Ak0
+M9GdutJQPFw5qhw1y+e7SUUlMDJ6nRt2fZfjtVqK6VvvMkpFDXn6UUUOdcLWGlxy
+2GbGppkCww5bi6GdflIWUHjyz3JLx92cQ17riwIDAQABAoIBADynFY2HgE+eyJ0m
+1wA8QBuWDHqmJnQvNu7olff8jzvO0/SLbyIFLZqgNADDYcxbm8G7DK5T+x1nsa/C
+QpKyEsQWi0wtUcPUgGVJadUKUqq8jhvSUteUGFN4iPZqtYovCdR6Ps9LQvjSvkAx
+ApAHs9cC6KbFGI6zCZX0bGi4Mk4buCLeioqcg6vlAVs0dKItFD+yQ6Kn67j6ISoi
+LLFOykAsF5ZgF54VH1mMvgEbHm6jAXWi5MHs4oCIrnjdddEl3YY5/Tpvw0HtY3QV
+Faus3Mj+ldxy4gfI8iPCGIM1IIneaRNt+U7pukvpgPlgrOXOEMSrknUSXW4V2rid
+x8C98qkCgYEA7apftn0bpMnRC4c2+biS8YRi8j+resXv9LZvLV1dhJB6p0CzhlEa
+uWbLj5zxx1FnzRPB6oja2RatdUZPWGPxbx415y57ByZO44GJkoeDwxore8adfwvZ
+f7uRB8crrY+ebv/Mf8FcpU2mVFPLL3T/LLGOpX68pp7RDFNWnkTyCfcCgYEAyShd
+8H/reiJoanfJ9G64F/ly5POK+dK3YPcDBv6RmhpNV0RiQ/x3XExx3zAxAcgeV++u
+tJF1XJ/fQOjYX3HUb7hqsaQ2hcoWtqlaR4momSUesRggfZCFaRMTpyYlHsLd7HnR
+SOTNIzdMUmQ5wGcV0rqZI6szzm146SqBbl7EZg0CgYBtQdWeXwVGTED9u7taMa/b
+t7CFDSAX4MbfCL8za6iCOKkqGmRtavuOH+OUseG0b4f4jwymdSOmiPZU4222hLuJ
+CapeDNAiCUpa7EICSqoYFv/GdxgQP7JNNj0GBlneABgljxLD6HBezcOZIKxXtMFa
+GoYpLoorTvdrYyR+vdNHIQKBgQDAiSqg709r71MR1OYwV2lNSS13hsQWqmFrJgJ3
+x2GFpncwd/u2Jwf4CBNWFMJTej/Q21DU9ATpSvxdHIE9ma5D4Lf+n7awB+YFn8MR
+hekh7C2cRAOVK6cGE4RUEGanMs1HcrGmm5jdhChBFD1Ss1hoAsJhKZTEmHOKeWy5
+P2usYQKBgDaT4FS8TFvnEGDqK0yiZvol54asL2QtHsm/Sw+T3PFXntdhDzP/NJIC
+6Rf29ADzO+l+pPoBSVWwvYFEn8xrUp8P+cRzxF6hc3gjg5nPQVPRZHyiXJWgOFYf
+MBGE+rFp9PPumPrrVgz1+TwK2e5gVyzFNECoNVSVh/Vq2AgdSo98
+-----END RSA PRIVATE KEY-----"""),
+          "",
+          ""
+        )
+credentials_store.addCredentials(global_domain, credentials)

@@ -1,0 +1,104 @@
+---
+# defaults file for ansible-role-jenkins
+jenkins2:
+  user: jenkins
+  package_version: jenkins
+# Choose release line between stable and latest
+  release_line: stable
+  disable_gpg_check: False
+  key_validate_certs: True
+  context_path: ''
+  cli_username: admin
+  cli_password: admin
+
+jenkins2_config:
+  home_directory: /var/lib/jenkins
+  java_cmd: ''
+  java_options: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false \
+  -Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_"
+  http_port: 8080
+  listen_address: ''
+  debug_level: 5
+  enable_access_log: "no"
+  handler_max: 100
+  handler_idle: 20
+  args: ''
+
+jenkins2_proxy:
+  url: ''
+  host: ''
+  port: 0
+  username: ''
+  password: ''
+  no_proxy_hosts: ''
+# SSH_KEYS generation properties
+jenkins2_ssh_keys:
+  generate: False
+  private_keyname: "id_rsa"
+  size: 4096
+  inv_slave_groupname: "jenkins_ssh_slaves"
+jenkins2_ssh_keys_slave_group: "{{ groups[jenkins2_ssh_keys.inv_slave_groupname]|default([''])}}"
+jenkins2_ssh_keys_slave_hosts: "{%- set users = [] %}
+    {%- for host in jenkins2_ssh_keys_slave_group %}
+    {{- users.append(dict(host=host, users=hostvars[host]['jenkins_ssh_user']|default([]))) }}
+    {%- endfor %}
+    {{- users -}}"
+jenkins2_ssh_keys_slave_ips: "{%- set ips = [] %}{%- for host in jenkins2_ssh_keys_slave_group %}
+    {{- ips.append(dict(host=host, ips=hostvars[host]['ansible_all_ipv4_addresses']|default([]))) }}
+    {%- endfor %}
+    {{- ips -}}"
+jenkins2_ssh_keys_slave_group_exist: "{{ ((jenkins2_ssh_keys_slave_group)[0]|default(''))  != ''}}"
+# SMTP properties
+jenkins2_smtp:
+  enabled: True
+  sysad_email: "usermail@test.com"
+  user: "usermail@test.com"
+  password: "password"
+  port: "587"
+  host: "smtp.office365.com"
+# Plugin installation
+jenkins2_plugins:
+  timeout: 1000
+  suggested:
+    - ant
+    - antisamy-markup-formatter
+    - blueocean
+    - build-timeout
+    - cloudbees-folder
+    - credentials-binding
+    - email-ext
+    - file-operations
+    - git
+    - gradle
+    - greenballs
+    - jira
+    - ldap
+    - mailer
+    - matrix-auth
+    - pam-auth
+    - pipeline-stage-view
+    - pipeline-utility-steps
+    - role-strategy
+    - ssh-agent
+    - ssh-slaves
+    - subversion
+    - timestamper
+    - workflow-aggregator
+    - ws-cleanup
+  plugin_list: []
+
+# Set Credentials
+jenkins2_credentials_enabled: True
+jenkins2_credentials:
+  slave:
+    type: 'password'
+    id: 'ci_slave'
+    description: 'credentials for jenkins slave'
+    username: 'user'
+    password: 'password'
+  jira:
+    type: 'password'
+    id: 'jirauser'
+    description: 'username and password for jira'
+    username: 'jiraUser'
+    password: 'JiraUserPassword'

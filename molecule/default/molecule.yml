@@ -1,0 +1,32 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+  options:
+    config-file: molecule/yamllint.yml
+platforms:
+  - name: test-jenkins
+    image: centos:7
+    privileged: True
+    groups:
+      - jenkins_master
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  playbooks:
+    converge: playbook.yml
+  config_options:
+    ssh_connection:
+      control_path: "/var/ans/%%h"
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

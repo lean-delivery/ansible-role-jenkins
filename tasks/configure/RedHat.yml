@@ -1,0 +1,16 @@
+---
+# included file
+- name: "Apply Jenkins configuration file"
+  template:
+    src: "{{ ansible_os_family }}_configuration.j2"
+    dest: /etc/sysconfig/jenkins
+    owner: "root"
+    group: "root"
+    mode: "0644"
+    backup: True
+  become: True
+  notify:
+    - Restart Jenkins
+
+- name: "Force all notified handlers to run"
+  meta: flush_handlers

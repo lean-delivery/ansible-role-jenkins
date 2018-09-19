@@ -1,0 +1,26 @@
+---
+# handlers file for ansible-role-jenkins
+- name: "Restart Jenkins"
+  service:
+    name: "jenkins"
+    state: restarted
+  notify: Wait for Jenkins
+  become: True
+
+- name: "Start Jenkins"
+  service:
+    name: "jenkins"
+    state: started
+    enabled: True
+  notify: Wait for Jenkins
+  become: True
+
+- name: "Wait for Jenkins"
+  uri:
+    url: "http://localhost:{{ jenkins2_config.http_port }}\
+    {{ jenkins2.context_path | default('') }}/login"
+    status_code: 200
+  register: login_page
+  until: login_page.status == 200
+  retries: 60
+  delay: 1

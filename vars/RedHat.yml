@@ -1,0 +1,12 @@
+---
+requirements:
+  - "gcc"
+  - "python-devel"
+  - "openssl-devel"
+  - "openssh-clients"
+  - "git"
+  - "python2-pip"
+  - "net-tools"
+  - "wget"
+  - "lsof"
+  - "python"
