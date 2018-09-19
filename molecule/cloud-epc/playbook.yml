@@ -8,4 +8,4 @@
   hosts: jenkins_master
   roles:
     - role: lean_delivery.java
-    - role: lean_delivery.jenkins
+    - role: ansible-role-jenkins
