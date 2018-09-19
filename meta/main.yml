@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "Install Jenkins2"
+  role_name: "jenkins"
   author: "Lean Delivery team <team@lean-delivery.com>"
   description: "Lean Delivery hybris node preparation"
   company: "Epam Systems"
