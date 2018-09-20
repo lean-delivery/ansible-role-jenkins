@@ -44,6 +44,9 @@
     state: absent
   become: True
 
+- name: "Force all notified handlers to run"
+  meta: flush_handlers
+
 - name: "Wait for Jenkins starts"
   wait_for:
     path: "{{ jenkins2_config.home_directory }}/config.xml"
