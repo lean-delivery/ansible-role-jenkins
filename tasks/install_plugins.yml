@@ -20,7 +20,12 @@
 - name: "Install Jenkins plugins"
   jenkins_plugin:
     url: "http://localhost:{{ jenkins2_config.http_port }}"
+    url_username: "{{ jenkins2.cli_username }}"
+    url_password: "{{ jenkins2.cli_password }}"
     name: "{{ item }}"
+    owner: "{{ jenkins2.user }}"
+    validate_certs: False
+    jenkins_home: "{{ jenkins2_config.home_directory }}"
     state: present
     timeout: "{{ jenkins2_plugins.timeout }}"
   register: my_jenkins_plugins

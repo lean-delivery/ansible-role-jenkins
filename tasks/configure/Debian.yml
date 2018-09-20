@@ -29,6 +29,21 @@
     mode: "0744"
   become: True
 
+- name: "Create directory for user"
+  file:
+    path: "{{ jenkins2_config.home_directory }}/users/{{ jenkins2.cli_username }}"
+    state: directory
+    owner: "{{ jenkins2.user }}"
+    group: "{{ jenkins2.user }}"
+    mode: "0755"
+  become: True
+
+- name: "Delete user directory"
+  file:
+    path: "{{ jenkins2_config.home_directory }}/users/{{ jenkins2.cli_username }}"
+    state: absent
+  become: True
+
 - name: "Wait for Jenkins starts"
   wait_for:
     path: "{{ jenkins2_config.home_directory }}/config.xml"
@@ -41,9 +56,30 @@
     path: "{{ jenkins2_config.home_directory }}/init.groovy.d/basic-security.groovy"
     state: absent
   become: True
+  notify:
+    - Restart Jenkins
 
-- name: "Restart Jenkins"
-  service:
-    name: jenkins
-    state: restarted
+- name: "Add script for password set"
+  template:
+    src: "reset_user_password.groovy.j2"
+    dest: "{{ jenkins2_config.home_directory }}/init.groovy.d/basic-security.groovy"
+    owner: "{{ jenkins2.user }}"
+    group: "{{ jenkins2.user }}"
+    mode: "0744"
   become: True
+  notify:
+    - Restart Jenkins
+
+- name: "Force all notified handlers to run"
+  meta: flush_handlers
+
+- name: "Remove unlock script2"
+  file:
+    path: "{{ jenkins2_config.home_directory }}/init.groovy.d/basic-security.groovy"
+    state: absent
+  become: True
+  notify:
+    - Restart Jenkins
+
+- name: "Force all notified handlers to run"
+  meta: flush_handlers
