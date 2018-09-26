@@ -186,9 +186,10 @@ Example Playbook
 License
 -------
 
-Apache2
+Apache
 
 Author Information
 ------------------
 
-DEP Infrastructure Platform
+authors:
+  - Lean Delivery Team <team@lean-delivery.com>
