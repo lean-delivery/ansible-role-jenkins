@@ -1,4 +1,5 @@
 ---
+# Run all tests
 stages:
   - lint
   - deployment test
@@ -6,6 +7,9 @@ stages:
 before_script:
   - ansible --version
   - molecule --version
+
+variables:
+  GET_SOURCES_ATTEMPTS: "5"
 
 Ansible lint:
   stage: lint
@@ -18,22 +22,27 @@ Ansible lint:
   tags:
     - delegated
 
-EPC Jenkins:
-  variables:
-    MOLECULE_INCLUDE_ANSIBLE_CFG: "True"
-    EPC_REGION: EPAM-HU1
+Docker jenkins:
   stage: deployment test
   script:
-    - molecule test -s cloud-epc
+    - molecule test -s default
   tags:
-    - delegated
+    - docker
 
-AWS Jenkins:
+AWS jenkins:
   variables:
-    MOLECULE_INCLUDE_ANSIBLE_CFG: "True"
     EPC_REGION: AWS-EUCENTRAL
   stage: deployment test
   script:
-    - molecule test -s cloud-aws
+    - molecule test -s cloud-aws-delegated
+  tags:
+    - delegated
+
+EPC jenkins:
+  variables:
+    EPC_REGION: EPAM-BY2
+  stage: deployment test
+  script:
+    - molecule test -s cloud-epc-delegated
   tags:
     - delegated

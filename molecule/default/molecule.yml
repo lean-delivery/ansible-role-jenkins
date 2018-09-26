@@ -8,14 +8,14 @@ driver:
 lint:
   name: yamllint
   options:
-    config-file: molecule/yamllint.yml
+    config-file: .yamllint
 platforms:
-  - name: test-jenkins-centos7
+  - name: test-docker-centos7-jenkins
     image: leandelivery/docker-systemd:centos7
     privileged: True
     groups:
-      - jenkins_centos7
-  - name: test-jenkins-ubuntu1804
+      - rhel_family
+  - name: test-docker-ubuntu1804-jenkins
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: True
     security_opts:
@@ -28,19 +28,17 @@ platforms:
     capabilities:
       - SYS_ADMIN
     groups:
-      - jenkins_debian
+      - debian_family
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
-  playbooks:
-    converge: playbook.yml
-  config_options:
-    ssh_connection:
-      control_path: "/var/ans/%%h"
 scenario:
   name: default
 verifier:
   name: testinfra
+  options:
+    verbose: true
+  directory: ../resources/tests/
   lint:
     name: flake8

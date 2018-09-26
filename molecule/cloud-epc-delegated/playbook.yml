@@ -1,11 +1,11 @@
 ---
-- name: "Force gathering facts"
+- name: Force gathering facts
   hosts: all
   gather_facts: True
   roles: []
 
-- name: "Converge"
-  hosts: jenkins_master
+- name: Converge
+  hosts: all
   roles:
     - role: lean_delivery.java
     - role: ansible-role-jenkins

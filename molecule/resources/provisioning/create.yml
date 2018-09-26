@@ -1,19 +1,14 @@
 ---
-- name: "Create"
+- name: Create
   hosts: localhost
   connection: local
   gather_facts: False
-  no_log: True
-
+  no_log: "{{ not (lookup('env', 'MOLECULE_DEBUG') | bool or molecule_yml.provisioner.log|default(false) | bool) }}"
   vars:
     ssh_port: 22
-    molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
-    molecule_instance_config: "{{ lookup('env','MOLECULE_INSTANCE_CONFIG') }}"
-    molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
-
   tasks:
     # Developer must implement.
-    - name: "Create molecule instance(s)"
+    - name: Create molecule instance(s)
       epc_vm:
         description: "{{ item.name | default('auto_molecule_epc_instance') }}"
         access_id: "{{ item.access_id | default(omit) }}"
@@ -32,7 +27,7 @@
       async: 7200
       poll: 0
 
-    - name: "Wait for instance(s) creation to complete"
+    - name: Wait for instance(s) creation to complete
       async_status:
         jid: "{{ item.ansible_job_id }}"
       register: epc_jobs
@@ -45,7 +40,7 @@
     # Developer must map instance config.
     # Mandatory configuration for Molecule to function.
 
-    - name: "Populate instance config dict"
+    - name: Populate instance config dict
       set_fact:
         instance_conf_dict:
           instance: "{{ item.description }}"
@@ -65,7 +60,6 @@
           scan_counter: "{{ item.scanCounter }}"
           scan_counter_within_period: "{{ item.scanCounterWithinPeriod }}"
           shape: "{{ item.shape }}"
-          description: "{{ item.description }}"
           ssh_keyset: "{{ item.sshKeySet }}"
           state: "{{ item.state }}"
           region: "{{ item.zone }}"
@@ -73,12 +67,12 @@
       register: instance_config_dict
       when: server.changed | bool
 
-    - name: "Convert instance config dict to a list"
+    - name: Convert instance config dict to a list
       set_fact:
         instance_conf: "{{ instance_config_dict.results | map(attribute='ansible_facts.instance_conf_dict') | list }}"
       when: server.changed | bool
 
-    - name: "Dump instance config"
+    - name: Dump instance config
       copy:
         # NOTE(retr0h): Workaround for Ansible 2.2.
         #               https://github.com/ansible/ansible/issues/20885
@@ -86,7 +80,7 @@
         dest: "{{ molecule_instance_config }}"
       when: server.changed | bool
 
-    - name: "Wait for SSH"
+    - name: Wait for SSH
       wait_for:
         port: "{{ ssh_port }}"
         host: "{{ item.address }}"
