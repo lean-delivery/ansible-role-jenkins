@@ -5,9 +5,8 @@ Jenkins 2 installation
 ## Summary
 
 This role:
-  - installs jenkins2 on Ununtu and Centos7
+  - installs jenkins2 on Ununtu, Centos7, RHEL7
   - make minimal configuration (e.g. smtp config, plugins install)
-Current role can be installed on OS Linux 7.*
 
 Role tasks
 ------------
@@ -25,7 +24,9 @@ Requirements
  - **Supported OS**:
    - CentOS
      - 7
-   Ubuntu
+   - RHEL
+     - 7
+   - Ubuntu
    
 ## Role Variables
 --------------	
@@ -176,10 +177,6 @@ Example Playbook
       - {host: 'slave2.example.com', users: ['root', 'jenkins']} 
   roles:
     - role: lean-delivery.java
-      java_major_version: 8
-      java_minor_version: 181
-      java_arch: "x64"
-      java_package: "jdk"
     - role: lean-delivery.jenkins
 ```
 
