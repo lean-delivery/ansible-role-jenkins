@@ -115,21 +115,20 @@ Requirements
 
 Use variable `jenkins2_credentials` to set properties of credentials
 ```yml
+jenkins2_credentials_enabled: True # Set False to disable credentials configuration
 jenkins2_credentials:
-  enabled: True  # Set False to disable credentials configuration
-  map:
-  - slave:
-      type: 'password'
-      id: 'ci_slave'
-      description: 'credentials for jenkins slave'
-      username: 'user'
-      password: 'password'
-  - jira:
-      type: 'password'
-      id: 'jirauser'
-      description: 'username and password for jira'
-      username: 'jiraUser'
-      password: 'JiraUserPassword'
+  slave:
+    type: 'password'
+    id: 'ci_slave'
+    description: 'credentials for jenkins slave'
+    username: 'user'
+    password: 'password'
+  jira:
+    type: 'password'
+    id: 'jirauser'
+    description: 'username and password for jira'
+    username: 'jiraUser'
+    password: 'JiraUserPassword'
 ```
 `type` has 2 available options:
   1. `key` - if you want to configure SSH Private key
