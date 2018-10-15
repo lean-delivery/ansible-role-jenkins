@@ -1,38 +1,38 @@
 ---
 - name: "Proxy Configuration"
   jenkins_script:
-    url: "http://localhost:{{ jenkins2_config.http_port }}"
+    url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'proxy_configuration.groovy.j2') }}"
-    user: '{{ jenkins2.cli_username }}'
-    password: '{{ jenkins2.cli_password }}'
+    user: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
     validate_certs: False
     timeout: 120
 
 - name: "Update Center Refresh"
   jenkins_script:
-    url: "http://localhost:{{ jenkins2_config.http_port }}"
+    url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'update_center_refresh.groovy.j2') }}"
-    user: '{{ jenkins2.cli_username }}'
-    password: '{{ jenkins2.cli_password }}'
+    user: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
     validate_certs: False
     timeout: 120
 
 - name: "Install Jenkins plugins"
   jenkins_plugin:
-    url: "http://localhost:{{ jenkins2_config.http_port }}"
-    url_username: "{{ jenkins2.cli_username }}"
-    url_password: "{{ jenkins2.cli_password }}"
+    url: "http://localhost:{{ jenkins2_config_http_port }}"
+    url_username: "{{ jenkins2_cli_username }}"
+    url_password: "{{ jenkins2_cli_password }}"
     name: "{{ item }}"
-    owner: "{{ jenkins2.user }}"
+    owner: "{{ jenkins2_user }}"
     validate_certs: False
-    jenkins_home: "{{ jenkins2_config.home_directory }}"
+    jenkins_home: "{{ jenkins2_home_directory }}"
     state: present
-    timeout: "{{ jenkins2_plugins.timeout }}"
+    timeout: "{{ jenkins2_plugins_timeout }}"
   register: my_jenkins_plugins
   retries: 10
   delay: 3
-  with_items:
-    - "{{ (jenkins2_plugins.suggested | union(jenkins2_plugins.plugin_list)) | unique }}"
+  loop:
+    - "{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}"
   become: True
   notify:
     - Restart Jenkins
