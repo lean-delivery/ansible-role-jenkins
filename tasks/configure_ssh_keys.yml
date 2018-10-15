@@ -10,7 +10,7 @@
 - name: "Ensure that openssh *private* key doesn't exist"
   stat:
     path: "{{ jenkins2_home_directory }}/.ssh/\
-    {{ jenkins2_ssh_keys.private_keyname }}"
+    {{ jenkins2_ssh_keys_private_keyname }}"
   become: True
   register: private_key_stat
 
