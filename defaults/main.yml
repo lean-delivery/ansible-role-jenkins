@@ -49,11 +49,11 @@ jenkins2_ssh_keys_slave_group_exist: "{{ ((jenkins2_ssh_keys_slave_group)[0]|def
 
 # SMTP properties
 jenkins2_smtp_enabled: True
-jenkins2_smtp_enabledsysad_email: "usermail@test.com"
-jenkins2_smtp_enableduser: "usermail@test.com"
-jenkins2_smtp_enabledpassword: "password"
-jenkins2_smtp_enabledport: "587"
-jenkins2_smtp_enabledhost: "smtp.office365.com"
+jenkins2_smtp_sysad_email: "usermail@test.com"
+jenkins2_smtp_user: "usermail@test.com"
+jenkins2_smtp_password: "password"
+jenkins2_smtp_port: "587"
+jenkins2_smtp_host: "smtp.office365.com"
 # Plugin installation
 jenkins2_plugins_timeout: 1000
 jenkins2_plugins_suggested:

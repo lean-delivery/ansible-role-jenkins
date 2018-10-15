@@ -93,15 +93,15 @@ Requirements
 # smtp settings
   - `jenkins2_smtp_enabledenabled` - to set the smtp configuration
      default: `True`
-  - `jenkins2_smtp_enabledsysad_email` - jenkins admin email
+  - `jenkins2_smtp_sysad_email` - jenkins admin email
      default: `usermail@test.com`
-  - `jenkins2_smtp_enableduser` - jenkins admin email
+  - `jenkins2_smtp_user` - jenkins admin email
      default: `usermail@test.com`
-  - `jenkins2_smtp_enabledpassword` - smtp user password
+  - `jenkins2_smtp_password` - smtp user password
      default: `password`
-  - `jenkins2_smtp_enabledport` - smtp server port
+  - `jenkins2_smtp_port` - smtp server port
      default: `587`
-  - `jenkins2_smtp_enabledhost` - smtp server host name
+  - `jenkins2_smtp_host` - smtp server host name
      default: `smtp.office365.com`
 # jenkins plugins configuration
   - `jenkins2_plugins_timeout` - plugin installation timeout
