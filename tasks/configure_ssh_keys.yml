@@ -84,7 +84,7 @@
     create: True
     mode: 0644
   become: True
-  loop:
+  with_items:
     - "{{ result_knownhost.results }}"
 
 - name: "Set corect folders owners/permissions"
@@ -94,7 +94,7 @@
     group: "{{ jenkins2_user | default('jenkins') }}"
     mode: "{{ item.mode }}"
   become: True
-  loop:
+  with_items:
     - {dst: "{{ jenkins2_home_directory }}/.ssh", mode: "0700"}
     - {dst: "{{ jenkins2_home_directory }}/.ssh/\
         {{ jenkins2_ssh_keys_private_keyname }}", mode: "0600"}

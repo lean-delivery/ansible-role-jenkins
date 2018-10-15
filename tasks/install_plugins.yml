@@ -31,7 +31,7 @@
   register: my_jenkins_plugins
   retries: 10
   delay: 3
-  loop:
+  with_items:
     - "{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}"
   become: True
   notify:

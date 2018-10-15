@@ -9,7 +9,7 @@
   package:
     name: "{{ item }}"
     state: present
-  loop:
+  with_items:
     - policycoreutils-python
     - libsemanage-python
   become: True

@@ -13,7 +13,7 @@
     name: "{{ item }}"
     state: present
     extra_args: --upgrade
-  loop:
+  with_items:
 # Remove pip upgrade
 #    - pip
     - jira
