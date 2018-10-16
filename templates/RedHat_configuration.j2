@@ -7,7 +7,7 @@
 # Directory where Jenkins store its configuration and working
 # files (checkouts, build reports, artifacts, ...).
 #
-JENKINS_HOME="{{ jenkins2_config.home_directory }}"
+JENKINS_HOME="{{ jenkins2_home_directory }}"
 
 ## Type:        string
 ## Default:     ""
@@ -16,7 +16,7 @@ JENKINS_HOME="{{ jenkins2_config.home_directory }}"
 # Java executable to run Jenkins
 # When left empty, we'll try to find the suitable Java.
 #
-JENKINS_JAVA_CMD="{{ jenkins2_config.java_cmd }}"
+JENKINS_JAVA_CMD="{{ jenkins2_config_java_cmd }}"
 
 ## Type:        string
 ## Default:     "jenkins"
@@ -26,7 +26,7 @@ JENKINS_JAVA_CMD="{{ jenkins2_config.java_cmd }}"
 # Be careful when you change this, as you need to update
 # permissions of $JENKINS_HOME and /var/log/jenkins.
 #
-JENKINS_USER="{{ jenkins2.user }}"
+JENKINS_USER="{{ jenkins2_user }}"
 
 ## Type:        string
 ## Default: "false"
@@ -44,7 +44,7 @@ JENKINS_USER="{{ jenkins2.user }}"
 #
 # Options to pass to java when running Jenkins.
 #
-JENKINS_JAVA_OPTIONS="{{ jenkins2_config.java_options }}"
+JENKINS_JAVA_OPTIONS="{{ jenkins2_config_java_options }}"
 
 ## Type:        integer(0:65535)
 ## Default:     8080
@@ -53,7 +53,7 @@ JENKINS_JAVA_OPTIONS="{{ jenkins2_config.java_options }}"
 # Port Jenkins is listening on.
 # Set to -1 to disable
 #
-JENKINS_PORT={{ jenkins2_config.http_port }}
+JENKINS_PORT={{ jenkins2_config_http_port }}
 
 ## Type:        string
 ## Default:     ""
@@ -62,7 +62,7 @@ JENKINS_PORT={{ jenkins2_config.http_port }}
 # IP address Jenkins listens on for HTTP requests.
 # Default is all interfaces (0.0.0.0).
 #
-JENKINS_LISTEN_ADDRESS="{{ jenkins2_config.listen_address }}"
+JENKINS_LISTEN_ADDRESS="{{ jenkins2_config_listen_address }}"
 
 ## Type:        integer(0:65535)
 ## Default:     ""
@@ -108,7 +108,7 @@ JENKINS_HTTPS_LISTEN_ADDRESS=""
 # Debug level for logs -- the higher the value, the more verbose.
 # 5 is INFO.
 #
-JENKINS_DEBUG_LEVEL={{ jenkins2_config.debug_level }}
+JENKINS_DEBUG_LEVEL={{ jenkins2_config_debug_level }}
 
 ## Type:        yesno
 ## Default:     no
@@ -116,7 +116,7 @@ JENKINS_DEBUG_LEVEL={{ jenkins2_config.debug_level }}
 #
 # Whether to enable access logging or not.
 #
-JENKINS_ENABLE_ACCESS_LOG="{{ jenkins2_config.enable_access_log }}"
+JENKINS_ENABLE_ACCESS_LOG="{{ jenkins2_config_enable_access_log }}"
 
 ## Type:        integer
 ## Default:     100
@@ -124,7 +124,7 @@ JENKINS_ENABLE_ACCESS_LOG="{{ jenkins2_config.enable_access_log }}"
 #
 # Maximum number of HTTP worker threads.
 #
-JENKINS_HANDLER_MAX={{ jenkins2_config.handler_max }}
+JENKINS_HANDLER_MAX={{ jenkins2_config_handler_max }}
 
 ## Type:        integer
 ## Default:     20
@@ -132,7 +132,7 @@ JENKINS_HANDLER_MAX={{ jenkins2_config.handler_max }}
 #
 # Maximum number of idle HTTP worker threads.
 #
-JENKINS_HANDLER_IDLE={{ jenkins2_config.handler_idle }}
+JENKINS_HANDLER_IDLE={{ jenkins2_config_handler_idle }}
 
 ## Type:        string
 ## Default:     ""
@@ -141,4 +141,4 @@ JENKINS_HANDLER_IDLE={{ jenkins2_config.handler_idle }}
 # Pass arbitrary arguments to Jenkins.
 # Full option list: java -jar jenkins.war --help
 #
-JENKINS_ARGS="{{ jenkins2_config.args }}"
+JENKINS_ARGS="{{ jenkins2_config_args }}"

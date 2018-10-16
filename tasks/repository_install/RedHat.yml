@@ -3,23 +3,23 @@
   set_fact:
     key_value: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
     base_url: https://pkg.jenkins.io/redhat-stable
-  when: jenkins2.release_line=="stable"
+  when: jenkins2_release_line=="stable"
 
 - name: "Choose recent Jenkins"
   set_fact:
     key_value: https://pkg.jenkins.io/redhat/jenkins.io.key
     base_url: https://pkg.jenkins.io/redhat
-  when: jenkins2.release_line=="latest"
+  when: jenkins2_release_line=="latest"
 
 - name: "Jenkins Key"
   environment:
-    http_proxy: "{{ jenkins2_proxy.url }}"
-    HTTP_PROXY: "{{ jenkins2_proxy.url }}"
-    https_proxy: "{{ jenkins2_proxy.url }}"
-    HTTPS_PROXY: "{{ jenkins2_proxy.url }}"
+    http_proxy: "{{ jenkins2_proxy_url }}"
+    HTTP_PROXY: "{{ jenkins2_proxy_url }}"
+    https_proxy: "{{ jenkins2_proxy_url }}"
+    HTTPS_PROXY: "{{ jenkins2_proxy_url }}"
   rpm_key:
     key: "{{ key_value }}"
-    validate_certs: "{{ jenkins2.key_validate_certs }}"
+    validate_certs: "{{ jenkins2_key_validate_certs }}"
     state: present
   become: True
 

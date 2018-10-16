@@ -4,18 +4,18 @@ import hudson.tools.*;
 import hudson.util.Secret;
 
 // Check if enabled
-if (!"{{ jenkins2_smtp.enabled }}".toBoolean()) {
+if (!"{{ jenkins2_smtp_enabled }}".toBoolean()) {
     println "--> SMTP configuration is disabled."
     return
 }
 println "--> SMTP configuration is enabled."
 
 // Variables
-def SystemAdminMailAddress = "{{ jenkins2_smtp.sysad_email }}"
-def SMTPUser = "{{ jenkins2_smtp.user }}"
-def SMTPPassword = "{{ jenkins2_smtp.password }}"
-def SMTPPort = "{{ jenkins2_smtp.port }}"
-def SMTPHost = "{{ jenkins2_smtp.host }}"
+def SystemAdminMailAddress = "{{ jenkins2_smtp_sysad_email }}"
+def SMTPUser = "{{ jenkins2_smtp_user }}"
+def SMTPPassword = "{{ jenkins2_smtp_password }}"
+def SMTPPort = "{{ jenkins2_smtp_port }}"
+def SMTPHost = "{{ jenkins2_smtp_host }}"
 
 // Constants
 def instance = Jenkins.getInstance()
