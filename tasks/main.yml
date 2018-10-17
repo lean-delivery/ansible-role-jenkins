@@ -69,7 +69,7 @@
   when: jenkins_was_installed is defined and jenkins_was_installed is changed
 
 - include_tasks: "install_plugins.yml"
-  when: jenkins_was_installed is defined and jenkins_was_installed is changed
+  when: jenkins_was_installed is defined
 
 - include_tasks: "configure_smtp.yml"
   when: jenkins2_smtp.enabled
