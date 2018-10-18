@@ -91,7 +91,7 @@ Requirements
   - `jenkins2_ssh_keys_inv_slave_groupname` - slave group name in inventory file
      default: `jenkins_ssh_slaves`
 # smtp settings
-  - `jenkins2_smtp_enabledenabled` - to set the smtp configuration
+  - `jenkins2_smtp_enabled` - to set the smtp configuration
      default: `True`
   - `jenkins2_smtp_sysad_email` - jenkins admin email
      default: `usermail@test.com`

@@ -72,7 +72,7 @@
   when: jenkins_was_installed is defined
 
 - include_tasks: "configure_smtp.yml"
-  when: jenkins2_smtp.enabled
+  when: jenkins2_smtp_enabled
 
 - include_tasks: "set_credentials.yml"
   when: jenkins2_credentials_enabled
