@@ -1,12 +1,12 @@
 # defaults for Jenkins automation server
 
 # pulled in from the init script; makes things easier.
-NAME={{ jenkins2.user }}
+NAME={{ jenkins2_user }}
 
 # arguments to pass to java
 
 # Allow graphs etc. to work even when an X server is present
-JAVA_ARGS="{{ jenkins2_config.java_cmd }}"
+JAVA_ARGS="{{ jenkins2_config_java_cmd }}"
 
 #JAVA_ARGS="-Xmx256m"
 
@@ -23,7 +23,7 @@ JENKINS_GROUP=$NAME
 JENKINS_WAR=/usr/share/$NAME/$NAME.war
 
 # jenkins home location
-JENKINS_HOME={{ jenkins2_config.home_directory }}
+JENKINS_HOME={{ jenkins2_home_directory }}
 
 # set this to false if you don't want Jenkins to run by itself
 # in this set up, you are expected to provide a servlet container
@@ -36,7 +36,7 @@ JENKINS_LOG=/var/log/$NAME/$NAME.log
 
 # Whether to enable web access logging or not.
 # Set to "yes" to enable logging to /var/log/$NAME/access_log
-JENKINS_ENABLE_ACCESS_LOG="{{ jenkins2_config.enable_access_log }}"
+JENKINS_ENABLE_ACCESS_LOG="{{ jenkins2_config_enable_access_log }}"
 
 # OS LIMITS SETUP
 #   comment this out to observe /etc/security/limits.conf
@@ -60,7 +60,7 @@ MAXOPENFILES=8192
 # UMASK=027
 
 # port for HTTP connector (default 8080; disable with -1)
-HTTP_PORT={{ jenkins2_config.http_port }}
+HTTP_PORT={{ jenkins2_config_http_port }}
 
 
 # servlet context, important if you want to use apache proxying
@@ -75,9 +75,8 @@ PREFIX=/
 # --argumentsRealm.roles.$ADMIN_USER=admin
 # --webroot=~/.jenkins/war
 # --prefix=$PREFIX
-{% if jenkins2_config.listen_address != '' -%}
-JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX --httpListenAddress={{ jenkins2_config.listen_address }}"
+{% if jenkins2_config_listen_address != '' -%}
+JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX --httpListenAddress={{ jenkins2_config_listen_address }}"
 {% else -%}
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX "
 {% endif -%}
-

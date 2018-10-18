@@ -22,27 +22,27 @@
 
 - name: "Create group"
   group:
-    name: "{{ jenkins2.user | default('jenkins') }}"
+    name: "{{ jenkins2_user | default('jenkins') }}"
     state: present
   become: True
 
 - name: "Create user"
   user:
-    name: "{{ jenkins2.user | default('jenkins') }}"
-    group: "{{ jenkins2.user | default('jenkins') }}"
+    name: "{{ jenkins2_user | default('jenkins') }}"
+    group: "{{ jenkins2_user | default('jenkins') }}"
     shell: /bin/bash
-    home: "{{ jenkins2_config.home_directory }}"
+    home: "{{ jenkins2_home_directory }}"
   become: True
 
 - name: "Create symlink"
   file:
-    src: "{{ jenkins2_config.home_directory }}"
+    src: "{{ jenkins2_home_directory }}"
     dest: /var/lib/jenkins
-    owner: "{{ jenkins2.user | default('jenkins') }}"
-    group: "{{ jenkins2.user | default('jenkins') }}"
+    owner: "{{ jenkins2_user | default('jenkins') }}"
+    group: "{{ jenkins2_user | default('jenkins') }}"
     state: link
   become: True
-  when: jenkins2_config.home_directory != '/var/lib/jenkins'
+  when: jenkins2_home_directory != '/var/lib/jenkins'
 
 - name: "Jenkins repository install"
   include_tasks: "{{ platform }}"
@@ -54,7 +54,7 @@
 
 - name: "Jenkins Installation"
   package:
-    name: "{{ jenkins2.package_version }}"
+    name: "{{ jenkins2_package_version }}"
     state: present
   register: jenkins_was_installed
   become: True
@@ -69,10 +69,10 @@
   when: jenkins_was_installed is defined and jenkins_was_installed is changed
 
 - include_tasks: "install_plugins.yml"
-  when: jenkins_was_installed is defined and jenkins_was_installed is changed
+  when: jenkins_was_installed is defined
 
 - include_tasks: "configure_smtp.yml"
-  when: jenkins2_smtp.enabled
+  when: jenkins2_smtp_enabled
 
 - include_tasks: "set_credentials.yml"
   when: jenkins2_credentials_enabled
