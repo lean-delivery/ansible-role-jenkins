@@ -1,0 +1,9 @@
+---
+- name: "Configure pipeline libraries"
+  jenkins_script:
+    url: "http://localhost:{{ jenkins2_config_http_port }}"
+    script: "{{ lookup('template', 'configure-pipeline-libraries.groovy.j2') }}"
+    user: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
+    validate_certs: False
+    timeout: 120

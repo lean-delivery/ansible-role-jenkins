@@ -99,3 +99,15 @@ jenkins2_credentials:
     description: 'username and password for jira'
     username: 'jiraUser'
     password: 'JiraUserPassword'
+  pipeline_libraries:
+    type: 'password'
+    id: 'pipeline_libraries'
+    description: 'username and password for pipeline libraries'
+    username: 'pipelineLibrariesUser'
+    password: 'pipelineLibrariesPassword'
+
+# Configure pipeline libraries
+jenkins2_pipeline_libraries_enabled: False
+jenkins2_pipeline_libraries_name: 'Pipeline Libraries'
+jenkins2_pipeline_libraries_url: ''
+jenkins2_pipeline_libraries_version: 'master'

@@ -1,0 +1,30 @@
+import jenkins.plugins.git.GitSCMSource
+import org.jenkinsci.plugins.workflow.libs.LibraryConfiguration
+import org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever
+
+// Creating global shared library configuration
+def globalSharedLibraryConfiguration = { name, gitUrl, gitCredentialsId, defaultVersion ->
+    def scmSource = new GitSCMSource(null,
+                                     gitUrl,
+                                     gitCredentialsId,
+                                     '*',
+                                     '',
+                                     false)
+    def libraryConfiguration = new LibraryConfiguration(name, new SCMSourceRetriever(scmSource))
+    libraryConfiguration.setDefaultVersion(defaultVersion)
+    libraryConfiguration.setIncludeInChangesets(false)
+    libraryConfiguration
+}
+
+def jenkins = Jenkins.getInstance()
+def descriptor = jenkins.getDescriptor("org.jenkinsci.plugins.workflow.libs.GlobalLibraries").get()
+def libraryConfigurations = [
+            globalSharedLibraryConfiguration(
+                    name = "{{ jenkins2_pipeline_libraries_name }}",
+                    gitUrl = "{{ jenkins2_pipeline_libraries_url }}",
+                    gitCredentialsId = "{{ jenkins2_credentials.pipeline_libraries.id }}",
+                    defaultVersion = "{{ jenkins2_pipeline_libraries_version }}"
+            )
+    ]
+descriptor.setLibraries(libraryConfigurations)
+descriptor.save()
