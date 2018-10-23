@@ -77,6 +77,9 @@
 - include_tasks: "set_credentials.yml"
   when: jenkins2_credentials_enabled
 
+- include_tasks: "configure_sonarqube.yml"
+  when: jenkins2_sonarqube_enabled
+
 - include_tasks: "configure_ssh_keys.yml"
   when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys.generate and
     jenkins_was_installed is defined and jenkins_was_installed is changed
