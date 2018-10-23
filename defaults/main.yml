@@ -108,6 +108,6 @@ jenkins2_credentials:
 
 # Configure pipeline libraries
 jenkins2_pipeline_libraries_enabled: False
-jenkins2_pipeline_libraries_name: 'Pipeline Libraries'
+jenkins2_pipeline_libraries_name: 'Pipeline_Libraries'
 jenkins2_pipeline_libraries_url: ''
 jenkins2_pipeline_libraries_version: 'master'
