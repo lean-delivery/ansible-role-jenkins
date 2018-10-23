@@ -112,7 +112,21 @@ Requirements
   - `jenkins2_credentials_enabled` - to add credentials
      default: `True`
   - `jenkins2_credentials` -  credentials map
-
+# sonarqube configuration
+  - `jenkins2_sonarqube_enabled` - to add SonarQube configuration
+     default: `False`
+  - `jenkins2_sonarqube_name` - SonarQube Name
+     default: `SonarQube`
+  - `jenkins2_sonarqube_url` - SonarQube Server URL
+     default: `http://localhost:9000`
+  - `jenkins2_sonarqube_token` - SonarQube authentication token. Mandatory when anonymous access is disabled.
+     default: `''`
+  - `jenkins2_sonarqube_maven_plugin` - Version of sonar-maven-plugin. If not specified, the goal will be sonar:sonar.
+     default: `''`
+  - `jenkins2_sonarqube_arguments - Additional command line arguments to be passed to the SonarQube scanner. For example, -X.
+     default: `''`
+  - `jenkins2_sonarqube_analysis_properties - Additional analysis properties in the form of key-value pairs. For example, sonar.analysis.mode=issues.
+     default: `''`
 
 Use variable `jenkins2_credentials` to set properties of credentials
 ```yml
