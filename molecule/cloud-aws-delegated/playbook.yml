@@ -9,13 +9,5 @@
   roles:
     - role: lean_delivery.java
     - role: ansible-role-jenkins
-      jenkins2_credentials_enabled: True
-      jenkins2_credentials:
-        pipeline_libraries:
-          type: "password"
-          id: "creds_id"
-          description: "pipeline libraries"
-          username: "username"
-          password: "password"
       jenkins2_pipeline_libraries_enabled: True
       jenkins2_pipeline_libraries_url: "https://example.com/example.git"
