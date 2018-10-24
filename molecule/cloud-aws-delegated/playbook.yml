@@ -9,3 +9,4 @@
   roles:
     - role: lean_delivery.java
     - role: ansible-role-jenkins
+      jenkins2_sonarqube_enabled: True
