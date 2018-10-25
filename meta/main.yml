@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: "jenkins"
   author: "Lean Delivery team <team@lean-delivery.com>"
-  description: "Lean Delivery hybris node preparation"
+  description: "Jenkins installation and configuration"
   company: "Epam Systems"
   license: "Apache"
   min_ansible_version: "2.5"
