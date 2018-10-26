@@ -9,3 +9,5 @@
   roles:
     - role: lean_delivery.java
     - role: ansible-role-jenkins
+      jenkins2_pipeline_libraries_enabled: True
+      jenkins2_pipeline_libraries_url: "https://example.com/example.git"
