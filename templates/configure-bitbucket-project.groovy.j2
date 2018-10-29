@@ -27,7 +27,7 @@ organizationFolder("{{ jenkins2_bitbucket_project_owner }}") {
     }
   } 
   triggers {
-    periodic("{{ jenkins2_bitbucket_project_scan_interval }}")
+    periodic({{ jenkins2_bitbucket_project_scan_interval }})
   }
 }
 '''
