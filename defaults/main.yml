@@ -82,6 +82,7 @@ jenkins2_plugins_suggested:
   - timestamper
   - workflow-aggregator
   - ws-cleanup
+  - sonar
 jenkins2_plugins_list: []
 
 # Set Credentials
@@ -111,3 +112,12 @@ jenkins2_pipeline_libraries_enabled: False
 jenkins2_pipeline_libraries_name: 'Pipeline_Libraries'
 jenkins2_pipeline_libraries_url: ''
 jenkins2_pipeline_libraries_version: 'master'
+
+# Configure SonarQube
+jenkins2_sonarqube_enabled: False
+jenkins2_sonarqube_name: 'SonarQube'
+jenkins2_sonarqube_url: 'http://localhost:9000'
+jenkins2_sonarqube_token: ''
+jenkins2_sonarqube_maven_plugin: ''
+jenkins2_sonarqube_arguments: ''
+jenkins2_sonarqube_analysis_properties: ''
