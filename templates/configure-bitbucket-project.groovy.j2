@@ -1,0 +1,36 @@
+import javaposse.jobdsl.dsl.DslScriptLoader
+import javaposse.jobdsl.plugin.JenkinsJobManagement
+
+def script = '''
+organizationFolder('schneideripo') {
+  properties {
+    noTriggerOrganizationFolderProperty {
+      branches('develop')
+    }
+  }
+  organizations {
+    bitbucket {
+      repoOwner("schneideripo")
+      credentialsId("1b073e8d-d111-4d1b-8c82-0f0baea705e7")
+    }
+  }
+  configure { node ->
+    def traits = node / navigators / 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMNavigator' / traits
+    traits << 'jenkins.scm.impl.trait.RegexSCMSourceFilterTrait' {
+      regex('^(?!.*exchange).*')   
+    }
+    traits << 'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait' {
+      strategyId('3')   
+    }
+    traits << 'com.cloudbees.jenkins.plugins.bitbucket.OriginPullRequestDiscoveryTrait' {
+      strategyId('1')
+    }
+  } 
+  triggers {
+    periodic(60)
+  }
+}
+'''
+
+def jobManagement = new JenkinsJobManagement(System.out, [:], workspace)
+new DslScriptLoader(jobManagement).runScript(script)

@@ -80,6 +80,9 @@
 - include_tasks: "configure_pipeline_libraries.yml"
   when: jenkins2_pipeline_libraries_enabled
 
+- include_tasks: "configure_bitbucket_project.yml"
+  when: jenkins2_bitbucket_project_enabled
+
 - include_tasks: "configure_ssh_keys.yml"
   when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys.generate and
     jenkins_was_installed is defined and jenkins_was_installed is changed

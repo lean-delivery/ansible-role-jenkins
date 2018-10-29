@@ -82,6 +82,7 @@ jenkins2_plugins_suggested:
   - timestamper
   - workflow-aggregator
   - ws-cleanup
+  - job-dsl
 jenkins2_plugins_list: []
 
 # Set Credentials
