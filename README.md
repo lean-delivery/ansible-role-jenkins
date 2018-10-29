@@ -126,7 +126,7 @@ Requirements
      default: `False`
   - `jenkins2_bitbucket_project_owner` - Name of the Bitbucket Team or Bitbucket User Account. It could be a Bitbucket Project also, if using Bitbucket Server. In this case (Bitbucket Server): Use the project key, not the project name. If using a user account instead of a project, add a "~" character before the username, i.e. "~joe".
      default: `Bitbucket_Project_Owner`
-  - `jenkins2_bitbucket_project_repo_regexp - A Java regular expression to restrict the repo names. Repo names that do not match the supplied regular expression will be ignored.
+  - `jenkins2_bitbucket_project_repo_regexp` - A Java regular expression to restrict the repo names. Repo names that do not match the supplied regular expression will be ignored.
      default: `''`
   - `jenkins2_bitbucket_project_discover_branches_strategy` - Determines which branches are discovered. 1 - Exclude branches that are also filed as PRs, 2 - Only branches that are also filed as PRs, 3 - All branches.
      default: 1
