@@ -77,6 +77,9 @@
 - include_tasks: "set_credentials.yml"
   when: jenkins2_credentials_enabled
 
+- include_tasks: "configure_pipeline_libraries.yml"
+  when: jenkins2_pipeline_libraries_enabled
+
 - include_tasks: "configure_sonarqube.yml"
   when: jenkins2_sonarqube_enabled
 

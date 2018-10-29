@@ -112,6 +112,15 @@ Requirements
   - `jenkins2_credentials_enabled` - to add credentials
      default: `True`
   - `jenkins2_credentials` -  credentials map
+# pipeline libraries configuration
+  - `jenkins2_pipeline_libraries_enabled` - to configure Global Pipeline Libraries
+     default: `False`
+  - `jenkins2_pipeline_libraries_name` - Library Name to be used in the @Library annotation
+     default: `Pipeline_Libraries`
+  - `jenkins2_pipeline_libraries_url` - URL of remote repository
+     default: `''`
+  - `jenkins2_pipeline_libraries_version` - A default version of the library to load if a script does not select another. Might be a branch name, tag, commit hash, etc., according to the SCM.
+     default: 'master'
 # sonarqube configuration
   - `jenkins2_sonarqube_enabled` - to add SonarQube configuration
      default: `False`
@@ -144,6 +153,12 @@ jenkins2_credentials:
     description: 'username and password for jira'
     username: 'jiraUser'
     password: 'JiraUserPassword'
+  pipeline_libraries:
+    type: 'password'
+    id: 'pipeline_libraries'
+    description: 'username and password for pipeline libraries'
+    username: 'pipelineLibrariesUser'
+    password: 'pipelineLibrariesPassword'
 ```
 `type` has 2 available options:
   1. `key` - if you want to configure SSH Private key
