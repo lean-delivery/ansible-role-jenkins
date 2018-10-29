@@ -121,6 +121,21 @@ Requirements
      default: `''`
   - `jenkins2_pipeline_libraries_version` - A default version of the library to load if a script does not select another. Might be a branch name, tag, commit hash, etc., according to the SCM.
      default: 'master'
+# bitbucket project configuration
+  - `jenkins2_bitbucket_project_enabled` - to configure Bitbucket Team/Project
+     default: `False`
+  - `jenkins2_bitbucket_project_owner` - Name of the Bitbucket Team or Bitbucket User Account. It could be a Bitbucket Project also, if using Bitbucket Server. In this case (Bitbucket Server): Use the project key, not the project name. If using a user account instead of a project, add a "~" character before the username, i.e. "~joe".
+     default: `Bitbucket_Project_Owner`
+  - `jenkins2_bitbucket_project_repo_regexp - A Java regular expression to restrict the repo names. Repo names that do not match the supplied regular expression will be ignored.
+     default: `''`
+  - `jenkins2_bitbucket_project_discover_branches_strategy` - Determines which branches are discovered. 1 - Exclude branches that are also filed as PRs, 2 - Only branches that are also filed as PRs, 3 - All branches.
+     default: 1
+  - `jenkins2_bitbucket_project_discover_pr_strategy` - Determines how pull requests are discovered. 1 - Merging the pull request with the current target branch revision, 2 - The current pull request revision, 3 - Both the current pull request revision and the pull request merged with the current target branch revision.
+     default: 1
+  - `jenkins2_bitbucket_project_scan_interval` - The maximum amount of time since the last indexing that is allowed to elapse before an indexing is triggered.
+     default: 60
+  - `jenkins2_bitbucket_project_autobuild_branches` - Matching branches will be triggered automatically.
+     default: 'master|develop|PR-\d+'
 
 Use variable `jenkins2_credentials` to set properties of credentials
 ```yml
@@ -144,6 +159,12 @@ jenkins2_credentials:
     description: 'username and password for pipeline libraries'
     username: 'pipelineLibrariesUser'
     password: 'pipelineLibrariesPassword'
+  bitbucket_project:
+    type: 'password'
+    id: 'bitbucket_project'
+    description: 'username and password for bitbucket project'
+    username: 'bitbucketProjectUser'
+    password: 'bitbucketProjectPassword'
 ```
 `type` has 2 available options:
   1. `key` - if you want to configure SSH Private key
