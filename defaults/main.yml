@@ -106,6 +106,12 @@ jenkins2_credentials:
     description: 'username and password for pipeline libraries'
     username: 'pipelineLibrariesUser'
     password: 'pipelineLibrariesPassword'
+  bitbucket_project:
+    type: 'password'
+    id: 'bitbucket_project'
+    description: 'username and password for bitbucket project'
+    username: 'bitbucketProjectUser'
+    password: 'bitbucketProjectPassword'
 
 # Configure pipeline libraries
 jenkins2_pipeline_libraries_enabled: False
@@ -115,3 +121,9 @@ jenkins2_pipeline_libraries_version: 'master'
 
 # Configure bitbucket project
 jenkins2_bitbucket_project_enabled: False
+jenkins2_bitbucket_project_owner: 'Bitbucket_Project_Owner'
+jenkins2_bitbucket_project_repo_regexp: ''
+jenkins2_bitbucket_project_discover_branches_strategy: '1'
+jenkins2_bitbucket_project_discover_pr_strategy: '1'
+jenkins2_bitbucket_project_scan_interval: '10'
+jenkins2_bitbucket_project_autobuild_branches: 'master'

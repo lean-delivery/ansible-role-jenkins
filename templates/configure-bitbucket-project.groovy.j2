@@ -2,32 +2,32 @@ import javaposse.jobdsl.dsl.DslScriptLoader
 import javaposse.jobdsl.plugin.JenkinsJobManagement
 
 def script = '''
-organizationFolder('schneideripo') {
+organizationFolder("{{ jenkins2_bitbucket_project_owner }}") {
   properties {
     noTriggerOrganizationFolderProperty {
-      branches('develop')
+      branches("{{ jenkins2_bitbucket_project_autobuild_branches }}")
     }
   }
   organizations {
     bitbucket {
-      repoOwner("schneideripo")
-      credentialsId("1b073e8d-d111-4d1b-8c82-0f0baea705e7")
+      repoOwner("{{ jenkins2_bitbucket_project_owner }}")
+      credentialsId("{{ jenkins2_credentials.bitbucket_project.id }}")
     }
   }
   configure { node ->
     def traits = node / navigators / 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMNavigator' / traits
     traits << 'jenkins.scm.impl.trait.RegexSCMSourceFilterTrait' {
-      regex('^(?!.*exchange).*')   
+      regex("{{ jenkins2_bitbucket_project_repo_regexp }}")   
     }
     traits << 'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait' {
-      strategyId('3')   
+      strategyId("{{ jenkins2_bitbucket_project_discover_branches_strategy }}")   
     }
     traits << 'com.cloudbees.jenkins.plugins.bitbucket.OriginPullRequestDiscoveryTrait' {
-      strategyId('1')
+      strategyId("{{ jenkins2_bitbucket_project_discover_pr_strategy }}")
     }
   } 
   triggers {
-    periodic(60)
+    periodic("{{ jenkins2_bitbucket_project_scan_interval }}")
   }
 }
 '''
