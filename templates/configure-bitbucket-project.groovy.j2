@@ -17,7 +17,7 @@ organizationFolder("{{ jenkins2_bitbucket_project_owner }}") {
   configure { node ->
     def traits = node / navigators / 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMNavigator' / traits
     traits << 'jenkins.scm.impl.trait.RegexSCMSourceFilterTrait' {
-      regex("{{ jenkins2_bitbucket_project_repo_regexp }}")   
+      regex({{ jenkins2_bitbucket_project_repo_regexp }})   
     }
     traits << 'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait' {
       strategyId("{{ jenkins2_bitbucket_project_discover_branches_strategy }}")   

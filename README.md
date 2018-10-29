@@ -135,7 +135,7 @@ Requirements
   - `jenkins2_bitbucket_project_scan_interval` - The maximum amount of time since the last indexing that is allowed to elapse before an indexing is triggered.
      default: 60
   - `jenkins2_bitbucket_project_autobuild_branches` - Matching branches will be triggered automatically.
-     default: 'master|develop|PR-\\d+'
+     default: master|develop|PR-\\d+
 
 Use variable `jenkins2_credentials` to set properties of credentials
 ```yml
