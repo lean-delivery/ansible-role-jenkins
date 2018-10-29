@@ -112,3 +112,6 @@ jenkins2_pipeline_libraries_enabled: False
 jenkins2_pipeline_libraries_name: 'Pipeline_Libraries'
 jenkins2_pipeline_libraries_url: ''
 jenkins2_pipeline_libraries_version: 'master'
+
+# Configure bitbucket project
+jenkins2_bitbucket_project_enabled: False
