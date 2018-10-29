@@ -32,5 +32,6 @@ organizationFolder('schneideripo') {
 }
 '''
 
+def workspace = new File('.')
 def jobManagement = new JenkinsJobManagement(System.out, [:], workspace)
 new DslScriptLoader(jobManagement).runScript(script)
