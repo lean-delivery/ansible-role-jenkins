@@ -125,5 +125,5 @@ jenkins2_bitbucket_project_owner: 'Bitbucket_Project_Owner'
 jenkins2_bitbucket_project_repo_regexp: ''
 jenkins2_bitbucket_project_discover_branches_strategy: 1
 jenkins2_bitbucket_project_discover_pr_strategy: 1
-jenkins2_bitbucket_project_scan_interval: 10
-jenkins2_bitbucket_project_autobuild_branches: 'master'
+jenkins2_bitbucket_project_scan_interval: 60
+jenkins2_bitbucket_project_autobuild_branches: 'master|develop|PR-\d+'
