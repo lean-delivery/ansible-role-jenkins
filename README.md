@@ -270,8 +270,8 @@ jenkins2_credentials:
     type: 'aws_creds'
     ID: 'AWS_EC2_CREDS'
     description: 'for ec2 plugin to create ec2 for slave instances'
-    accessKey: '{{ aws_access_key | default('AWSaccessKey') }}'
-    secKey: '{{ aws_secret_key | default('AWSsecretKey') }}'
+    access_key: '{{ aws_access_key | default('AWSaccessKey') }}'
+    sec_key: '{{ aws_secret_key | default('AWSsecretKey') }}'
 ```
 `type` has available options:
   1. `key` - if you want to configure SSH Private key

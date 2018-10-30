@@ -198,8 +198,8 @@ jenkins2_credentials:
     type: 'aws_creds'
     id: 'AWS_EC2_CREDS'
     description: 'for ec2 plugin to create ec2 for slave instances'
-    accessKey: "{{ aws_access_key | default('AWSaccessKey') }}"
-    secKey: "{{ aws_secret_key | default('AWSsecretKey') }}"
+    access_key: "{{ aws_access_key | default('AWSaccessKey') }}"
+    sec_key: "{{ aws_secret_key | default('AWSsecretKey') }}"
 
 # Configure pipeline libraries
 jenkins2_pipeline_libraries_enabled: False
