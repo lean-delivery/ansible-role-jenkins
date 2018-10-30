@@ -1,10 +1,10 @@
 ---
 - name: "Copy custom files"
   copy:
-    src: "{{ value.src }}"
-    dest: "{{ value.dest }}"
-    owner: "{{ value.owner }}"
-    group: "{{ value.group }}"
-    mode: "{{ value.mode | int }}"
+    src: "{{ item.value.src }}"
+    dest: "{{ item.value.dest }}"
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode | int }}"
   with_dict: "{{ jenkins2_custom_files }}"
   become: True
