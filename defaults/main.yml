@@ -163,14 +163,14 @@ jenkins2_credentials:
     type: 'password'
     ID: 'GIT_CREDENTIALS_TOKEN'
     description: 'to use with GL10.2+ but could be used with earlier versions'
-    username: '{{ gitlab_master_username | default('admin') }}'
-    password: '{{ gitlab_master_token | default('ToKen12345') }}'
+    username: "{{ gitlab_master_username | default('admin') }}"
+    password: "{{ gitlab_master_token | default('ToKen12345') }}"
   aws_credentials:
     type: 'password'
     ID: 'AWS_CREDENTIALS'
     description: 'for operations in AWS'
-    username: '{{ aws_access_key | default('AWSaccessKey') }}'
-    password: '{{ aws_secret_key | default('AWSsecretKey') }}'
+    username: "{{ aws_access_key | default('AWSaccessKey') }}"
+    password: "{{ aws_secret_key | default('AWSsecretKey') }}"
   gitlabtoken:
     type: 'gitlabtoken'
     ID: 'gitlab_token'
@@ -180,8 +180,8 @@ jenkins2_credentials:
     type: 'aws_creds'
     ID: 'AWS_EC2_CREDS'
     description: 'for ec2 plugin to create ec2 for slave instances'
-    accessKey: '{{ aws_access_key | default('AWSaccessKey') }}'
-    secKey: '{{ aws_secret_key | default('AWSsecretKey') }}'
+    accessKey: "{{ aws_access_key | default('AWSaccessKey') }}"
+    secKey: "{{ aws_secret_key | default('AWSsecretKey') }}"
 
 # Configure pipeline libraries
 jenkins2_pipeline_libraries_enabled: False
