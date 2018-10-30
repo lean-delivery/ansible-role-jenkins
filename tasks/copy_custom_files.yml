@@ -5,6 +5,6 @@
     dest: "{{ item.value.dest }}"
     owner: "{{ item.value.owner }}"
     group: "{{ item.value.group }}"
-    mode: "{{ item.value.mode | int }}"
+    mode: "{{ item.value.mode }}"
   with_dict: "{{ jenkins2_custom_files }}"
   become: True

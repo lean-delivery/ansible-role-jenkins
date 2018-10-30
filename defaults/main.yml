@@ -224,7 +224,7 @@ jenkins2_custom_files:
     dest: "{{ jenkins2_home_directory }}"
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
-    mode: 0755
+    mode: "0755"
 
 # Setup gitlab connection
 jenkins2_gitlab_enabled: False

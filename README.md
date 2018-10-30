@@ -146,7 +146,7 @@ Requirements
       dest: "{{ jenkins2_home_directory }}"
       owner: "{{ jenkins2_user }}"
       group: "{{ jenkins2_user }}"
-      mode: 0755`
+      mode: "0755"`
 # Gitlab configuration
   - `jenkins2_gitlab_enabled` - to enable gitlab config
      default: `False`
