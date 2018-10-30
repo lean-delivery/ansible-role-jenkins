@@ -83,6 +83,7 @@ jenkins2_plugins_suggested:
   - workflow-aggregator
   - ws-cleanup
   - job-dsl
+  - sonar
 jenkins2_plugins_list: []
 
 # Set Credentials
@@ -127,3 +128,12 @@ jenkins2_bitbucket_project_discover_branches_strategy: 1
 jenkins2_bitbucket_project_discover_pr_strategy: 1
 jenkins2_bitbucket_project_scan_interval: 60
 jenkins2_bitbucket_project_autobuild_branches: 'master|develop|PR-[0-9]+'
+
+# Configure SonarQube
+jenkins2_sonarqube_enabled: False
+jenkins2_sonarqube_name: 'SonarQube'
+jenkins2_sonarqube_url: 'http://localhost:9000'
+jenkins2_sonarqube_token: ''
+jenkins2_sonarqube_maven_plugin: ''
+jenkins2_sonarqube_arguments: ''
+jenkins2_sonarqube_analysis_properties: ''
