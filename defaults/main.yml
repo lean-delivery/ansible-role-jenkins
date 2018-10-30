@@ -115,7 +115,7 @@ jenkins2_credentials:
   sshconnection:
     type: 'key'
     keySource: 0
-    key: >
+    key: |
       -----BEGIN RSA PRIVATE KEY-----
       MIIEpQIBAAKCAQEAp4aKtv4Tw760QLb5eG4M0nKeO8cPPf68aSbYwhSNqn4n3+Pq
       WGfP25rVmZqW6UATPdAaw4k5OahCgYCdgmEgiilj5ZJeb3pgQ1Hi4AP0+TNHBDgU
