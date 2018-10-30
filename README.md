@@ -224,8 +224,8 @@ jenkins2_credentials:
     type: 'password'
     ID: 'GIT_CREDENTIALS'
     description: 'gitlab credentials username with password'
-    username: '{{ gitlab_master_username }}'
-    password: '{{ master_user_password }}'
+    username: "{{ gitlab_master_username | default('admin') }}"
+    password: "{{ gitlab_master_password | default('password') }}"
   jenkinshttpconnectionuser:
     type: 'password'
     ID: 'Jenkins_http_connection'
@@ -236,8 +236,8 @@ jenkins2_credentials:
     type: 'password'
     ID: 'GIT_CREDENTIALS_TOKEN'
     description: 'to use with GL10.2+ but could be used with earlier versions'
-    username: '{{ gitlab_master_username | default('admin') }}'
-    password: '{{ gitlab_master_token | default('ToKen12345') }}'
+    username: "{{ gitlab_master_username | default('admin') }}"
+    password: "{{ gitlab_master_token | default('ToKen12345') }}"
   aws_credentials:
     type: 'password'
     ID: 'AWS_CREDENTIALS'
