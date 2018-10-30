@@ -105,7 +105,7 @@ Requirements
      default: `smtp.office365.com`
 # jenkins plugins configuration
   - `jenkins2_plugins_timeout` - plugin installation timeout
-     default: `1000`
+     default: `2000`
   - `jenkins2_plugins_list` - list of plugins (will be merged with suggested list)
      default: `[]`
 # credentials configuration
@@ -136,8 +136,34 @@ Requirements
      default: `''`
   - `jenkins2_sonarqube_analysis_properties - Additional analysis properties in the form of key-value pairs. For example, sonar.analysis.mode=issues.
      default: `''`
+# custom files copy
+  - `jenkins2_custom_files_enabled` - to copy custom files to Jenkins
+     default: `False`
+  - `jenkins2_custom_files` - map with files parameters
+      default:
+    `log_parser:
+      src: "{{ role_path }}/files/pipeline_error_in_init_console"
+      dest: "{{ jenkins2_home_directory }}"
+      owner: "{{ jenkins2_user }}"
+      group: "{{ jenkins2_user }}"
+      mode: 0755`
+# Gitlab configuration
+  - `jenkins2_gitlab_enabled` - to enable gitlab config
+     default: `False`
+  - `gitlab_external_url` - gitlab external url
+     default: `https://localhost`
+  - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)
+     default: `gitlab_token`
 
 Use variable `jenkins2_credentials` to set properties of credentials
+# To set AWS credentials set variables:
+- aws_access_key
+- aws_secret_key
+# To set Gitlab connection please set:
+- gitlab_master_password
+- gitlab_master_username
+- gitlab_master_token
+
 ```yml
 jenkins2_credentials_enabled: True # Set False to disable credentials configuration
 jenkins2_credentials:
@@ -159,10 +185,81 @@ jenkins2_credentials:
     description: 'username and password for pipeline libraries'
     username: 'pipelineLibrariesUser'
     password: 'pipelineLibrariesPassword'
+  sshconnection:
+    type: 'key'
+    keySource: 0
+    key: >
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEpQIBAAKCAQEAp4aKtv4Tw760QLb5eG4M0nKeO8cPPf68aSbYwhSNqn4n3+Pq
+      WGfP25rVmZqW6UATPdAaw4k5OahCgYCdgmEgiilj5ZJeb3pgQ1Hi4AP0+TNHBDgU
+      ltY4x+oLbJmg4Kw5kjojeBoz9nNJxpBCI5FaTE9kPaAuqNaeLgK1EAC/CTwHbR4x
+      6R79loSkqgltV8ex/QXf3y3D2ICS45FCoyOR+VkMZz4a2qjadc/Vvh3TtSWka+sW
+      NzGJkv20TQXSNWGt6vWDMxWHI5CimfKYRQJbnkqYhULCdXVhZd86rmldR9OPDwhC
+      MXDN6bsymGhYllNqk5FI7rRbJwn9Hp1Fkh4i9wIDAQABAoIBAGAUbuxCzm0eq9zN
+      1Eh4vYvZRt077ob82WxpZjnxdcqJri7fVaE8cN8fb1A4dEL0h9SUzTTGN/bUhMgn
+      Tq7fK71xvaSGDPlcs2cIyNj4DAD8osdNrqlP1aL6nXC8r6MLw70U8RDJ3nGDb5Wd
+      WQFzNNm9Ut1xSDF3XaM/1D6IXwhY4llrhjjNvXlgyaAWCQ7byJbuoNd5NFGiGGII
+      XA/3Cqb9TfssRqZ0ougBTDYSQmqev74Jc9OkRONuRnjPBX4tAj1hGl8KzBmx70bl
+      mAexMQxODYUtUnAe/h+QL5aGmt6dlShwHR9Dfpn3GtSB6rtSUHm3lhg/4pDhLD3U
+      rhVo8ckCgYEA3Ibsh5FYgYZGhEWb0/n1Hoa2kiav6E2WDRHwu6LAw4Y8c2dHZ5ov
+      rl0aS9DqKUJqQI8LBVhZCaKbLXFZKTQBbWe6FsT5VidG9UIrYGXLT09db1Oww1PG
+      s4FW6rJy1Y6VtBJxQdRz1gAse8TXED6uGzAih7q0jLkxdk/s03LbUXMCgYEAwnkS
+      ONnna4obkzJ1iGNCOvT2kP2rVcx9AP/R8kN8ZAJdbHXZ57KE8h45e/R4/YOppTNt
+      KSTOZwbjCOy0f1eLK9bJFZ4qm+YsNOoQFpQW9QFEqwjO76CEpdMpo+/aGxGAI+rT
+      RFcEhAkz6AKlXADzLhw8/S5DvvoR1tXEKfCgd20CgYEAr1+FPpJxxh+YeJw6viqr
+      qikLi9LEVYNN7vrzbOSTU2qvLD9X46YUgR99SAnODh3JDaoz435M4IK10T+w3jmD
+      YRP6Qx1GBCOcJHMIt9J8CohdD6mIiu1WuW4ERwS+meKYXunDs8xWijr9JTh2p26R
+      WwG+lB4Ac2DbWvFYrxdKHs0CgYEAicmCcaliYD1wIDDmOYYqTN93O2+fz6CdCPI4
+      bHAIWEucqdYuWA2SSIHFtN+YQfbhYd04AKjFXRXyEkaz9G2we5Uo0BpKkj7ZH3yf
+      fX/bbChD4PLSu9F9aohcvnyYigkyQ0CEA62r02k5z67gPnml0wvK4o+/DDbeINtA
+      q36EE1kCgYEAnWDOCnLJKJElmJzhUhunzef6XjFHyBZ353D3VLCdoz8Aww24dMV/
+      ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
+      criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
+      -----END RSA PRIVATE KEY-----
+    ID: 'sshagent'
+    username: 'hybris'
+    passphrase: ''
+    description: 'credentials for hybris user to connect remotely'
+  gitlab_creds:
+    type: 'password'
+    ID: 'GIT_CREDENTIALS'
+    description: 'gitlab credentials username with password'
+    username: '{{ gitlab_master_username }}'
+    password: '{{ master_user_password }}'
+  jenkinshttpconnectionuser:
+    type: 'password'
+    ID: 'Jenkins_http_connection'
+    description: 'for connection via jenkins cli; used for pipeline syntax check'
+    username: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
+  gitlabusertoken:
+    type: 'password'
+    ID: 'GIT_CREDENTIALS_TOKEN'
+    description: 'to use with GL10.2+ but could be used with earlier versions'
+    username: '{{ gitlab_master_username | default('admin') }}'
+    password: '{{ gitlab_master_token | default('ToKen12345') }}'
+  aws_credentials:
+    type: 'password'
+    ID: 'AWS_CREDENTIALS'
+    description: 'for operations in AWS'
+    username: '{{ aws_access_key | default('AWSaccessKey') }}'
+    password: '{{ aws_secret_key | default('AWSsecretKey') }}'
+  gitlabtoken:
+    type: 'gitlabtoken'
+    ID: 'gitlab_token'
+    description: 'gitlab connection with token'
+  aws_ec2_credentials:
+    type: 'aws_creds'
+    ID: 'AWS_EC2_CREDS'
+    description: 'for ec2 plugin to create ec2 for slave instances'
+    accessKey: '{{ aws_access_key | default('AWSaccessKey') }}'
+    secKey: '{{ aws_secret_key | default('AWSsecretKey') }}'
 ```
-`type` has 2 available options:
+`type` has available options:
   1. `key` - if you want to configure SSH Private key
   2. `password` - if you want to configure username/password bundle
+  3. `gitlabtoken` - if you want to configure gitlab token (need gitlab plugin to be installed)
+  3. `aws_creds` - if you want to configure ec2 creds (need ec2 plugin to be installed)
 
 `keySource` specifies method of private key providing:
   * `0` - DirectEntryPrivateKeySource. _If this value is set you need to place your private key to variable `key` in plain text._
