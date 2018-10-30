@@ -80,6 +80,9 @@
 - include_tasks: "configure_pipeline_libraries.yml"
   when: jenkins2_pipeline_libraries_enabled
 
+- include_tasks: "configure_bitbucket_project.yml"
+  when: jenkins2_bitbucket_project_enabled
+
 - include_tasks: "configure_sonarqube.yml"
   when: jenkins2_sonarqube_enabled
 

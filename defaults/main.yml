@@ -82,6 +82,7 @@ jenkins2_plugins_suggested:
   - timestamper
   - workflow-aggregator
   - ws-cleanup
+  - job-dsl
   - sonar
   - checkstyle
   - gitlab-plugin
@@ -200,12 +201,27 @@ jenkins2_credentials:
     description: 'for ec2 plugin to create ec2 for slave instances'
     access_key: "{{ aws_access_key | default('AWSaccessKey') }}"
     sec_key: "{{ aws_secret_key | default('AWSsecretKey') }}"
+  bitbucket_project:
+    type: 'password'
+    id: 'bitbucket_project'
+    description: 'username and password for bitbucket project'
+    username: 'bitbucketProjectUser'
+    password: 'bitbucketProjectPassword'
 
 # Configure pipeline libraries
 jenkins2_pipeline_libraries_enabled: False
 jenkins2_pipeline_libraries_name: 'Pipeline_Libraries'
 jenkins2_pipeline_libraries_url: ''
 jenkins2_pipeline_libraries_version: 'master'
+
+# Configure bitbucket project
+jenkins2_bitbucket_project_enabled: False
+jenkins2_bitbucket_project_owner: 'Bitbucket_Project_Owner'
+jenkins2_bitbucket_project_repo_regexp: ''
+jenkins2_bitbucket_project_discover_branches_strategy: 1
+jenkins2_bitbucket_project_discover_pr_strategy: 1
+jenkins2_bitbucket_project_scan_interval: 60
+jenkins2_bitbucket_project_autobuild_branches: 'master|develop|PR-[0-9]+'
 
 # Configure SonarQube
 jenkins2_sonarqube_enabled: False

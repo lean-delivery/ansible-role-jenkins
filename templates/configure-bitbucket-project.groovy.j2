@@ -1,0 +1,37 @@
+import javaposse.jobdsl.dsl.DslScriptLoader
+import javaposse.jobdsl.plugin.JenkinsJobManagement
+
+def script = '''
+organizationFolder("{{ jenkins2_bitbucket_project_owner }}") {
+  properties {
+    noTriggerOrganizationFolderProperty {
+      branches("{{ jenkins2_bitbucket_project_autobuild_branches }}")
+    }
+  }
+  organizations {
+    bitbucket {
+      repoOwner("{{ jenkins2_bitbucket_project_owner }}")
+      credentialsId("{{ jenkins2_credentials.bitbucket_project.id }}")
+    }
+  }
+  configure { node ->
+    def traits = node / navigators / 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMNavigator' / traits
+    traits << 'jenkins.scm.impl.trait.RegexSCMSourceFilterTrait' {
+      regex({{ jenkins2_bitbucket_project_repo_regexp }})   
+    }
+    traits << 'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait' {
+      strategyId("{{ jenkins2_bitbucket_project_discover_branches_strategy }}")   
+    }
+    traits << 'com.cloudbees.jenkins.plugins.bitbucket.OriginPullRequestDiscoveryTrait' {
+      strategyId("{{ jenkins2_bitbucket_project_discover_pr_strategy }}")
+    }
+  } 
+  triggers {
+    periodic({{ jenkins2_bitbucket_project_scan_interval }})
+  }
+}
+'''
+
+def workspace = new File('.')
+def jobManagement = new JenkinsJobManagement(System.out, [:], workspace)
+new DslScriptLoader(jobManagement).runScript(script)

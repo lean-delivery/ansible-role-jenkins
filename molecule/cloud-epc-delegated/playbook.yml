@@ -11,6 +11,7 @@
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: True
       jenkins2_pipeline_libraries_url: "https://example.com/example.git"
+      jenkins2_bitbucket_project_enabled: True
       jenkins2_sonarqube_enabled: True
       jenkins2_custom_files_enabled: True
       jenkins2_gitlab_enabled: True
