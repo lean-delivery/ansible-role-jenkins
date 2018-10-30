@@ -143,42 +143,60 @@ jenkins2_credentials:
       ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
       criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
       -----END RSA PRIVATE KEY-----
-    ID: 'sshagent'
+    id: 'sshagent'
     username: 'hybris'
     passphrase: ''
     description: 'credentials for hybris user to connect remotely'
+  cidbsysuser:
+    type: 'password'
+    id: 'ciDBsysUser'
+    description: 'sys user for CI db'
+    username: 'sys'
+    password: 'syspassword'
+  fqa1dbuser:
+    type: 'password'
+    id: 'fqa1DBuser'
+    description: 'fqa1 DB user'
+    username: 'fqa1user'
+    password: 'fqa1password'
+  dbtempuser:
+    type: 'password'
+    id: 'tempDBuser'
+    description: 'DB user for datacut'
+    username: 'DB_TEMP'
+    password: 'DB_TEMP'
   gitlab_creds:
     type: 'password'
-    ID: 'GIT_CREDENTIALS'
+    id: 'GIT_CREDENTIALS'
     description: 'gitlab credentials username with password'
     username: "{{ gitlab_master_username | default('admin') }}"
     password: "{{ gitlab_master_password | default('password') }}"
   jenkinshttpconnectionuser:
     type: 'password'
-    ID: 'Jenkins_http_connection'
+    id: 'Jenkins_http_connection'
     description: 'for connection via jenkins cli; used for pipeline syntax check'
     username: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
   gitlabusertoken:
     type: 'password'
-    ID: 'GIT_CREDENTIALS_TOKEN'
+    id: 'GIT_CREDENTIALS_TOKEN'
     description: 'to use with GL10.2+ but could be used with earlier versions'
     username: "{{ gitlab_master_username | default('admin') }}"
     password: "{{ gitlab_master_token | default('ToKen12345') }}"
   aws_credentials:
     type: 'password'
-    ID: 'AWS_CREDENTIALS'
+    id: 'AWS_CREDENTIALS'
     description: 'for operations in AWS'
     username: "{{ aws_access_key | default('AWSaccessKey') }}"
     password: "{{ aws_secret_key | default('AWSsecretKey') }}"
   gitlabtoken:
     type: 'gitlabtoken'
-    ID: 'gitlab_token'
+    id: 'gitlab_token'
     description: 'gitlab connection with token'
     token: "{{ gitlab_master_token | default('ToKen12345') }}"
   aws_ec2_credentials:
     type: 'aws_creds'
-    ID: 'AWS_EC2_CREDS'
+    id: 'AWS_EC2_CREDS'
     description: 'for ec2 plugin to create ec2 for slave instances'
     accessKey: "{{ aws_access_key | default('AWSaccessKey') }}"
     secKey: "{{ aws_secret_key | default('AWSsecretKey') }}"

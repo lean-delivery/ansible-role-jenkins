@@ -220,6 +220,24 @@ jenkins2_credentials:
     username: 'hybris'
     passphrase: ''
     description: 'credentials for hybris user to connect remotely'
+  cidbsysuser:
+    type: 'password'
+    id: 'ciDBsysUser'
+    description: 'sys user for CI db'
+    username: 'sys'
+    password: 'syspassword'
+  fqa1dbuser:
+    type: 'password'
+    id: 'fqa1DBuser'
+    description: 'fqa1 DB user'
+    username: 'fqa1user'
+    password: 'fqa1password'
+  dbtempuser:
+    type: 'password'
+    id: 'tempDBuser'
+    description: 'DB user for datacut'
+    username: 'DB_TEMP'
+    password: 'DB_TEMP'
   gitlab_creds:
     type: 'password'
     ID: 'GIT_CREDENTIALS'
