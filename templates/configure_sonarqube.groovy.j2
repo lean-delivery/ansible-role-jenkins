@@ -1,0 +1,17 @@
+import hudson.plugins.sonar.SonarInstallation
+import hudson.plugins.sonar.model.TriggersConfig
+
+def jenkins = Jenkins.getInstance()
+def descriptor = jenkins.getDescriptor("hudson.plugins.sonar.SonarGlobalConfiguration")
+def sonar = new SonarInstallation(
+		"{{ jenkins2_sonarqube_name }}",
+		"{{ jenkins2_sonarqube_url }}",
+		"{{ jenkins2_sonarqube_token }}",
+		"{{ jenkins2_sonarqube_maven_plugin }}",
+		"{{ jenkins2_sonarqube_arguments }}",
+		new TriggersConfig(),
+		"{{ jenkins2_sonarqube_analysis_properties }}"
+)
+descriptor.setInstallations(sonar)
+descriptor.setBuildWrapperEnabled(true)
+descriptor.save()
