@@ -1,0 +1,4 @@
+ok /does not belong to known type. Maybe you have added a new type without updating your system./
+ok /does not belong to known type!/
+error /ERROR/
+error /BUILD FAILED/

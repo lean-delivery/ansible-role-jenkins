@@ -55,7 +55,7 @@ jenkins2_smtp_password: "password"
 jenkins2_smtp_port: "587"
 jenkins2_smtp_host: "smtp.office365.com"
 # Plugin installation
-jenkins2_plugins_timeout: 1000
+jenkins2_plugins_timeout: 2000
 jenkins2_plugins_suggested:
   - ant
   - antisamy-markup-formatter
@@ -84,6 +84,12 @@ jenkins2_plugins_suggested:
   - ws-cleanup
   - job-dsl
   - sonar
+  - checkstyle
+  - gitlab-plugin
+  - job-dsl
+  - log-parser
+  - pmd
+  - ec2
 jenkins2_plugins_list: []
 
 # Set Credentials
@@ -107,6 +113,94 @@ jenkins2_credentials:
     description: 'username and password for pipeline libraries'
     username: 'pipelineLibrariesUser'
     password: 'pipelineLibrariesPassword'
+  sshconnection:
+    type: 'key'
+    keySource: 0
+    key: >
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEpQIBAAKCAQEAp4aKtv4Tw760QLb5eG4M0nKeO8cPPf68aSbYwhSNqn4n3+Pq
+      WGfP25rVmZqW6UATPdAaw4k5OahCgYCdgmEgiilj5ZJeb3pgQ1Hi4AP0+TNHBDgU
+      ltY4x+oLbJmg4Kw5kjojeBoz9nNJxpBCI5FaTE9kPaAuqNaeLgK1EAC/CTwHbR4x
+      6R79loSkqgltV8ex/QXf3y3D2ICS45FCoyOR+VkMZz4a2qjadc/Vvh3TtSWka+sW
+      NzGJkv20TQXSNWGt6vWDMxWHI5CimfKYRQJbnkqYhULCdXVhZd86rmldR9OPDwhC
+      MXDN6bsymGhYllNqk5FI7rRbJwn9Hp1Fkh4i9wIDAQABAoIBAGAUbuxCzm0eq9zN
+      1Eh4vYvZRt077ob82WxpZjnxdcqJri7fVaE8cN8fb1A4dEL0h9SUzTTGN/bUhMgn
+      Tq7fK71xvaSGDPlcs2cIyNj4DAD8osdNrqlP1aL6nXC8r6MLw70U8RDJ3nGDb5Wd
+      WQFzNNm9Ut1xSDF3XaM/1D6IXwhY4llrhjjNvXlgyaAWCQ7byJbuoNd5NFGiGGII
+      XA/3Cqb9TfssRqZ0ougBTDYSQmqev74Jc9OkRONuRnjPBX4tAj1hGl8KzBmx70bl
+      mAexMQxODYUtUnAe/h+QL5aGmt6dlShwHR9Dfpn3GtSB6rtSUHm3lhg/4pDhLD3U
+      rhVo8ckCgYEA3Ibsh5FYgYZGhEWb0/n1Hoa2kiav6E2WDRHwu6LAw4Y8c2dHZ5ov
+      rl0aS9DqKUJqQI8LBVhZCaKbLXFZKTQBbWe6FsT5VidG9UIrYGXLT09db1Oww1PG
+      s4FW6rJy1Y6VtBJxQdRz1gAse8TXED6uGzAih7q0jLkxdk/s03LbUXMCgYEAwnkS
+      ONnna4obkzJ1iGNCOvT2kP2rVcx9AP/R8kN8ZAJdbHXZ57KE8h45e/R4/YOppTNt
+      KSTOZwbjCOy0f1eLK9bJFZ4qm+YsNOoQFpQW9QFEqwjO76CEpdMpo+/aGxGAI+rT
+      RFcEhAkz6AKlXADzLhw8/S5DvvoR1tXEKfCgd20CgYEAr1+FPpJxxh+YeJw6viqr
+      qikLi9LEVYNN7vrzbOSTU2qvLD9X46YUgR99SAnODh3JDaoz435M4IK10T+w3jmD
+      YRP6Qx1GBCOcJHMIt9J8CohdD6mIiu1WuW4ERwS+meKYXunDs8xWijr9JTh2p26R
+      WwG+lB4Ac2DbWvFYrxdKHs0CgYEAicmCcaliYD1wIDDmOYYqTN93O2+fz6CdCPI4
+      bHAIWEucqdYuWA2SSIHFtN+YQfbhYd04AKjFXRXyEkaz9G2we5Uo0BpKkj7ZH3yf
+      fX/bbChD4PLSu9F9aohcvnyYigkyQ0CEA62r02k5z67gPnml0wvK4o+/DDbeINtA
+      q36EE1kCgYEAnWDOCnLJKJElmJzhUhunzef6XjFHyBZ353D3VLCdoz8Aww24dMV/
+      ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
+      criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
+      -----END RSA PRIVATE KEY-----
+    id: 'sshagent'
+    username: 'hybris'
+    passphrase: ''
+    description: 'credentials for hybris user to connect remotely'
+  cidbsysuser:
+    type: 'password'
+    id: 'ciDBsysUser'
+    description: 'sys user for CI db'
+    username: 'sys'
+    password: 'syspassword'
+  fqa1dbuser:
+    type: 'password'
+    id: 'fqa1DBuser'
+    description: 'fqa1 DB user'
+    username: 'fqa1user'
+    password: 'fqa1password'
+  dbtempuser:
+    type: 'password'
+    id: 'tempDBuser'
+    description: 'DB user for datacut'
+    username: 'DB_TEMP'
+    password: 'DB_TEMP'
+  gitlab_creds:
+    type: 'password'
+    id: 'GIT_CREDENTIALS'
+    description: 'gitlab credentials username with password'
+    username: "{{ gitlab_master_username | default('admin') }}"
+    password: "{{ gitlab_master_password | default('password') }}"
+  jenkinshttpconnectionuser:
+    type: 'password'
+    id: 'Jenkins_http_connection'
+    description: 'for connection via jenkins cli; used for pipeline syntax check'
+    username: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
+  gitlabusertoken:
+    type: 'password'
+    id: 'GIT_CREDENTIALS_TOKEN'
+    description: 'to use with GL10.2+ but could be used with earlier versions'
+    username: "{{ gitlab_master_username | default('admin') }}"
+    password: "{{ gitlab_master_token | default('ToKen12345') }}"
+  aws_credentials:
+    type: 'password'
+    id: 'AWS_CREDENTIALS'
+    description: 'for operations in AWS'
+    username: "{{ aws_access_key | default('AWSaccessKey') }}"
+    password: "{{ aws_secret_key | default('AWSsecretKey') }}"
+  gitlabtoken:
+    type: 'gitlabtoken'
+    id: 'gitlab_token'
+    description: 'gitlab connection with token'
+    token: "{{ gitlab_master_token | default('ToKen12345') }}"
+  aws_ec2_credentials:
+    type: 'aws_creds'
+    id: 'AWS_EC2_CREDS'
+    description: 'for ec2 plugin to create ec2 for slave instances'
+    access_key: "{{ aws_access_key | default('AWSaccessKey') }}"
+    sec_key: "{{ aws_secret_key | default('AWSsecretKey') }}"
   bitbucket_project:
     type: 'password'
     id: 'bitbucket_project'
@@ -137,3 +231,18 @@ jenkins2_sonarqube_token: ''
 jenkins2_sonarqube_maven_plugin: ''
 jenkins2_sonarqube_arguments: ''
 jenkins2_sonarqube_analysis_properties: ''
+
+# Add custom files
+jenkins2_custom_files_enabled: False
+jenkins2_custom_files:
+  log_parser:
+    src: "{{ role_path }}/files/pipeline_error_in_init_console"
+    dest: "{{ jenkins2_home_directory }}"
+    owner: "{{ jenkins2_user }}"
+    group: "{{ jenkins2_user }}"
+    mode: "0755"
+
+# Setup gitlab connection
+jenkins2_gitlab_enabled: False
+gitlab_external_url: "https://localhost"
+jenkins2_gitlab_token_cred: "gitlab_token"
