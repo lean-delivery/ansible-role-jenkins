@@ -2,7 +2,7 @@
 - name: "Copy DSL file to jenkins"
   template:
     src: "{{ jenkins2_seed_job_template }}.j2"
-    dest: "{{ jenkins2_home }}/{{ (jenkins2_seed_job_template }}"
+    dest: "{{ jenkins2_home }}/{{ jenkins2_seed_job_template }}"
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
     mode: 0644
