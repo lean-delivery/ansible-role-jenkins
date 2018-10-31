@@ -86,7 +86,6 @@ jenkins2_plugins_suggested:
   - sonar
   - checkstyle
   - gitlab-plugin
-  - job-dsl
   - log-parser
   - pmd
   - ec2
@@ -246,3 +245,12 @@ jenkins2_custom_files:
 jenkins2_gitlab_enabled: False
 gitlab_external_url: "https://localhost"
 jenkins2_gitlab_token_cred: "gitlab_token"
+
+# Add seed job - job that run dsl config and seeds jobs
+# Add or replace dsl template
+jenkins2_seed_job_enable: False
+# DSL template file name. Do not forget to setup all needed variables for template
+jenkins2_seed_job_template: dsl_create_job.groovy.j2
+# to ignore existing jobs and do not rewrite them
+jenkins2_seed_job_ignore_existing: "true"
+jenkins2_seed_job_name: "seed_job"

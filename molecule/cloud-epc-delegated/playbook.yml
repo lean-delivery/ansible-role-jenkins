@@ -15,3 +15,4 @@
       jenkins2_sonarqube_enabled: True
       jenkins2_custom_files_enabled: True
       jenkins2_gitlab_enabled: True
+      jenkins2_seed_job_enable: True

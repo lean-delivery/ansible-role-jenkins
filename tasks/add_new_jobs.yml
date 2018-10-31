@@ -1,0 +1,33 @@
+---
+- name: "Copy DSL file to jenkins"
+  template:
+    src: "{{ jenkins2_seed_job_template }}"
+    dest: "{{ jenkins2_home }}/{{ (jenkins2_seed_job_template | splittext)[0] }}"
+    owner: "{{ jenkins2_user }}"
+    group: "{{ jenkins2_user }}"
+    mode: 0644
+    backup: True
+
+- name: "Create seed job"
+  jenkins_job:
+    config: "{{ lookup('template', 'seedJob.xml.j2') }}"
+    name: "{{ jenkins2_seed_job_name }}"
+    password: "{{ jenkins2_cli_password }}"
+    user: "{{ jenkins2_cli_username }}"
+    url: "http://localhost:{{ jenkins2_http_port }}"
+
+- name: "Run Seed Job"
+  jenkins_script:
+    script: "{{ lookup('template', 'run_seed_job.groovy.j2') }}"
+    user: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
+    validate_certs: False
+    timeout: 120
+
+- name: "Disable seed job"
+  jenkins_job:
+    name: "{{ jenkins2_seed_job_name }}"
+    password: "{{ jenkins2_cli_password }}"
+    user: "{{ jenkins2_cli_username }}"
+    url: "http://localhost:{{ jenkins2_http_port }}"
+    enabled: False
