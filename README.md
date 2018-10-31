@@ -171,11 +171,11 @@ Requirements
      default: `gitlab_token`
 
 # Seed job configuration
-# More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
+### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
 - `jenkins2_seed_job_enable` - enable jenkins seed job   
    default: `False`
-- `jenkins2_seed_job_template` - DSL template file name. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label   
-   default: `dsl_create_job.groovy.j2`
+- `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label   
+   default: `dsl_create_job.groovy`
 - `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them   
    default: `"true"`
 - `jenkins2_seed_job_name` - Jenkins seed job name   
