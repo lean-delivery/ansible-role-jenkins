@@ -18,6 +18,10 @@
 #    - pip
     - jira
     - pyOpenSSL
+    - python-gitlab
+    - python-jenkins
+    - lxml
+    - awscli
   become: True
 
 - name: "Create group"
