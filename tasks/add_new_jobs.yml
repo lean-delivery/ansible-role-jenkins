@@ -10,10 +10,6 @@
   register: dsl_file_copied
   become: True
 
-- name: "Debug dsl"
-  debug:
-    var: dsl_file_copied
-
 - name: "Create seed job"
   jenkins_job:
     config: "{{ lookup('template', 'seedJob.xml.j2') }}"
@@ -21,6 +17,7 @@
     password: "{{ jenkins2_cli_password }}"
     user: "{{ jenkins2_cli_username }}"
     url: "http://localhost:{{ jenkins2_config_http_port }}"
+  when: dsl_file_copied.changed
 
 - name: "Run Seed Job"
   jenkins_script:
@@ -29,6 +26,7 @@
     password: '{{ jenkins2_cli_password }}'
     validate_certs: False
     timeout: 120
+  when: dsl_file_copied.changed
 
 - name: "Disable seed job"
   jenkins_job:
@@ -37,3 +35,4 @@
     user: "{{ jenkins2_cli_username }}"
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     enabled: False
+  when: dsl_file_copied.changed
