@@ -15,7 +15,7 @@
     name: "{{ jenkins2_seed_job_name }}"
     password: "{{ jenkins2_cli_password }}"
     user: "{{ jenkins2_cli_username }}"
-    url: "http://localhost:{{ jenkins2_http_port }}"
+    url: "http://localhost:{{ jenkins2_config_http_port }}"
 
 - name: "Run Seed Job"
   jenkins_script:
@@ -30,5 +30,5 @@
     name: "{{ jenkins2_seed_job_name }}"
     password: "{{ jenkins2_cli_password }}"
     user: "{{ jenkins2_cli_username }}"
-    url: "http://localhost:{{ jenkins2_http_port }}"
+    url: "http://localhost:{{ jenkins2_config_http_port }}"
     enabled: False
