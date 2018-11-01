@@ -11,7 +11,7 @@
   become: True
 
 - name: "Set variable for changed"
-  set_facts:
+  set_fact:
     dsl_copied: dsl_file_copied.changed
 
 - name: "Create seed job"
