@@ -7,7 +7,12 @@
     group: "{{ jenkins2_user }}"
     mode: 0644
     backup: True
+  register: dsl_file_copied
   become: True
+
+- name: "Debug dsl"
+  debug:
+    var: dsl_file_copied
 
 - name: "Create seed job"
   jenkins_job:
