@@ -7,6 +7,7 @@
     group: "{{ jenkins2_user }}"
     mode: 0644
     backup: True
+  become: True
 
 - name: "Create seed job"
   jenkins_job:

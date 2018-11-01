@@ -16,3 +16,8 @@
       jenkins2_custom_files_enabled: True
       jenkins2_gitlab_enabled: True
       jenkins2_seed_job_enable: True
+      gitlab_external_url: "https://localhost"
+      gitlab_project_group: "test"
+      gitlab_project_name: "test"
+      ci_test_jenkins_slave_label: "ci_slaves"
+      feature_verification_jenkins_slave_label: "fv_slaves"
