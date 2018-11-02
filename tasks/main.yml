@@ -18,6 +18,10 @@
 #    - pip
     - jira
     - pyOpenSSL
+    - python-gitlab
+    - python-jenkins
+    - lxml
+    - awscli
   become: True
 
 - name: "Create group"
@@ -91,6 +95,9 @@
 
 - include_tasks: "configure_gitlab.yml"
   when: jenkins2_gitlab_enabled
+
+- include_tasks: "add_new_jobs.yml"
+  when: jenkins2_seed_job_enable
 
 - include_tasks: "configure_ssh_keys.yml"
   when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys.generate and

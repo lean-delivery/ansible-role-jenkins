@@ -1,0 +1,1154 @@
+{% if gitlab_external_url | urlsplit('port') %}
+    {% set GitPort = gitlab_external_url | urlsplit('port') -%}
+    {% set GitScheme = gitlab_external_url | urlsplit('scheme') -%}
+    {% set GitHost = gitlab_external_url | urlsplit('hostname') -%}
+    {% set GitURL = GitScheme + '://' + GitHost + ':' + GitPort + '/' + gitlab_project_group + '/' + gitlab_project_name | lower + '.git' -%}
+{% else %}
+    {% set GitScheme = gitlab_external_url | urlsplit('scheme') -%}
+    {% set GitHost = gitlab_external_url | urlsplit('hostname') -%}
+    {% set GitURL = GitScheme + '://' + GitHost + '/' + gitlab_project_group + '/' + gitlab_project_name | lower + '.git' -%}
+{% endif %}
+
+pipelineJob("sub_add_jira_comment") {
+    description('To add comment to jira ticket when MR is accepted')
+    properties {
+         gitLabConnection {
+            gitLabConnection('Gitlab')
+        }
+    }
+    triggers{
+        gitlabPush {
+            buildOnPushEvents(false)
+            commentTrigger()
+            //add later to build on accept trigger
+        }
+    }
+    definition {
+        cps {
+            sandbox(true)
+            script('''
+                pipeline {
+                    options {
+                        skipDefaultCheckout()
+                    }
+                    agent {
+                        node {
+                            label 'master'
+                        }
+                    }
+                    stages {
+                        stage("Git") {
+                            steps {
+                                checkout([$class: 'GitSCM', branches: [[name: "develop"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "GIT_CREDENTIALS", url: env.gitlabSourceRepoHttpUrl]]])
+                            }
+                        }
+                        stage("Add Comment") {
+                            steps {
+                                script {
+                                    props = readProperties file: "ci/conf/global.properties"
+                                    hybrisModule = load "ci/jenkins/pipeline/hybris_module.groovy"
+                                    hybrisModule.jira_merge_comment("${env.gitlabSourceBranch}", "${env.gitlabTargetBranch}", "${props.GITLAB_MRs_URL}/${env.gitlabMergeRequestIid}")
+                                }
+                            }
+                        }
+                    }
+                }
+            ''')
+        }
+    }
+}
+
+pipelineJob("ci_sonar_test") {
+    description('Run sonar test for merge request - it will receive results only and do not store the result in sonar')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', '', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_sonar_test.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_sonar_branch_test") {
+    description('Run sonar test for branch - it will store the result in sonar')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', '', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_sonar_branch_test.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_allwebtest_test") {
+    description('Run allweb ant target')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', '', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_allwebtests_test.groovy')
+        }
+    }
+}
+
+pipelineJob("manage_change_properties") {
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3', 'fv_tests'], 'env name')
+        choiceParam('FV_SERVER_NAME', ['', 'fv1', 'fv2', 'fv3'], 'Feature Verification server name')
+        choiceParam('ACTION', ['list', 'update', 'revert'], 'action list:\nlist - list properties to console log\nupdate - add property to properties file\nrevert - restore property file from the build')
+        booleanParam('be', false, 'backend nodes')
+        booleanParam('fe', false, 'frontend nodes')
+        booleanParam('batch', false, 'batch nodes')
+        choiceParam('FILE_NAME', ['file1', 'file2', 'file3'], 'file name list')
+        textParam('PROPS_TO_ADD', '', 'properties to add')
+        booleanParam('RESTART_NODES', false, 'to restart nodes after property change')
+        booleanParam('PARALLEL', true, 'to restart nodes in parallel')
+        stringParam('PREACTION_EMAIL_LIST', '', 'to this email list delimited by comma will be sent email before to start chosen action\ncc:EMAIL to include to CC')
+        stringParam('POSTACTION_EMAIL_LIST', '', 'to this email list delimited by comma will be sent email after chosen action finished\ncc:EMAIL to include to CC')
+        stringParam('SLEEP', '0', 'seconds to sleep before to restart next server\napplicable for non-parallel restart only')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL\ndo not change!')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name\ndo not change!')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/properties_configuration.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_main_branch_test") {
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '${gitlabSourceBranch}', 'git branch name')
+        stringParam('GIT_COMMIT', '${gitlabAfter}', 'git branch name')
+        stringParam('TEMPLATE', 'develop', 'Hybris template will be used in artifacts creation')
+        stringParam('SLAVE_NODE_LABEL', '{{ ci_test_jenkins_slave_label }}', 'jenkins slave nodes label to run tests')
+        stringParam('FV_ENVIRONMENT', 'fv_tests', 'FV hybris environment name')
+        stringParam('DEPLOY_NODE_LABEL', '{{ feature_verification_jenkins_slave_label }}', 'jenkins slave nodes label to start feature env')
+        stringParam('USER_MAIL', '${gitlabUserEmail}', 'jenkins slave nodes label to run tests')
+        stringParam('BUILDKIT_EMAIL_LIST', '', 'to send buildkit update info')
+    }
+    properties {
+        gitLabConnection {
+            gitLabConnection('Gitlab')
+        }
+    }
+    triggers {
+        gitlabPush {
+            buildOnPushEvents(true)
+            commentTrigger()
+            buildOnMergeRequestEvents(false)
+            targetBranchRegex('(master|develop|release[/]uat_v.*|R2_UI|release[/]v_.*|)')
+            enableCiSkip(false)
+            skipWorkInProgressMergeRequest(false)
+        }
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote{
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_main_branch.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_codequality_test") {
+    description('Run codequality ant target')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', '', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote{
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_codequality_test.groovy')
+        }
+    }
+}
+
+pipelineJob("sub_create_artifact") {
+    description('Create artifact for the commit or branch')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('USER_MAIL', '', 'User mail to send notification')
+        stringParam('MAIN_BUILD_ID', '', 'parent job id')
+        stringParam('NODE_NAME', '{{ ci_test_jenkins_slave_label }}', 'Jenkins node label name')
+   }
+   definition {
+       cpsScm {
+           scm {
+               git {
+                   branch('${GIT_BRANCH}')
+                   remote{
+                       url('${GIT_URL}')
+                       credentials('GIT_CREDENTIALS')
+                   }
+                   extensions {
+                       cleanBeforeCheckout()
+                   }
+               }
+           }
+           scriptPath('ci/jenkins/pipeline/create_artifacts.groovy')
+       }
+   }
+}
+
+pipelineJob("manage_create_db_dump") {
+    description('create DB dump for env DB')
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL\nDo not change')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name\nDo not change')
+        stringParam('DBTEMP_ENVIRONMENT', 'db_temp', 'Do not change\nThis is environment to cleanup dump')
+        booleanParam('CLEAN_USERS', true, 'To clean external users and groups\nInternal and test users and groups are kept')
+        booleanParam('CLEAN_ORDERS', true, 'To cleanup orders')
+        stringParam('TEST_NODE', '{{ ci_test_jenkins_slave_label }}', 'node to run on')
+   }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote{
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/create_db_dump.groovy')
+        }
+    }
+}
+
+
+pipelineJob("manage_create_release_notes") {
+    description('to create release notes and post them to confluence')
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        booleanParam('EMAIL_RN', true, 'to send release notes by email')
+        booleanParam('PUBLISH_RN', true, 'to add release notes to confluence')
+        stringParam('EMAIL', '', 'email addresses to send Release Notes\nto this email list delimited by comma will be sent email\ncc:EMAIL to include to CC')
+        stringParam('START_GIT_BRANCH', 'develop', 'Git branch contained artifact to get start SHA')
+        stringParam('START_ARTIFACT_ID', '1', 'Start artifact id')
+        stringParam('END_GIT_BRANCH', 'develop', 'Git branch contained artifact to get end SHA')
+        stringParam('END_ARTIFACT_ID', 'latest', 'End artifact id')
+        stringParam('CONF_ROOT_PAGE', '', 'Custom page ID to create subpage')
+        booleanParam('DO_NOT_INCLUDE_COMMITS', false, 'to include only type and jira ticket reference')
+        stringParam('CONFLUENCE_PAGE_NAME', '', 'Custom page name\ndefault is:\nRelease Notes: ENV_NAME END_GIT_BRANCH_NAME END_ARTIFACT_ID')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL\nDo not change')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name\nDo not change')
+   }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/create_release_notes.groovy')
+        }
+    }
+}
+
+
+pipelineJob("FV_deploy") {
+    description('to deploy to feature verification env')
+        logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'fv_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL\nDo not change')
+        stringParam('GIT_BRANCH', '', 'git branch name\nDo not change')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('DBTEMP_ENVIRONMENT', 'db_temp', 'This is environment to cleanup dump')
+        stringParam('ENV_DUMP', 'prod', 'Env dump to use')
+        stringParam('DUMP_ARTIFACT_ID', 'latest', 'Dump artifact id to use')
+        stringParam('DB_PREPARE_METHOD', 'init', 'DB preparation method\nset by global properties as default value\nor by git labels')
+        stringParam('NODE_NAME', '{{ feature_verification_jenkins_slave_label }}', 'Jenkins node label name')
+        stringParam('USER_MAIL', '', 'User mail to send notification')
+        stringParam('MAIN_BUILD_ID', '', 'Build_ID of parent job')
+        stringParam('TEST_ENVIRONMENT', 'pr_tests', 'Hybris env name for test')
+        stringParam('TEST_NODE', '{{ ci_test_jenkins_slave_label }}', 'Hybris env name for test')
+        stringParam('TEST_TARGET_BRANCH', '', 'Target branch for test')
+        booleanParam('SPOCK_TEST_RUN', false, 'to enable spock tests')
+        textParam('SITE_URLS', '/hybrisacceleratorstorefront\n/hac\n/backoffice', 'FV URIs')
+        booleanParam('KEEP_FV_RUNNING', false, 'To keep FV running for QA or DEV verification')
+        booleanParam('FV_QA_REVIEW', false, 'to review FV by QA\nset by git label')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/deploy_to_fv.groovy')
+        }
+    }
+}
+
+
+pipelineJob("manage_dev_import_dump") {
+    description('to create DB schema and to import env dump to it')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name\ndo not change')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL\nDo not change')
+        stringParam('GIT_BRANCH', '', 'git branch name\nDo not change')
+        stringParam('DBTEMP_ENVIRONMENT', 'db_temp', 'This is environment to cleanup dump')
+        stringParam('ENV_DUMP', 'prod', 'Env dump to use')
+        stringParam('DUMP_ARTIFACT_ID', 'latest', 'Dump artifact id to use')
+        stringParam('DB_USERNAME', '', 'your user name, e.g. Firstname_sirname')
+        stringParam('NODE_NAME', '{{ ci_test_jenkins_slave_label }}', 'do not change')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/dev_import_dump.groovy')
+        }
+    }
+}
+
+pipelineJob("ENV_deploy_w_init") {
+    description('to deploy to multinode env with DB init')
+    concurrentBuild(false)
+    parameters {
+        stringParam('ENVIRONMENT', '', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('ARTIFACT_ID', 'latest', 'use latest to get latest aftifact')
+        booleanParam('UPDATE_SOLR', true, 'To update solr cloud schema')
+        booleanParam('SOLR_INDEX_RESTORE', true, 'To restore solr index')
+        stringParam('TEST_ENVIRONMENT', 'pr_tests', 'environment for spock tests')
+        stringParam('TEST_NODE', '{{ ci_test_jenkins_slave_label }}', 'node to run spock test')
+        booleanParam('SPOCK_TEST_RUN', true, 'to enable spock tests')
+        booleanParam('RUN_AUTOTESTS', true, 'to enable auto tests')
+        textParam('SITE_URLS', 'Cluster:\nhttps://LB-fe\nFrontEnd:\nhttps://srv-fe1:9002/hybrisacceleratorstorefront\nhttps://srv-fe2:9002/hybrisacceleratorstorefront\nBackend:\nhttps://srv-admin:9002/hac\nhttps://srv-admin:9002/backoffice\nBatch:\nhttps://srv-batch:9002/hac\nBuildKit:\nhttp://BKserver:81/', 'FV URIs')
+        booleanParam('SKIP_IF_NO_CHANGES', true, 'to skip the build if there is no changes')
+        stringParam('USER_MAIL', '', 'Custom user email - this email list delimited by comma is sending email after chosen actionis finished. cc:EMAIL - to include to CC')
+    }
+        definition {
+            cpsScm {
+                scm {
+                    git {
+                        branch('${GIT_BRANCH}')
+                        remote {
+                            url('${GIT_URL}')
+                            credentials('GIT_CREDENTIALS')
+                        }
+                        extensions {
+                            cleanBeforeCheckout()
+                        }
+                    }
+                }
+                scriptPath('ci/jenkins/pipeline/deploy_initial_to_multiple_node.groovy')
+            }
+        }
+}
+
+pipelineJob("ENV_deploy_w_rolling_update") {
+    description('to deploy to multinode env with DB update')
+    concurrentBuild(false)
+    parameters {
+        stringParam('ENVIRONMENT', '', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('ARTIFACT_ID', 'latest', 'use latest to get latest aftifact')
+        booleanParam('EXPORT_BEFORE_UPDATE', false, 'to export dump before env was updated')
+        stringParam('DBTEMP_ENVIRONMENT', 'db_temp', 'environment used to clean env')
+        booleanParam('UPDATE_DB', true, 'to update DB')
+        booleanParam('EXPORT_AFTER_UPDATE', false, 'to export dump after env was updated')
+        booleanParam('CLEAN_USERS', true, 'To clean external users and groups\nInternal and test users and groups are kept')
+        booleanParam('CLEAN_ORDERS', true, 'To cleanup orders')
+        booleanParam('UPDATE_SOLR', true, 'To update solr cloud schema')
+        booleanParam('SOLR_INDEX_RESTORE', true, 'To restore solr index')
+        stringParam('TEST_ENVIRONMENT', 'pr_tests', 'environment for spock tests')
+        stringParam('TEST_NODE', '{{ ci_test_jenkins_slave_label }}', 'node to run spock test')
+        booleanParam('SPOCK_TEST_RUN', true, 'to enable spock tests')
+        booleanParam('RUN_AUTOTESTS', true, 'to enable auto tests')
+        textParam('SITE_URLS', 'Cluster:\nhttps://LB-fe\nFrontEnd:\nhttps://srv-fe1:9002/hybrisacceleratorstorefront\nhttps://srv-fe2:9002/hybrisacceleratorstorefront\nBackend:\nhttps://srv-admin:9002/hac\nhttps://srv-admin:9002/backoffice\nBatch:\nhttps://srv-batch:9002/hac\nBuildKit:\nhttp://BKserver:81/', 'FV URIs')
+        booleanParam('SKIP_IF_NO_CHANGES', true, 'to skip the build if there is no changes')
+        stringParam('USER_MAIL', '', 'Custom user email - this email list delimited by comma is sending email after chosen actionis finished. cc:EMAIL - to include to CC')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/deploy_rolling_update_multiple_node.groovy')
+        }
+    }
+}
+
+pipelineJob("ENV_deploy_w_db_import_and_update") {
+    description('to deploy to multinode env with DB update and DB dump import and export after update')
+    concurrentBuild(false)
+    parameters {
+        stringParam('ENVIRONMENT', '', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('ARTIFACT_ID', 'latest', 'use latest to get latest aftifact')
+        stringParam('DBTEMP_ENVIRONMENT', 'db_temp', 'environment used to clean env')
+        booleanParam('EXPORT_BEFORE_UPDATE', false, 'to export dump before env was updated')
+        stringParam('ENV_DUMP', 'prod', 'empty if from environment dump\nvalue to import import another env dump')
+        stringParam('DUMP_ARTIFACT_ID', 'latest', 'Dump artifact id to use')
+        booleanParam('IMPORT_DUMP', true, 'To import dump')
+        booleanParam('UPDATE_DB', true, 'to update DB')
+        booleanParam('EXPORT_AFTER_UPDATE', false, 'to export dump after env was updated')
+        booleanParam('CLEAN_USERS', true, 'To clean external users and groups\nInternal and test users and groups are kept')
+        booleanParam('CLEAN_ORDERS', true, 'To cleanup orders')
+        booleanParam('UPDATE_SOLR', true, 'To update solr cloud schema')
+        booleanParam('SOLR_INDEX_RESTORE', true, 'To restore solr index')
+        stringParam('TEST_ENVIRONMENT', 'pr_tests', 'environment for spock tests')
+        stringParam('TEST_NODE', '{{ ci_test_jenkins_slave_label }}', 'node to run spock test')
+        booleanParam('SPOCK_TEST_RUN', true, 'to enable spock tests')
+        booleanParam('RUN_AUTOTESTS', true, 'to enable auto tests')
+        textParam('SITE_URLS', 'Cluster:\nhttps://LB-fe\nFrontEnd:\nhttps://srv-fe1:9002/hybrisacceleratorstorefront\nhttps://srv-fe2:9002/hybrisacceleratorstorefront\nBackend:\nhttps://srv-admin:9002/hac\nhttps://srv-admin:9002/backoffice\nBatch:\nhttps://srv-batch:9002/hac\nBuildKit:\nhttp://BKserver:81/', 'FV URIs')
+        booleanParam('SKIP_IF_NO_CHANGES', true, 'to skip the build if there is no changes')
+        stringParam('USER_MAIL', '', 'Custom user email - this email list delimited by comma is sending email after chosen actionis finished. cc:EMAIL - to include to CC')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/deploy_update_multiple_node.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_incremental_update_test") {
+    description('Run incremental update test')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+        stringParam('DBTEMP_ENVIRONMENT', 'db_temp', 'This is environment to cleanup dump')
+        stringParam('ENV_DUMP', 'prod', 'Env dump to use')
+        stringParam('DUMP_ARTIFACT_ID', 'latest', 'Dump artifact id to use')
+        booleanParam('CREATE_TYPESYSTEM', true, 'to create typesystem before DB update')
+
+   }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_incremental_update_test.groovy')
+        }
+    }
+}
+
+
+pipelineJob("ci_initialization_test") {
+    description('Run DB init test')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote{
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_initialization_test.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_integration_test") {
+    description('Run integrational test')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_integrational_test.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_junit_test") {
+    description('Run junit test')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', '', 'git branch name')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('NODE_NAME', '', 'Jenkins node label name')
+   }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_junit_test.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_initialization_from_artifact_test") {
+    description('Run initialization test to check the init from artifact')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'fv_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('LOAD_GIT_BRANCH', 'develop', 'git branch name form which sources will be loaded')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('ARTIFACT_ID', 'latest', 'use latest to get latest aftifact')
+        stringParam('USER_MAIL', '', 'User mail to send notification separated by comma')
+        stringParam('NODE_NAME', '{{ feature_verification_jenkins_slave_label }}', 'Jenkins node label name')
+    }
+    triggers {
+        cron('00 8-22/1 * * 1-5')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${LOAD_GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_initialization_from_artifact_test.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_spock_test") {
+    description('Hybris spock tests or autotests')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('GIT_COMMIT', '', 'git commit to checkout the current commit')
+        stringParam('TARGET_BRANCH', '', 'Target branch to make local merge')
+        stringParam('TEMPLATE', '', 'Hybris template to use')
+        stringParam('HOST_NAME', '', 'host name to test')
+        stringParam('HOST_PORT', '9002', 'host port to test')
+        stringParam('USER_MAIL', '', 'User mail to send notification separated by comma')
+        stringParam('NODE_NAME', '{{ ci_test_jenkins_slave_label }}', 'Jenkins node label name')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_spock_test.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_mr_test") {
+    description('Run CI tests on merge requests')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('ENVIRONMENT', 'pr_tests', 'Environment name')
+        stringParam('SLAVE_NODE_LABEL', '{{ ci_test_jenkins_slave_label }}', 'Jenkins node label name')
+        stringParam('FV_ENVIRONMENT', 'fv_tests', 'Hybris template will be used in artifacts creation')
+        stringParam('DEPLOY_NODE_LABEL', '{{ feature_verification_jenkins_slave_label }}', 'jenkins slaves label to deploy')
+        stringParam('TEMPLATE', 'develop', 'Hybris template will be used in artifacts creation')
+        textParam('SITE_URLS', '/hybrisacceleratorstorefront\n/hac\n/backoffice', 'FV URIs')
+    }
+    properties {
+        gitLabConnection {
+        gitLabConnection('Gitlab')
+        }
+    }
+    triggers {
+        gitlabPush {
+            buildOnPushEvents(false)
+            commentTrigger('retest')
+            buildOnMergeRequestEvents(true)
+            enableCiSkip(true)
+            skipWorkInProgressMergeRequest(true)
+        }
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${gitlabSourceBranch}')
+                    remote {
+                        url('${gitlabSourceRepoHttpUrl}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_mr_test.groovy')
+        }
+    }
+}
+
+
+pipelineJob("manage_server_state") {
+    description('manage servers')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        choiceParam('ACTION', ['restart', 'stop'], 'action to restart or stop hybris on servers')
+        booleanParam('be', false, 'backend nodes')
+        booleanParam('fe', false, 'frontend nodes')
+        booleanParam('batch', false, 'batch nodes')
+        booleanParam('PARALLEL', true, 'to restart nodes in parallel')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('PREACTION_EMAIL_LIST', '', 'to this email list delimited by comma will be sent email before to start chosen action\ncc:EMAIL to include to CC')
+        stringParam('POSTACTION_EMAIL_LIST', '', 'to this email list delimited by comma will be sent email after chosen action finished\ncc:EMAIL to include to CC')
+        stringParam('SLEEP', '0', 'seconds to sleep before to restart next server\napplicable for non-parallel restart only')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/nodes_management.groovy')
+        }
+    }
+}
+
+pipelineJob("sub_send_emails_about_old_branches") {
+    description('Sends emails to git users about branches that are not closed and older than (default is 30) days.\nSchedule: last Monday of the month')
+    logRotator {
+        numToKeep(12)
+    }
+    parameters {
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('mailcc', '', 'to this email list delimited by comma will be sent email in any case\ncc:EMAIL to include to CC')
+        stringParam('DAYS', '30', 'branches older this value will be accounted')
+    }
+    triggers {
+        cron('H 9 24-31 * 1')
+    }
+    definition {
+        cps {
+            sandbox(true)
+            script('''
+                node(){
+                    cleanWs()
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: "develop"]],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [],
+                        userRemoteConfigs: [[credentialsId: "GIT_CREDENTIALS", url: "${env.GIT_URL}"]]])
+                        sh 'python ci/jenkins/git_out_of_date.py'
+                }
+            ''')
+        }
+    }
+}
+
+
+pipelineJob("manage_solr_dump_create") {
+    description('Job to create solr collection backup')
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('COLLECTIONS_TO_BACKUP', '', 'collections list separated by comma to backup')
+        booleanParam('OVERRIDE', false, 'To overwrite backup it it already exists')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/create_solr_dump.groovy')
+        }
+    }
+}
+
+pipelineJob("manage_solr_dump_restore") {
+    description('Job to restore solr collection backup')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3', 'fv_tests'], 'env name')
+        choiceParam('FV_SERVER_NAME', ['','fv1', 'fv2', 'fv3'], 'Feature Verification server name\nif fv_tests was chosen as a parameter')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('COLLECTIONS_TO_RESTORE', '', 'if empty - it will get collection list from env properties file ')
+        stringParam('CONFIGSET_LIST', '', 'list is a configset list appropriate to collections list')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/restore_solr_dump.groovy')
+        }
+    }
+}
+
+pipelineJob("manage_solr_update") {
+    description('Job to create solr collection backup')
+    logRotator {
+    daysToKeep(30)
+    }
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/solr_update.groovy')
+        }
+    }
+}
+
+pipelineJob("sub_static_content_sync") {
+    description('Sync static content to web server')
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('ARTIFACT_ID', 'latest', 'Artifact id')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/upload_static_content.groovy')
+        }
+    }
+}
+
+pipelineJob("ci_syntax_check_test") {
+    description('Pipeline syntax check test')
+    logRotator {
+        daysToKeep(30)
+    }
+    parameters {
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/ci_syntax_check_test.groovy')
+        }
+    }
+}
+
+pipelineJob("manage_update_apache_routing_config") {
+    description('Update apache routing config')
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/update_apache_config.groovy')
+        }
+    }
+}
+
+listView('CI_Tests') {
+    description('All test jobs')
+    jobs {
+        regex(/ci_.*_test/)
+    }
+    columns {
+        status()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
+
+listView('Deploy_init') {
+    description('All deploy with init jobs')
+    jobs {
+        regex(/.*_deploy_w_init/)
+    }
+    columns {
+        status()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
+
+listView('Deploy_update') {
+    description('All deploy with init jobs')
+    jobs {
+        regex(/.*_deploy_w.*update/)
+    }
+    columns {
+        status()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
+
+listView('management') {
+    description('All deploy with init jobs')
+    jobs {
+        regex(/manage.*/)
+    }
+    columns {
+        status()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
+
+listView('PROD') {
+    description('All PROD jobs')
+    jobs {
+        regex(/PROD.*/)
+    }
+    columns {
+        status()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}

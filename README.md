@@ -170,6 +170,18 @@ Requirements
   - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)
      default: `gitlab_token`
 
+# Seed job configuration
+### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
+- `jenkins2_seed_job_enable` - enable jenkins seed job   
+   default: `False`
+- `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label   
+   default: `dsl_create_job.groovy`
+- `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them   
+   default: `"true"`
+- `jenkins2_seed_job_name` - Jenkins seed job name   
+   default: `"seed_job"`
+
+
 Use variable `jenkins2_credentials` to set properties of credentials
 # To set AWS credentials set variables:
 - aws_access_key
@@ -231,7 +243,7 @@ jenkins2_credentials:
       ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
       criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
       -----END RSA PRIVATE KEY-----
-    ID: 'sshagent'
+    id: 'sshagent'
     username: 'hybris'
     passphrase: ''
     description: 'credentials for hybris user to connect remotely'
@@ -255,35 +267,35 @@ jenkins2_credentials:
     password: 'DB_TEMP'
   gitlab_creds:
     type: 'password'
-    ID: 'GIT_CREDENTIALS'
+    id: 'GIT_CREDENTIALS'
     description: 'gitlab credentials username with password'
     username: "{{ gitlab_master_username | default('admin') }}"
     password: "{{ gitlab_master_password | default('password') }}"
   jenkinshttpconnectionuser:
     type: 'password'
-    ID: 'Jenkins_http_connection'
+    id: 'Jenkins_http_connection'
     description: 'for connection via jenkins cli; used for pipeline syntax check'
     username: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
   gitlabusertoken:
     type: 'password'
-    ID: 'GIT_CREDENTIALS_TOKEN'
+    id: 'GIT_CREDENTIALS_TOKEN'
     description: 'to use with GL10.2+ but could be used with earlier versions'
     username: "{{ gitlab_master_username | default('admin') }}"
     password: "{{ gitlab_master_token | default('ToKen12345') }}"
   aws_credentials:
     type: 'password'
-    ID: 'AWS_CREDENTIALS'
+    id: 'AWS_CREDENTIALS'
     description: 'for operations in AWS'
     username: "{{ aws_access_key | default('AWSaccessKey') }}"
     password: "{{ aws_secret_key | default('AWSsecretKey') }}"
   gitlabtoken:
     type: 'gitlabtoken'
-    ID: 'gitlab_token'
+    id: 'gitlab_token'
     description: 'gitlab connection with token'
   aws_ec2_credentials:
     type: 'aws_creds'
-    ID: 'AWS_EC2_CREDS'
+    id: 'AWS_EC2_CREDS'
     description: 'for ec2 plugin to create ec2 for slave instances'
     access_key: "{{ aws_access_key | default('AWSaccessKey') }}"
     sec_key: "{{ aws_secret_key | default('AWSsecretKey') }}"
