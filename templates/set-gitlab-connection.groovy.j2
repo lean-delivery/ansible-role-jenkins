@@ -1,0 +1,12 @@
+import com.dabsquared.gitlabjenkins.connection.*
+def jenkins = Jenkins.getInstance()
+def gitLabConfig = jenkins.getDescriptor("GitLabConnectionConfig")
+gitLabConfig.useAuthenticatedEndpoint = false
+GitLabConnection connection = new GitLabConnection('Gitlab', '{{ gitlab_external_url | default('https://localhost') }}','{{ jenkins2_gitlab_token_cred }}', true ,10, 10)
+boolean gitlabMissing = gitLabConfig.getConnections().findAll() {
+    it.getName() == connection.name
+}.empty
+if(gitlabMissing) {
+    gitLabConfig.addConnection(connection)
+    gitLabConfig.save()
+}

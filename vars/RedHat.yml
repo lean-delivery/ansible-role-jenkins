@@ -10,3 +10,4 @@ requirements:
   - "wget"
   - "lsof"
   - "python"
+  - "unzip"
