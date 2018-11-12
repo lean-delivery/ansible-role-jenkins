@@ -21,3 +21,4 @@
       gitlab_project_name: "test"
       ci_test_jenkins_slave_label: "ci_slaves"
       feature_verification_jenkins_slave_label: "fv_slaves"
+      jenkins2_ec2_enable: True

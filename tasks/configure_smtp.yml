@@ -1,13 +1,13 @@
 ---
-- name: "Check SMTP configuration"
-  jenkins_script:
-    url: "http://localhost:{{ jenkins2_config_http_port }}"
-    script: "{{ lookup('template', 'check-smtp.groovy.j2') }}"
-    user: '{{ jenkins2_cli_username }}'
-    password: '{{ jenkins2_cli_password }}'
-    validate_certs: False
-    timeout: 120
-  register: smtp
+# - name: "Check SMTP configuration"
+#   jenkins_script:
+#     url: "http://localhost:{{ jenkins2_config_http_port }}"
+#     script: "{{ lookup('template', 'check-smtp.groovy.j2') }}"
+#     user: '{{ jenkins2_cli_username }}'
+#     password: '{{ jenkins2_cli_password }}'
+#     validate_certs: False
+#     timeout: 120
+#   register: smtp
 
 - name: "Configure SMTP"
   jenkins_script:
@@ -17,17 +17,17 @@
     password: '{{ jenkins2_cli_password }}'
     validate_certs: False
     timeout: 120
-  when: smtp.output|trim != jenkins2_smtp_host and jenkins2_smtp_enabled
+  # when: smtp.output|trim != jenkins2_smtp_host and jenkins2_smtp_enabled
 
-- name: "Wait for SMTP configuration apply's"
-  jenkins_script:
-    url: "http://localhost:{{ jenkins2_config_http_port }}"
-    script: "{{ lookup('template', 'check-smtp.groovy.j2') }}"
-    user: '{{ jenkins2_cli_username }}'
-    password: '{{ jenkins2_cli_password }}'
-    validate_certs: False
-    timeout: 120
-  register: smtp_check
-  until: smtp_check.output|trim == jenkins2_smtp_host
-  retries: 60
-  delay: 1
+# - name: "Wait for SMTP configuration apply's"
+#   jenkins_script:
+#     url: "http://localhost:{{ jenkins2_config_http_port }}"
+#     script: "{{ lookup('template', 'check-smtp.groovy.j2') }}"
+#     user: '{{ jenkins2_cli_username }}'
+#     password: '{{ jenkins2_cli_password }}'
+#     validate_certs: False
+#     timeout: 120
+#   register: smtp_check
+#   until: smtp_check.output|trim == jenkins2_smtp_host
+#   retries: 60
+#   delay: 1
