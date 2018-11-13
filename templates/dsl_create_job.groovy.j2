@@ -1078,6 +1078,116 @@ pipelineJob("manage_update_apache_routing_config") {
     }
 }
 
+pipelineJob("env_infrastructure_create") {
+    description('create infrastructure')
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        choiceParam('ENV_TYPE', ['2_node_spot', '2_node_spot_w_solr_master_slave','demo'], 'env type: should be added to ci/terraform folder')
+        stringParam('AMI', '{{ ami_for_env }}', 'AMI id')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('SPOT_MAX_BID_PRICE', '0.035', 'spot instance bid price')
+        stringParam('SPOT_INSTANCE_SUBNET_ID', '{{ aws_subnet_id }}', 'subnet ID')
+        stringParam('SPOT_INSTANCE_ROOT_VOLUME_TYPE', 'standard', 'volume type: standard, gp2, iops')
+        stringParam('SPOT_INSTANCE_ROOT_VOLUME_SIZE', '30', 'volume size')
+        stringParam('SPOT_INSTANCE_TYPE', 'r4.large', 'instance type')
+        stringParam('SOLR_AMI', '{{ ami_for_solr }}', 'AMI id for solr server')
+        stringParam('SPOT_SOLR_INSTANCE_ROOT_VOLUME_SIZE', '15', 'volume size for solr instance')
+        stringParam('SPOT_SOLR_INSTANCE_TYPE', 't2.medium', 'instance type for solr server')
+        stringParam('SPOT_SOLR_MAX_BID_PRICE', '0.015', 'spot instance bid price for solr server')
+        stringParam('KEY_NAME', '{{ aws_key }}', 'key name for instances for AWS')
+        stringParam('S3_BUCKET', '{{ artifact_bucket_name }}', 'AWS s3 bucket name')
+        stringParam('LB_SECURITY_GROUPS', '{{ lb_security_groups }}', 'security groups for load balancer list separated by comma')
+        stringParam('EC2_SECURITY_GROUPS', '{{ ec2_security_groups }}', 'security groups for ec2 instances list separated by comma')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/env_infrastructure_create.groovy')
+        }
+    }
+}
+
+pipelineJob("env_infrastructure_destroy") {
+    description('destroy infrastructure')
+    parameters {
+        choiceParam('ENVIRONMENT', ['env1', 'env2', 'env3'], 'env name')
+        choiceParam('ENV_TYPE', ['2_node_spot', '2_node_spot_w_solr_master_slave','demo'], 'env type: should be added to ci/terraform folder')
+        stringParam('AMI', '{{ ami_for_env }}', 'AMI id')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('SPOT_MAX_BID_PRICE', '0.035', 'spot instance bid price')
+        stringParam('SPOT_INSTANCE_SUBNET_ID', '{{ aws_subnet_id }}', 'subnet ID')
+        stringParam('SPOT_INSTANCE_ROOT_VOLUME_TYPE', 'standard', 'volume type: standard, gp2, iops')
+        stringParam('SPOT_INSTANCE_ROOT_VOLUME_SIZE', '30', 'volume size')
+        stringParam('SPOT_INSTANCE_TYPE', 'r4.large', 'instance type')
+        stringParam('SOLR_AMI', '{{ ami_for_solr }}', 'AMI id for solr server')
+        stringParam('SPOT_SOLR_INSTANCE_ROOT_VOLUME_SIZE', '15', 'volume size for solr instance')
+        stringParam('SPOT_SOLR_INSTANCE_TYPE', 't2.medium', 'instance type for solr server')
+        stringParam('SPOT_SOLR_MAX_BID_PRICE', '0.015', 'spot instance bid price for solr server')
+        stringParam('KEY_NAME', '{{ aws_key }}', 'key name for instances for AWS')
+        stringParam('S3_BUCKET', '{{ artifact_bucket_name }}', 'AWS s3 bucket name')
+        stringParam('LB_SECURITY_GROUPS', '{{ lb_security_groups }}', 'security groups for load balancer list separated by comma')
+        stringParam('EC2_SECURITY_GROUPS', '{{ ec2_security_groups }}', 'security groups for ec2 instances list separated by comma')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/env_infrastructure_destroy.groovy')
+        }
+    }
+}
+
+pipelineJob("env_infrastructure_autotest_ami") {
+    description('create ami for autotest env')
+    parameters {
+        stringParam('AMI_NAME', 'ci_autotests_0.1', 'ami name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('KEY_NAME', '{{ aws_key }}', 'key name for instances for AWS')
+        stringParam('EC2_SECURITY_GROUPS', '{{ ec2_security_groups }}', 'security groups for ec2 instances list separated by comma')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/env_infractructure_autotest_ami.groovy')
+        }
+    }
+}
+
 listView('CI_Tests') {
     description('All test jobs')
     jobs {
@@ -1142,6 +1252,20 @@ listView('PROD') {
     description('All PROD jobs')
     jobs {
         regex(/PROD.*/)
+    }
+    columns {
+        status()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
+listView('create_envs') {
+    description('create environment infrastructure based on terraform configurations')
+    jobs {
+        regex(/env_infrastructure_.*/)
     }
     columns {
         status()

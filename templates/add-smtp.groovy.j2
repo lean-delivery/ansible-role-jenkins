@@ -3,13 +3,6 @@ import jenkins.model.*;
 import hudson.tools.*;
 import hudson.util.Secret;
 
-// Check if enabled
-if (!"{{ jenkins2_smtp_enabled }}".toBoolean()) {
-    println "--> SMTP configuration is disabled."
-    return
-}
-println "--> SMTP configuration is enabled."
-
 // Variables
 def SystemAdminMailAddress = "{{ jenkins2_smtp_sysad_email }}"
 def SMTPUser = "{{ jenkins2_smtp_user }}"
@@ -24,10 +17,7 @@ def jenkinsLocationConfiguration = JenkinsLocationConfiguration.get()
 def extmailServer = instance.getDescriptor("hudson.plugins.emailext.ExtendedEmailPublisher")
 
 Thread.start {
-    // sleep 10000
-
         //Jenkins Location
-        println "--> Configuring JenkinsLocation"
         jenkinsLocationConfiguration.setAdminAddress(SystemAdminMailAddress)
         jenkinsLocationConfiguration.save()
 
@@ -37,6 +27,10 @@ Thread.start {
         mailServer.setSmtpPort(SMTPPort)
         mailServer.setCharset("UTF-8")
 
+        // Save the state
+        instance.save()
+}
+sleep 10000
         //Extended-Email
         extmailServer.smtpAuthUsername=SMTPUser
         extmailServer.smtpAuthPassword=Secret.fromString(SMTPPassword)
@@ -45,7 +39,6 @@ Thread.start {
         extmailServer.charset="UTF-8"
         extmailServer.defaultSubject="\$PROJECT_NAME - Build # \$BUILD_NUMBER - \$BUILD_STATUS!"
         extmailServer.defaultBody="\$PROJECT_NAME - Build # \$BUILD_NUMBER - \$BUILD_STATUS:\n\nCheck console output at \$BUILD_URL to view the results."
-
+        extmailServer.upgradeFromMailer()
     // Save the state
     instance.save()
-}
