@@ -255,7 +255,6 @@ jenkins2_seed_job_template: dsl_create_job.groovy
 jenkins2_seed_job_ignore_existing: "true"
 jenkins2_seed_job_name: "seed_job"
 
-
 # EC2 plugin configuration
 jenkins2_ec2_enable: False
 jenkins2_ec2_cloud_parameters:
