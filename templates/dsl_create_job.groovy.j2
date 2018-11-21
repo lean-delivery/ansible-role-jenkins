@@ -1168,6 +1168,7 @@ pipelineJob("env_infrastructure_autotest_ami") {
         stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
         stringParam('KEY_NAME', '{{ aws_key }}', 'key name for instances for AWS')
         stringParam('EC2_SECURITY_GROUPS', '{{ ec2_security_groups }}', 'security groups for ec2 instances list separated by comma')
+        stringParam('AWS_REGION', 'us-east-1', 'aws region name')
     }
     definition {
         cpsScm {
