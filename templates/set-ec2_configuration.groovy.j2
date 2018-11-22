@@ -1,0 +1,89 @@
+import com.amazonaws.services.ec2.model.InstanceType
+import com.cloudbees.plugins.credentials.domains.Domain
+import hudson.model.*
+import hudson.plugins.ec2.AmazonEC2Cloud
+import hudson.plugins.ec2.AMITypeData
+import hudson.plugins.ec2.EC2Tag
+import hudson.plugins.ec2.SpotConfiguration
+import hudson.plugins.ec2.SlaveTemplate
+import hudson.plugins.ec2.SpotConfiguration
+import hudson.plugins.ec2.UnixData
+import jenkins.model.Jenkins
+
+{% set slaveTemplateList = [] %}
+
+{% for key, value in jenkins2_ec2_ami_list.iteritems() -%}
+
+  {% set TagList = [] %}
+
+  {% for dict_item in value.tags -%}
+    def tag_{{ key }}_{{ dict_item['name'] }} = new EC2Tag("{{ dict_item['name'] }}", "{{ dict_item['value'] }}")
+    {{ TagList.append( "tag_" + key + "_" + dict_item['name']) }}
+  {% endfor %}
+
+  {% if value.SpotConfiguration.enabled == True %}
+    def spotConfig_{{ key }} = new SpotConfiguration("{{ value.SpotConfiguration.spotMaxBidPrice }}")
+  {% endif -%}
+
+  // https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/SlaveTemplate.java
+  SlaveTemplate slaveTemplate_{{ key }} = new SlaveTemplate(
+    '{{ value.ami }}',
+    '{{ value.zone }}',
+    {{ (value.SpotConfiguration.enabled == True) | ternary("spotConfig_" + key, 'null') }},
+    '{{ value.securityGroups }}',
+    '{{ value.remoteFS }}',
+    InstanceType.fromValue('{{ value.type }}'),
+    {{ value.ebsOptimized }},
+    '{{ value.labelString }}',
+    Node.Mode.NORMAL,
+    '{{ value.description }}',
+    '{{ value.initScript }}',
+    '{{ value.tmpDir }}',
+    '{{ value.userData }}',
+    '{{ value.numExecutors }}',
+    '{{ value.remoteAdmin }}',
+    new UnixData(null, null, null, null),
+    '{{ value.jvmopts }}',
+    {{ value.stopOnTerminate }},
+    '{{ value.subnetId }}',
+    [{{ TagList | join(",") }}],
+    '{{ value.idleTerminationMinutes }}',
+    {{ value.usePrivateDnsName }},
+    '{{ value.instanceCapStr }}',
+    '{{ value.iamInstanceProfile }}',
+    {{ value.deleteRootOnTermination }},
+    {{ value.useEphemeralDevices }},
+    {{ value.useDedicatedTenancy }},
+    '{{ value.launchTimeoutStr }}',
+    {{ value.associatePublicIp }},
+    '{{ value.customDeviceMapping }}',
+    {{ value.connectBySSHProcess }},
+    {{ value.connectUsingPublicIp }},
+    {{ value.monitoring }}
+  )
+
+{{ slaveTemplateList.append( "slaveTemplate_" + key) }}
+
+{% endfor %}
+
+// https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/AmazonEC2Cloud.java
+AmazonEC2Cloud amazonEC2Cloud = new AmazonEC2Cloud(
+  '{{ jenkins2_ec2_cloud_parameters.cloud_name }}',
+  {{ jenkins2_ec2_cloud_parameters.use_instance_profile_for_credentials }},
+  '{{ jenkins2_ec2_cloud_parameters.credentials_id }}',
+  '{{ jenkins2_ec2_cloud_parameters.region }}',
+  '''{{ jenkins2_ec2_cloud_parameters.private_key }}''',
+  '{{ jenkins2_ec2_cloud_parameters.instance_cap_str }}',
+  [{{ slaveTemplateList | join(",") }}],
+  '{{ jenkins2_ec2_cloud_parameters.role_arn }}',
+  '{{ jenkins2_ec2_cloud_parameters.role_session_name }}'
+)
+
+// get Jenkins instance
+Jenkins jenkins = Jenkins.getInstance()
+
+// add cloud configuration to Jenkins
+jenkins.clouds.replace(amazonEC2Cloud)
+
+// save current Jenkins state to disk
+jenkins.save()

@@ -8,9 +8,6 @@
   block:
     - name: "Install requirements"
       package:
-        name: "{{ package }}"
+        name: "{{ requirements }}"
         state: "present"
-      loop: "{{ requirements }}"
-      loop_control:
-        loop_var: package
   become: True
