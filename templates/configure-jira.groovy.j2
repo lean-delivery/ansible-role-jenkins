@@ -1,0 +1,25 @@
+import hudson.plugins.jira.JiraProjectProperty
+import hudson.plugins.jira.JiraSite
+import jenkins.model.*
+
+def jenkins = Jenkins.getInstance()
+JiraProjectProperty.DescriptorImpl config = jenkins.getExtensionList(JiraProjectProperty.DescriptorImpl.class)[0]
+
+JiraSite jiraSite = new JiraSite(new URL("{{ jenkins2_jira_url }}"),
+                            new URL("{{ jenkins2_jira_alternative_url }}"),
+                            "{{ jenkins2_jira_credentials_id }}",
+                            {{ jenkins2_jira_support_wiki_notation }},
+                            {{ jenkins2_jira_record_scm_changes }},
+							              "{{ jenkins2_jira_issue_pattern }}",
+                            {{ jenkins2_jira_update_relevant_issues }},
+                            "{{ jenkins2_jira_visible_for_group }}",
+              							"{{ jenkins2_jira_visible_for_project_role }}",
+              							{{ jenkins2_jira_use_http_auth }},
+              							{{ jenkins2_jira_connection_timeout }},
+              							{{ jenkins2_jira_read_timeout }},
+              							{{ jenkins2_jira_thread_executor_size }})
+jiraSite.setDisableChangelogAnnotations({{ jenkins2_jira_disable_changelog_annotations }})
+jiraSite.setDateTimePattern('{{ jenkins2_jira_timestamp_format }}')
+jiraSite.setAppendChangeTimestamp({{ jenkins2_jira_add_timestamps_for_comments }})
+config.setSites(jiraSite)
+config.save()

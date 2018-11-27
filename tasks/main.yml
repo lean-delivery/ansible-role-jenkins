@@ -90,6 +90,9 @@
 - include_tasks: "configure_sonarqube.yml"
   when: jenkins2_sonarqube_enabled
 
+- include_tasks: "configure_jira.yml"
+  when: jenkins2_jira_enabled
+
 - include_tasks: "copy_custom_files.yml"
   when: jenkins2_custom_files_enabled
 

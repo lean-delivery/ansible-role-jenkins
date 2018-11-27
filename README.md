@@ -169,6 +169,42 @@ Requirements
      default: `https://localhost`
   - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)
      default: `gitlab_token`
+# Jira configuration
+  - `jenkins2_jira_enabled` - to enable jira config   
+     default: `False`
+  - `jenkins2_jira_url` - jira url   
+     default: `https://jira.example.com`
+  - `jenkins2_jira_alternative_url` - jira alternative url   
+     default: `https://jira.example.com`
+  - `jenkins2_jira_use_http_auth` - This option forces Jenkins to connect to JIRA using HTTP Basic Authentication, instead of logging in over RPC   
+     default: `true`
+  - `jenkins2_jira_support_wiki_notation` - if true JIRA supports Wiki notations in comments. When true, Jenkins will post comments that take advantage of the Wiki notation. If false, Jenkins will only post plain-text comments   
+     default: `true`
+  - `jenkins2_jira_record_scm_changes` - If true, scm changes will be recorded in JIRA : link to the scm repository browser and paths changes   
+     default: `false`
+  - `jenkins2_jira_disable_changelog_annotations` - Disable creating JIRA hyperlinks in the changeset   
+     default: `false`
+  - `jenkins2_jira_issue_pattern` - You can define your own pattern to search for JIRA issue ids in the SCM logs   
+     default: `PATTERN.*`
+  - `jenkins2_jira_update_relevant_issues` - If false, issues will be only updated if the build is SUCCESSful or UNSTABLE. If true, related JIRA issues will be always updated, regardless of the build result   
+     default: `true`
+  - `jenkins2_jira_credentials_id` - Jenkins credentials ID for jira   
+     default: `jirauser`
+  - `jenkins2_jira_connection_timeout` - Connection timeout for JIRA REST API calls (in seconds)   
+     default: `10`
+  - `jenkins2_jira_read_timeout` - Read timeout for JIRA REST API calls (in seconds)   
+     default: `30`
+  - `jenkins2_jira_thread_executor_size` - Size of the Thread Pool Executor to query Jira   
+     default: `10`
+  - `jenkins2_jira_visible_for_group` - Enter the name of the JIRA group that has permission to view the comment, leave the field empty to make the comment available to all JIRA users   
+     default: ``
+  - `jenkins2_jira_visible_for_project_role` - Enter the name of the JIRA project role that has permission to view the comment, leave the field empty to make the comment available to all JIRA users   
+     default: ``
+  - `jenkins2_jira_add_timestamps_for_comments` - If true, SCM change entries date and time will be recorded in JIRA   
+     default: `true`
+  - `jenkins2_jira_timestamp_format` - See javadoc for SimpleDateFormat for help. If not set, DateFormat.SHORT for the current locale will be used.    
+     default: `EEE, d MMM yyyy HH:mm:ss Z`
+
 
 # Seed job configuration
 ### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
