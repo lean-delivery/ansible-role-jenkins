@@ -14,8 +14,7 @@
     state: present
     extra_args: --upgrade
   with_items:
-# Remove pip upgrade
-#    - pip
+    - pip
     - jira
     - pyOpenSSL
     - python-gitlab
