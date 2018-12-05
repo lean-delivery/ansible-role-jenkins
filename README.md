@@ -211,7 +211,7 @@ Requirements
 - `jenkins2_seed_job_enable` - enable jenkins seed job   
    default: `False`
 - `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label   
-   default: `dsl_create_job.groovy`
+   default: `dsl_hybris_create_job.groovy`
 - `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them   
    default: `"true"`
 - `jenkins2_seed_job_name` - Jenkins seed job name   
@@ -287,8 +287,8 @@ jenkins2_credentials:
     type: 'password'
     id: 'ciDBsysUser'
     description: 'sys user for CI db'
-    username: 'sys'
-    password: 'syspassword'
+    username: 'root'
+    password: 'Qwerty_123'
   fqa1dbuser:
     type: 'password'
     id: 'fqa1DBuser'
