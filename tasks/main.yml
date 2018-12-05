@@ -14,13 +14,13 @@
     state: present
     extra_args: --upgrade
   with_items:
-    - pip
     - jira
     - pyOpenSSL
     - python-gitlab
     - python-jenkins
     - lxml
     - awscli
+    - pip
   become: True
 
 - name: "Create group"
