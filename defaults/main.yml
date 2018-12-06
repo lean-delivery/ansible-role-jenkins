@@ -151,8 +151,8 @@ jenkins2_credentials:
     type: 'password'
     id: 'ciDBsysUser'
     description: 'sys user for CI db'
-    username: 'sys'
-    password: 'syspassword'
+    username: 'root'
+    password: 'Qwerty_123'
   fqa1dbuser:
     type: 'password'
     id: 'fqa1DBuser'
@@ -250,7 +250,7 @@ jenkins2_gitlab_token_cred: "gitlab_token"
 # Add or replace dsl template
 jenkins2_seed_job_enable: False
 # DSL template file name. Do not forget to setup all needed variables for template
-jenkins2_seed_job_template: dsl_create_job.groovy
+jenkins2_seed_job_template: dsl_hybris_create_job.groovy
 # to ignore existing jobs and do not rewrite them
 jenkins2_seed_job_ignore_existing: "true"
 jenkins2_seed_job_name: "seed_job"
@@ -364,3 +364,22 @@ jenkins2_ec2_ami_list:
     monitoring: "false"
     SpotConfiguration:
       enabled: False
+
+# Jira configuration
+jenkins2_jira_enabled: False
+jenkins2_jira_url: "https://jira.example.com"
+jenkins2_jira_alternative_url: "https://jira.example.com"
+jenkins2_jira_use_http_auth: "true"
+jenkins2_jira_support_wiki_notation: "true"
+jenkins2_jira_record_scm_changes: "false"
+jenkins2_jira_disable_changelog_annotations: "false"
+jenkins2_jira_issue_pattern: "PATTERN.*"
+jenkins2_jira_update_relevant_issues: "true"
+jenkins2_jira_credentials_id: "jirauser"
+jenkins2_jira_connection_timeout: "10"
+jenkins2_jira_read_timeout: "30"
+jenkins2_jira_thread_executor_size: "10"
+jenkins2_jira_visible_for_group: ""
+jenkins2_jira_visible_for_project_role: ""
+jenkins2_jira_add_timestamps_for_comments: "true"
+jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"

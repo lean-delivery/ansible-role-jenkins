@@ -205,7 +205,6 @@ pipelineJob("ci_main_branch_test") {
         stringParam('FV_ENVIRONMENT', 'fv_tests', 'FV hybris environment name')
         stringParam('DEPLOY_NODE_LABEL', '{{ feature_verification_jenkins_slave_label }}', 'jenkins slave nodes label to start feature env')
         stringParam('USER_MAIL', '${gitlabUserEmail}', 'jenkins slave nodes label to run tests')
-        stringParam('BUILDKIT_EMAIL_LIST', '', 'to send buildkit update info')
     }
     properties {
         gitLabConnection {
@@ -1166,8 +1165,8 @@ pipelineJob("env_infrastructure_autotest_ami") {
         stringParam('AMI_NAME', 'ci_autotests_0.1', 'ami name')
         stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
         stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
-        stringParam('KEY_NAME', '{{ aws_key }}', 'key name for instances for AWS')
-        stringParam('EC2_SECURITY_GROUPS', '{{ ec2_security_groups }}', 'security groups for ec2 instances list separated by comma')
+        stringParam('AWS_KEY_NAME', '{{ aws_key }}', 'key name for instances for AWS')
+        stringParam('SECURITY_GROUPS', '{{ ec2_security_groups }}', 'security groups for ec2 instances list separated by comma')
         stringParam('AWS_REGION', 'us-east-1', 'aws region name')
     }
     definition {
@@ -1185,6 +1184,41 @@ pipelineJob("env_infrastructure_autotest_ami") {
                 }
             }
             scriptPath('ci/jenkins/pipeline/env_infractructure_autotest_ami.groovy')
+        }
+    }
+}
+
+pipelineJob("env_infrastructure_ci_fv_ami") {
+    description('create ami for ci and FV env')
+    parameters {
+        stringParam('AMI_NAME', 'ci_image_0.1', 'ami name')
+        stringParam('GIT_URL', '{{ GitURL }}', 'Gitlab URL')
+        stringParam('GIT_BRANCH', 'develop', 'git branch name which will be tested')
+        stringParam('AWS_KEY_NAME', '{{ aws_key }}', 'key name for instances for AWS')
+        stringParam('SECURITY_GROUPS', '{{ ec2_security_groups }}', 'security groups for ec2 instances list separated by comma')
+        stringParam('AWS_REGION', 'us-east-1', 'aws region name')
+        stringParam('TEMPLATE', 'ci', 'packer template')
+        stringParam('SOURCE_AMI', 'ami-9887c6e7', 'source ami')
+        stringParam('INSTANCE_TYPE', 't2.micro', 'instance type for ami creation')
+        stringParam('SSH_USERNAME', 'centos', 'user to connect to instance')
+        stringParam('VPC_ID', 'vpc-aaaaaaa', 'AWS VPC ID')
+        stringParam('PEM_FILE_PATH', '/path/to/pemfile.pem', 'path to pem file on jenkins server')
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    branch('${GIT_BRANCH}')
+                    remote {
+                        url('${GIT_URL}')
+                        credentials('GIT_CREDENTIALS')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('ci/jenkins/pipeline/env_infractructure_ci_fv_ami.groovy')
         }
     }
 }

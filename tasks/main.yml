@@ -14,14 +14,13 @@
     state: present
     extra_args: --upgrade
   with_items:
-# Remove pip upgrade
-#    - pip
     - jira
     - pyOpenSSL
     - python-gitlab
     - python-jenkins
     - lxml
     - awscli
+    - pip
   become: True
 
 - name: "Create group"
@@ -89,6 +88,9 @@
 
 - include_tasks: "configure_sonarqube.yml"
   when: jenkins2_sonarqube_enabled
+
+- include_tasks: "configure_jira.yml"
+  when: jenkins2_jira_enabled
 
 - include_tasks: "copy_custom_files.yml"
   when: jenkins2_custom_files_enabled
