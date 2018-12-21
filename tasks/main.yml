@@ -108,5 +108,5 @@
   when: jenkins2_ec2_enable
 
 - include_tasks: "configure_ssh_keys.yml"
-  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys.generate and
+  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
     jenkins_was_installed is defined and jenkins_was_installed is changed
