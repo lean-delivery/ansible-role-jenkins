@@ -468,6 +468,7 @@ jenkins2_ec2_ami_list:
     monitoring: "false"
     SpotConfiguration:
       enabled: False
+    t2Unlimited: "false"
 ```
 =======
 * jenkins2_ssh_keys_slave_hosts - dict that describes slave hosts with remote ssh users, ex:

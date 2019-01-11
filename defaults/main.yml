@@ -330,6 +330,7 @@ jenkins2_ec2_ami_list:
     SpotConfiguration:
       enabled: True
       spotMaxBidPrice: "0.001"
+    t2Unlimited: "false"
   fv_ami:
     ami: "ami-BBBBBBBB"
     associatePublicIp: "false"
@@ -364,6 +365,7 @@ jenkins2_ec2_ami_list:
     monitoring: "false"
     SpotConfiguration:
       enabled: False
+    t2Unlimited: "false"
 
 # Jira configuration
 jenkins2_jira_enabled: False
