@@ -59,7 +59,8 @@ import jenkins.model.Jenkins
     '{{ value.customDeviceMapping }}',
     {{ value.connectBySSHProcess }},
     {{ value.connectUsingPublicIp }},
-    {{ value.monitoring }}
+    {{ value.monitoring }},
+    {{ value.t2Unlimited }}
   )
 
 {{ slaveTemplateList.append( "slaveTemplate_" + key) }}

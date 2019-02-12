@@ -21,6 +21,8 @@
     - lxml
     - awscli
     - pip
+  register: installed_packages
+  until: installed_packages is success
   become: True
 
 - name: "Create group"
@@ -60,6 +62,7 @@
     name: "{{ jenkins2_package_version }}"
     state: present
   register: jenkins_was_installed
+  until: jenkins_was_installed is success
   become: True
 
 - name: "Jenkins confuguration"
@@ -105,5 +108,5 @@
   when: jenkins2_ec2_enable
 
 - include_tasks: "configure_ssh_keys.yml"
-  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys.generate and
+  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
     jenkins_was_installed is defined and jenkins_was_installed is changed
