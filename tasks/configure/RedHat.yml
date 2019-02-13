@@ -1,4 +1,12 @@
 ---
+- name: "Generating keystore"
+  shell:
+    "{{ java_path }}{{ java_package }}1.{{ java_major_version }}.0_{{ java_minor_version }}/bin/keytool -importkeystore \
+    -srckeystore {{ jenkins2_config_path_to_cert }} -srcstoretype pkcs12 -srcstorepass {{ jenkins2_config_keystore_password }} -destkeystore \
+    {{ jenkins2_config_keystore }} -deststoretype JKS -deststorepass {{ jenkins2_config_keystore_password }}"
+  when: generate_jks_from_pfx
+  become: True
+
 # included file
 - name: "Apply Jenkins configuration file"
   template:
