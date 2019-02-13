@@ -6,6 +6,7 @@ stages:
 
 before_script:
   - ansible --version
+  - ansible-lint --version
   - molecule --version
 
 variables:
@@ -20,23 +21,32 @@ Ansible lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - delegated
+    - aws
 
 Docker jenkins:
   stage: deployment test
   script:
     - molecule test -s default
   tags:
-    - docker
+    - aws
 
 AWS jenkins:
   variables:
-    EPC_REGION: AWS-EUCENTRAL
+    AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule test -s cloud-aws-delegated
+    - molecule test -s cloud-aws-direct
   tags:
-    - delegated
+    - aws
+
+# AWS Windows jenkins:
+#   variables:
+#     AWS_REGION: us-east-1
+#   stage: deployment test
+#   script:
+#     - molecule test -s cloud-aws-windows
+#   tags:
+#     - aws
 
 EPC jenkins:
   variables:
