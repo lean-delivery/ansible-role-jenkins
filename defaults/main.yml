@@ -386,3 +386,6 @@ jenkins2_jira_visible_for_group: ""
 jenkins2_jira_visible_for_project_role: ""
 jenkins2_jira_add_timestamps_for_comments: "true"
 jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"
+
+# Security configuration
+jenkins2_security_enable: True
