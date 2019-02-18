@@ -12,9 +12,14 @@ jenkins2_cli_password: admin
 jenkins2_home_directory: /var/lib/jenkins
 
 # Use https
-generate_jks_from_pfx: true
-jenkins2_config_keystore: "{{ jenkins2_home_directory }}/keystore.jks"
+jenkins2_config_https_enabled: false
+generate_jks_from_pfx: false
+# If you use existed keystore (and not generate it) you should set path where it placed
+jenkins2_config_keystore_path: "{{ jenkins2_home_directory }}/keystore.jks"
+# If you have a ready keystore file set path to the *.jks file
+keystore_jks: "keystore.jks"
 jenkins2_config_keystore_password: "123456"
+# Select path to pfx certificate file
 jenkins2_config_path_to_cert: "/home/user/example.com.pfx"
 jenkins2_config_https_port: 8443
 jenkins2_config_listen_https_address: ''

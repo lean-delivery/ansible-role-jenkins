@@ -65,6 +65,17 @@
   until: jenkins_was_installed is success
   become: True
 
+- include_tasks: "generate_jks.yml"
+  when: generate_jks_from_pfx
+  
+- name: Copy keystore to jenkins folder
+  copy:
+    src: "{{ jenkins2_config_keystore_path }}"
+    dest: "{{ jenkins2_home_directory }}/keystore.jks"
+    mode: 0644
+  when: not generate_jks_from_pfx and jenkins2_config_https_enabled
+  become: True
+
 - name: "Jenkins confuguration"
   include_tasks: "{{ platform }}"
   with_first_found:

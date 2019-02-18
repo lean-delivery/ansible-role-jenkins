@@ -62,9 +62,10 @@ MAXOPENFILES=8192
 # port for HTTP connector (default 8080; disable with -1)
 HTTP_PORT={{ jenkins2_config_http_port }}
 
-HTTPS_PORT="{{ jenkins2_config_https_port }}"
-HTTPS_KEYSTORE="{{ jenkins2_config_keystore }}"
-HTTPS_KEYSTORE_PASSWORD="{{ jenkins2_config_keystore_password }}"
+HTTPS_PORT={{ jenkins2_config_https_port }}
+HTTPS_KEYSTORE={{ jenkins2_home_directory }}/keystore.jks
+HTTPS_KEYSTORE_PASSWORD={{ jenkins2_config_keystore_password }}
+HTTPS_LISTEN_ADDRESS={{ jenkins2_config_https_listen_address }}
 
 # servlet context, important if you want to use apache proxying
 PREFIX=/
@@ -78,8 +79,12 @@ PREFIX=/
 # --argumentsRealm.roles.$ADMIN_USER=admin
 # --webroot=~/.jenkins/war
 # --prefix=$PREFIX
+{% if jenkins2_config_https_enabled -%}
+JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort={{ jenkins2_config_http_port }} --httpsPort={{ jenkins2_config_https_port }} --httpsKeyStore={{ jenkins2_home_directory }}/keystore.jks --httpsKeyStorePassword={{ jenkins2_config_keystore_password }}"
+{% else -%}
 {% if jenkins2_config_listen_address != '' -%}
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX --httpListenAddress={{ jenkins2_config_listen_address }}"
 {% else -%}
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX "
+{% endif -%}
 {% endif -%}
