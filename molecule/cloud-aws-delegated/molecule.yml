@@ -10,23 +10,22 @@ lint:
   options:
     config-file: .yamllint
 platforms:
-  - name: test-epc-centos7-jenkins
+  - name: test-aws-centos7-jenkins
     image: CentOS7_64-bit
     shape: small
-    region: EPAM-BY2
+    region: AWS-EUCENTRAL
     wait_timeout: 3600
     groups:
       - rhel_family
-  - name: test-epc-ubuntu1804-jenkins
+  - name: test-aws-ubuntu1804-jenkins
     image: Ubuntu18.04_64-bit
     shape: small
-    region: EPAM-BY2
+    region: AWS-EUCENTRAL
     wait_timeout: 3600
     groups:
       - debian_family
 provisioner:
   name: ansible
-  log: True
   playbooks:
     create: ../resources/provisioning/create.yml
     prepare: ../resources/provisioning/prepare.yml
@@ -39,7 +38,7 @@ provisioner:
   env:
     ANSIBLE_LIBRARY: ${ANSIBLE_LIBRARY}
 scenario:
-  name: cloud-epc-delegated
+  name: cloud-aws-delegated
 verifier:
   name: testinfra
   options:

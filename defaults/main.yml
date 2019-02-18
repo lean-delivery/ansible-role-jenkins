@@ -102,7 +102,6 @@ jenkins2_plugins_suggested:
   - log-parser
   - pmd
   - ec2
-  - warnings-ng
 jenkins2_plugins_list: []
 
 # Set Credentials

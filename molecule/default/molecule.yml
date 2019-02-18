@@ -31,7 +31,6 @@ platforms:
       - debian_family
 provisioner:
   name: ansible
-  log: False
   lint:
     name: ansible-lint
 scenario:
