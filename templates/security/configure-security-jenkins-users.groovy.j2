@@ -11,11 +11,7 @@ instance.save()
 
 {% if jenkins2_authorization_strategy == "logged-in" %}
   def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
-
-    {% if jenkins2_authorization_strategy_logged_in_allow_anonymous_read %}
-      strategy.setAllowAnonymousRead(true)
-    {% endif %}
-
+  strategy.setAllowAnonymousRead({{ jenkins2_authorization_strategy_logged_in_allow_anonymous_read }})
   instance.setAuthorizationStrategy(strategy)
   instance.save()
 {% endif %}
