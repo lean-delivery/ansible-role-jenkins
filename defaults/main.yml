@@ -392,6 +392,15 @@ jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"
 jenkins2_security_enable: True
 jenkins2_security_realm: "jenkins-users"
 
+# Configure active directory
+jenkins2_active_directory_domain_name: "domain.com"
+jenkins2_active_directory_domain_controller: "server.domain.com:3268"
+jenkins2_active_directory_site: "null"
+jenkins2_active_directory_bind_name: "user@domain.com"
+jenkins2_active_directory_bind_pass: "password"
+jenkins2_active_directory_start_tls: "true"
+jenkins2_active_directory_remove_irrelevant_groups: "false"
+
 #Authorization stategy
 #logged-in, matrix-based, project-based"
 jenkins2_authorization_strategy: "logged-in"
