@@ -67,7 +67,7 @@
 
 - include_tasks: "generate_jks.yml"
   when: generate_jks_from_pfx
-  
+
 - name: Copy keystore to jenkins folder
   copy:
     src: "{{ jenkins2_config_keystore_path }}"
