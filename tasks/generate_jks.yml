@@ -6,4 +6,3 @@
     {{ jenkins2_home_directory }}/keystore.jks -deststoretype JKS -deststorepass {{ jenkins2_config_keystore_password }}"
   when: generate_jks_from_pfx
   become: True
-  
