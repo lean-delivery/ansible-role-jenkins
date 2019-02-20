@@ -21,6 +21,8 @@
     key: "{{ key_value }}"
     validate_certs: "{{ jenkins2_key_validate_certs }}"
     state: present
+  register: status
+  until: status is succeeded
   become: True
 
 - name: "Jenkins Repository"
