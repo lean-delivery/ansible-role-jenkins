@@ -471,7 +471,6 @@ jenkins2_ec2_ami_list:
     t2Unlimited: "false"
 ```
 
-
 # Security and Authorization configuration
 - `jenkins2_security_enable`: enable Jenkins security.   
    default: `True`
@@ -512,7 +511,6 @@ jenkins2_ec2_ami_list:
    default: `"logged-in"`
 - `jenkins2_authorization_strategy_logged_in_allow_anonymous_read`: allow anonymous read access   
    default: `"false"`
-
 
 =======
 * jenkins2_ssh_keys_slave_hosts - dict that describes slave hosts with remote ssh users, ex:

@@ -10,9 +10,13 @@
       yum:
         name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
         state: "present"
+      register: status
+      until: status is succeeded
 
     - name: "Install requirements"
       package:
         name: "{{ requirements }}"
         state: "present"
+      register: status
+      until: status is succeeded
   become: True

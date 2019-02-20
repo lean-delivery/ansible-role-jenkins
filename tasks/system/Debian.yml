@@ -10,4 +10,6 @@
       package:
         name: "{{ requirements }}"
         state: "present"
+      register: status
+      until: status is succeeded
   become: True
