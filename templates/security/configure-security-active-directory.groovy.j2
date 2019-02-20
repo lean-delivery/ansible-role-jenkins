@@ -6,7 +6,6 @@ def instance = Jenkins.getInstance()
 
 def hudsonRealm = new HudsonPrivateSecurityRealm(false)
 hudsonRealm.createAccount("{{ jenkins2_active_directory_bind_name }}","{{ jenkins2_active_directory_bind_pass }}")
-// instance.setSecurityRealm(hudsonRealm)
 instance.save()
 
 def domain = new hudson.plugins.active_directory.ActiveDirectoryDomain(
