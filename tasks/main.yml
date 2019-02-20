@@ -10,17 +10,16 @@
 
 - name: "Install pip packages"
   pip:
-    name: "{{ item }}"
+    name:
+      - jira
+      - pyOpenSSL
+      - python-gitlab
+      - python-jenkins
+      - lxml
+      - awscli
+      - pip
     state: present
     extra_args: --upgrade
-  with_items:
-    - jira
-    - pyOpenSSL
-    - python-gitlab
-    - python-jenkins
-    - lxml
-    - awscli
-    - pip
   register: installed_packages
   until: installed_packages is success
   become: True

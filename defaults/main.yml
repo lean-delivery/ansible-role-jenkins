@@ -90,6 +90,7 @@ jenkins2_plugins_suggested:
   - pmd
   - ec2
   - warnings-ng
+  - active-directory
 jenkins2_plugins_list: []
 
 # Set Credentials
@@ -388,9 +389,9 @@ jenkins2_jira_add_timestamps_for_comments: "true"
 jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"
 
 # Security configuration
-# Security Realm: jenkins-users, active-directory, ldap
+# Security Realm: basic, active-directory, ldap
 jenkins2_security_enable: True
-jenkins2_security_realm: "jenkins-users"
+jenkins2_security_realm: "basic"
 
 # Configure active directory
 jenkins2_active_directory_domain_name: "domain.com"
@@ -416,7 +417,8 @@ jenkins2_ldap_disable_mail_address_resolver: "false"
 jenkins2_ldap_display_name_attribute_name: "displayname"
 jenkins2_ldap_mail_address_attribute_name: "mail"
 
-#Authorization stategy
-#logged-in, matrix-based, project-based"
+# Authorization stategy configuration
+# Strategy: logged-in, matrix-based
+jenkins2_authorization_strategy_configure: True
 jenkins2_authorization_strategy: "logged-in"
 jenkins2_authorization_strategy_logged_in_allow_anonymous_read: "false"
