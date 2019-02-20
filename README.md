@@ -34,130 +34,130 @@ Requirements
 ## Role Variables
 --------------
 # configuration for jenkins
-  - `jenkins2_user` - OS user and group used for jenkins start
+  - `jenkins2_user` - OS user and group used for jenkins start   
      default: `jenkins`
-  - `jenkins2_package_version` - package name for jenkins install
+  - `jenkins2_package_version` - package name for jenkins install   
      default: `jenkins`
-  - `jenkins2_release_line` - package version to be installed: stable or latest
+  - `jenkins2_release_line` - package version to be installed: stable or latest   
      default: `stable`
-  - `jenkins2_disable_gpg_check` - gpg check skipped (only for yum)
+  - `jenkins2_disable_gpg_check` - gpg check skipped (only for yum)   
      default: `False`
-  - `jenkins2_key_validate_certs` - validate certs during key install (only for yum)
+  - `jenkins2_key_validate_certs` - validate certs during key install (only for yum)   
      default: `True`
-  - `jenkins2_context_path` - Jenkins context path
+  - `jenkins2_context_path` - Jenkins context path   
      default: `''`
-  - `jenkins2_cli_username` - user for jenkins cli connection
+  - `jenkins2_cli_username` - user for jenkins cli connection   
      default: `admin`
-  - `jenkins2_cli_password` - user password for jenkins cli connection
+  - `jenkins2_cli_password` - user password for jenkins cli connection   
      default: `admin`
-  - `jenkins2_home_directory` - Directory where Jenkins store its configuration and working files (checkouts, build reports, artifacts, ...)
+  - `jenkins2_home_directory` - Directory where Jenkins store its configuration and working files (checkouts, build reports, artifacts, ...)   
      default: `/var/lib/jenkins`
 # Jenkins configuration parameters: used in /etc/sysconfig/jenkins or in /etc/default/jenkins
-  - `jenkins2_config_java_cmd` - Java executable to run Jenkins
+  - `jenkins2_config_java_cmd` - Java executable to run Jenkins   
      default: `''`
-  - `jenkins2_config_java_options` - Options to pass to java when running Jenkins.
+  - `jenkins2_config_java_options` - Options to pass to java when running Jenkins.   
      default: `"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_"`
-  - `jenkins2_config_http_port` - Port Jenkins is listening on.
+  - `jenkins2_config_http_port` - Port Jenkins is listening on.   
      default: `8080`
-  - `jenkins2_config_listen_address` - IP address Jenkins listens on for HTTP requests. Default is all interfaces (0.0.0.0).
+  - `jenkins2_config_listen_address` - IP address Jenkins listens on for HTTP requests. Default is all interfaces (0.0.0.0).   
      default: `''`
-  - `jenkins2_config_debug_level` - Debug level for logs -- the higher the value, the more verbose. 5 is INFO.
+  - `jenkins2_config_debug_level` - Debug level for logs -- the higher the value, the more verbose. 5 is INFO.   
      default: `5`
-  - `jenkins2_config_enable_access_log` - Whether to enable access logging or not.
+  - `jenkins2_config_enable_access_log` - Whether to enable access logging or not.   
      default: `no`
-  - `jenkins2_config_handler_max` - Maximum number of HTTP worker threads.
+  - `jenkins2_config_handler_max` - Maximum number of HTTP worker threads.   
      default: `100`
-  - `jenkins2_config_handler_idle` - Maximum number of idle HTTP worker threads.
+  - `jenkins2_config_handler_idle` - Maximum number of idle HTTP worker threads.   
      default: `20`
-  - `jenkins2_config_args` - Pass arbitrary arguments to Jenkins. Full option list: java -jar jenkins.war --help
+  - `jenkins2_config_args` - Pass arbitrary arguments to Jenkins. Full option list: java -jar jenkins.war --help   
      default: `''`
 # Jenkins proxy config
-  - `jenkins2_proxy_url` - proxy url for plugins download config
+  - `jenkins2_proxy_url` - proxy url for plugins download config   
      default: `''`
-  - `jenkins2_proxy_host` - proxy server host name
+  - `jenkins2_proxy_host` - proxy server host name   
      default: `''`
-  - `jenkins2_proxy_port` - proxy server port
+  - `jenkins2_proxy_port` - proxy server port   
      default: `0`
-  - `jenkins2_proxy_username` - username for proxy connection
+  - `jenkins2_proxy_username` - username for proxy connection   
      default: `''`
-  - `jenkins2_proxy_password` - password for proxy connection
+  - `jenkins2_proxy_password` - password for proxy connection   
      default: `''`
-  - `jenkins2_proxy_no_proxy_hosts` - hosts to skip from proxying
+  - `jenkins2_proxy_no_proxy_hosts` - hosts to skip from proxying   
      default: `''`
 # ssh key generation config
-  - `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user
+  - `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user   
      default: `False`
-  - `jenkins2_ssh_keys_private_keyname` - private key name
+  - `jenkins2_ssh_keys_private_keyname` - private key name   
      default: `id_rsa`
-  - `jenkins2_ssh_keys_size` - ssh rsa key strength size
+  - `jenkins2_ssh_keys_size` - ssh rsa key strength size   
      default: `4096`
-  - `jenkins2_ssh_keys_inv_slave_groupname` - slave group name in inventory file
+  - `jenkins2_ssh_keys_inv_slave_groupname` - slave group name in inventory file   
      default: `jenkins_ssh_slaves`
 # smtp settings
-  - `jenkins2_smtp_enabled` - to set the smtp configuration
+  - `jenkins2_smtp_enabled` - to set the smtp configuration   
      default: `True`
-  - `jenkins2_smtp_sysad_email` - jenkins admin email
+  - `jenkins2_smtp_sysad_email` - jenkins admin email   
      default: `usermail@test.com`
-  - `jenkins2_smtp_user` - jenkins admin email
+  - `jenkins2_smtp_user` - jenkins admin email   
      default: `usermail@test.com`
-  - `jenkins2_smtp_password` - smtp user password
+  - `jenkins2_smtp_password` - smtp user password   
      default: `password`
-  - `jenkins2_smtp_port` - smtp server port
+  - `jenkins2_smtp_port` - smtp server port   
      default: `587`
-  - `jenkins2_smtp_host` - smtp server host name
+  - `jenkins2_smtp_host` - smtp server host name   
      default: `smtp.office365.com`
 # jenkins plugins configuration
-  - `jenkins2_plugins_timeout` - plugin installation timeout
+  - `jenkins2_plugins_timeout` - plugin installation timeout   
      default: `2000`
-  - `jenkins2_plugins_list` - list of plugins (will be merged with suggested list)
+  - `jenkins2_plugins_list` - list of plugins (will be merged with suggested list)   
      default: `[]`
 # credentials configuration
-  - `jenkins2_credentials_enabled` - to add credentials
+  - `jenkins2_credentials_enabled` - to add credentials   
      default: `True`
-  - `jenkins2_credentials` -  credentials map
+  - `jenkins2_credentials` - credentials map
 # pipeline libraries configuration
-  - `jenkins2_pipeline_libraries_enabled` - to configure Global Pipeline Libraries
+  - `jenkins2_pipeline_libraries_enabled` - to configure Global Pipeline Libraries   
      default: `False`
-  - `jenkins2_pipeline_libraries_name` - Library Name to be used in the @Library annotation
+  - `jenkins2_pipeline_libraries_name` - Library Name to be used in the @Library annotation   
      default: `Pipeline_Libraries`
-  - `jenkins2_pipeline_libraries_url` - URL of remote repository
+  - `jenkins2_pipeline_libraries_url` - URL of remote repository   
      default: `''`
-  - `jenkins2_pipeline_libraries_version` - A default version of the library to load if a script does not select another. Might be a branch name, tag, commit hash, etc., according to the SCM.
-     default: 'master'
+  - `jenkins2_pipeline_libraries_version` - A default version of the library to load if a script does not select another. Might be a branch name, tag, commit hash, etc., according to the SCM.   
+     default: `'master'`
 # bitbucket project configuration
-  - `jenkins2_bitbucket_project_enabled` - to configure Bitbucket Team/Project
+  - `jenkins2_bitbucket_project_enabled` - to configure Bitbucket Team/Project   
      default: `False`
-  - `jenkins2_bitbucket_project_owner` - Name of the Bitbucket Team or Bitbucket User Account. It could be a Bitbucket Project also, if using Bitbucket Server. In this case (Bitbucket Server): Use the project key, not the project name. If using a user account instead of a project, add a "~" character before the username, i.e. "~joe".
+  - `jenkins2_bitbucket_project_owner` - Name of the Bitbucket Team or Bitbucket User Account. It could be a Bitbucket Project also, if using Bitbucket Server. In this case (Bitbucket Server): Use the project key, not the project name. If using a user account instead of a project, add a "~" character before the username, i.e. "~joe".   
      default: `Bitbucket_Project_Owner`
-  - `jenkins2_bitbucket_project_repo_regexp` - A Java regular expression to restrict the repo names. Repo names that do not match the supplied regular expression will be ignored.
-     default: `''`
-  - `jenkins2_bitbucket_project_discover_branches_strategy` - Determines which branches are discovered. 1 - Exclude branches that are also filed as PRs, 2 - Only branches that are also filed as PRs, 3 - All branches.
-     default: 1
-  - `jenkins2_bitbucket_project_discover_pr_strategy` - Determines how pull requests are discovered. 1 - Merging the pull request with the current target branch revision, 2 - The current pull request revision, 3 - Both the current pull request revision and the pull request merged with the current target branch revision.
-     default: 1
+  - `jenkins2_bitbucket_project_repo_regexp` - A Java regular expression to restrict the repo names. Repo names that do not match the supplied regular expression will be ignored.   
+     default: `''`   
+  - `jenkins2_bitbucket_project_discover_branches_strategy` - Determines which branches are discovered. 1 - Exclude branches that are also filed as PRs, 2 - Only branches that are also filed as PRs, 3 - All branches.   
+     default: `1`
+  - `jenkins2_bitbucket_project_discover_pr_strategy` - Determines how pull requests are discovered. 1 - Merging the pull request with the current target branch revision, 2 - The current pull request revision, 3 - Both the current pull request revision and the pull request merged with the current target branch revision.   
+     default: `1`
   - `jenkins2_bitbucket_project_scan_interval` - The maximum amount of time since the last indexing that is allowed to elapse before an indexing is triggered.
-     default: 60
-  - `jenkins2_bitbucket_project_autobuild_branches` - Matching branches will be triggered automatically.
-     default: 'master|develop|PR-[0-9]+'
+     default: `60`
+  - `jenkins2_bitbucket_project_autobuild_branches` - Matching branches will be triggered automatically.   
+     default: `'master|develop|PR-[0-9]+'`
 # sonarqube configuration
-  - `jenkins2_sonarqube_enabled` - to add SonarQube configuration
+  - `jenkins2_sonarqube_enabled` - to add SonarQube configuration   
      default: `False`
-  - `jenkins2_sonarqube_name` - SonarQube Name
+  - `jenkins2_sonarqube_name` - SonarQube Name   
      default: `SonarQube`
-  - `jenkins2_sonarqube_url` - SonarQube Server URL
+  - `jenkins2_sonarqube_url` - SonarQube Server URL   
      default: `http://localhost:9000`
-  - `jenkins2_sonarqube_token` - SonarQube authentication token. Mandatory when anonymous access is disabled.
+  - `jenkins2_sonarqube_token` - SonarQube authentication token. Mandatory when anonymous access is disabled.   
      default: `''`
-  - `jenkins2_sonarqube_maven_plugin` - Version of sonar-maven-plugin. If not specified, the goal will be sonar:sonar.
+  - `jenkins2_sonarqube_maven_plugin` - Version of sonar-maven-plugin. If not specified, the goal will be sonar:sonar.   
      default: `''`
-  - `jenkins2_sonarqube_arguments - Additional command line arguments to be passed to the SonarQube scanner. For example, -X.
+  - `jenkins2_sonarqube_arguments` - Additional command line arguments to be passed to the SonarQube scanner. For example, -X.   
      default: `''`
-  - `jenkins2_sonarqube_analysis_properties - Additional analysis properties in the form of key-value pairs. For example, sonar.analysis.mode=issues.
+  - `jenkins2_sonarqube_analysis_properties` - Additional analysis properties in the form of key-value pairs. For example, sonar.analysis.mode=issues.   
      default: `''`
 # custom files copy
-  - `jenkins2_custom_files_enabled` - to copy custom files to Jenkins
+  - `jenkins2_custom_files_enabled` - to copy custom files to Jenkins   
      default: `False`
-  - `jenkins2_custom_files` - map with files parameters
+  - `jenkins2_custom_files` - map with files parameters   
       default:
     `log_parser:
       src: "{{ role_path }}/files/pipeline_error_in_init_console"
@@ -166,58 +166,58 @@ Requirements
       group: "{{ jenkins2_user }}"
       mode: "0755"`
 # Gitlab configuration
-  - `jenkins2_gitlab_enabled` - to enable gitlab config
+  - `jenkins2_gitlab_enabled` - to enable gitlab config   
      default: `False`
-  - `gitlab_external_url` - gitlab external url
+  - `gitlab_external_url` - gitlab external url   
      default: `https://localhost`
-  - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)
+  - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)   
      default: `gitlab_token`
 # Jira configuration
-  - `jenkins2_jira_enabled` - to enable jira config
+  - `jenkins2_jira_enabled` - to enable jira config   
      default: `False`
-  - `jenkins2_jira_url` - jira url
+  - `jenkins2_jira_url` - jira url   
      default: `https://jira.example.com`
-  - `jenkins2_jira_alternative_url` - jira alternative url
+  - `jenkins2_jira_alternative_url` - jira alternative url   
      default: `https://jira.example.com`
-  - `jenkins2_jira_use_http_auth` - This option forces Jenkins to connect to JIRA using HTTP Basic Authentication, instead of logging in over RPC
+  - `jenkins2_jira_use_http_auth` - This option forces Jenkins to connect to JIRA using HTTP Basic Authentication, instead of logging in over RPC   
      default: `true`
-  - `jenkins2_jira_support_wiki_notation` - if true JIRA supports Wiki notations in comments. When true, Jenkins will post comments that take advantage of the Wiki notation. If false, Jenkins will only post plain-text comments
+  - `jenkins2_jira_support_wiki_notation` - if true JIRA supports Wiki notations in comments. When true, Jenkins will post comments that take advantage of the Wiki notation. If false, Jenkins will only post plain-text comments   
      default: `true`
-  - `jenkins2_jira_record_scm_changes` - If true, scm changes will be recorded in JIRA : link to the scm repository browser and paths changes
+  - `jenkins2_jira_record_scm_changes` - If true, scm changes will be recorded in JIRA : link to the scm repository browser and paths changes   
      default: `false`
-  - `jenkins2_jira_disable_changelog_annotations` - Disable creating JIRA hyperlinks in the changeset
+  - `jenkins2_jira_disable_changelog_annotations` - Disable creating JIRA hyperlinks in the changeset   
      default: `false`
-  - `jenkins2_jira_issue_pattern` - You can define your own pattern to search for JIRA issue ids in the SCM logs
+  - `jenkins2_jira_issue_pattern` - You can define your own pattern to search for JIRA issue ids in the SCM logs   
      default: `PATTERN.*`
-  - `jenkins2_jira_update_relevant_issues` - If false, issues will be only updated if the build is SUCCESSful or UNSTABLE. If true, related JIRA issues will be always updated, regardless of the build result
+  - `jenkins2_jira_update_relevant_issues` - If false, issues will be only updated if the build is SUCCESSful or UNSTABLE. If true, related JIRA issues will be always updated, regardless of the build result   
      default: `true`
-  - `jenkins2_jira_credentials_id` - Jenkins credentials ID for jira
+  - `jenkins2_jira_credentials_id` - Jenkins credentials ID for jira   
      default: `jirauser`
-  - `jenkins2_jira_connection_timeout` - Connection timeout for JIRA REST API calls (in seconds)
+  - `jenkins2_jira_connection_timeout` - Connection timeout for JIRA REST API calls (in seconds)   
      default: `10`
-  - `jenkins2_jira_read_timeout` - Read timeout for JIRA REST API calls (in seconds)
+  - `jenkins2_jira_read_timeout` - Read timeout for JIRA REST API calls (in seconds)   
      default: `30`
-  - `jenkins2_jira_thread_executor_size` - Size of the Thread Pool Executor to query Jira
+  - `jenkins2_jira_thread_executor_size` - Size of the Thread Pool Executor to query Jira   
      default: `10`
-  - `jenkins2_jira_visible_for_group` - Enter the name of the JIRA group that has permission to view the comment, leave the field empty to make the comment available to all JIRA users
+  - `jenkins2_jira_visible_for_group` - Enter the name of the JIRA group that has permission to view the comment, leave the field empty to make the comment available to all JIRA users   
      default: ``
-  - `jenkins2_jira_visible_for_project_role` - Enter the name of the JIRA project role that has permission to view the comment, leave the field empty to make the comment available to all JIRA users
+  - `jenkins2_jira_visible_for_project_role` - Enter the name of the JIRA project role that has permission to view the comment, leave the field empty to make the comment available to all JIRA users   
      default: ``
-  - `jenkins2_jira_add_timestamps_for_comments` - If true, SCM change entries date and time will be recorded in JIRA
+  - `jenkins2_jira_add_timestamps_for_comments` - If true, SCM change entries date and time will be recorded in JIRA   
      default: `true`
-  - `jenkins2_jira_timestamp_format` - See javadoc for SimpleDateFormat for help. If not set, DateFormat.SHORT for the current locale will be used.
+  - `jenkins2_jira_timestamp_format` - See javadoc for SimpleDateFormat for help. If not set, DateFormat.SHORT for the current locale will be used.    
      default: `EEE, d MMM yyyy HH:mm:ss Z`
 
 
 # Seed job configuration
 ### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
-- `jenkins2_seed_job_enable` - enable jenkins seed job
+- `jenkins2_seed_job_enable` - enable jenkins seed job   
    default: `False`
-- `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label
+- `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label   
    default: `dsl_hybris_create_job.groovy`
-- `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them
+- `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them   
    default: `"true"`
-- `jenkins2_seed_job_name` - Jenkins seed job name
+- `jenkins2_seed_job_name` - Jenkins seed job name   
    default: `"seed_job"`
 
 
@@ -357,7 +357,7 @@ jenkins2_credentials:
   * `2` - UsersPrivateKeySource. _If this value is set Jenkins will use default private keys from `~/.ssh`._
 
 # EC2 plugin configuration
-- `jenkins2_ec2_enable` - enable jenkins ec2 plugin configure https://wiki.jenkins.io/display/JENKINS/Amazon+EC2+Plugin
+- `jenkins2_ec2_enable` - enable jenkins ec2 plugin configure https://wiki.jenkins.io/display/JENKINS/Amazon+EC2+Plugin   
    default: `False`
 ```yml
 jenkins2_ec2_cloud_parameters:
@@ -471,11 +471,12 @@ jenkins2_ec2_ami_list:
     t2Unlimited: "false"
 ```
 
+
 # Security and Authorization configuration
-- `jenkins2_security_enable`: enable Jenkins security.
-  default: `True`
+- `jenkins2_security_enable`: enable Jenkins security.   
+   default: `True`
 - `jenkins2_security_realm`: Select type of Jenkins security. Avaible: `basic`, `ldap`, `active-directory`
-  default: `"basic"`
+   default: `"basic"`
 
   ### Default `active-directory` plugin configuration
   ```yaml
@@ -505,12 +506,13 @@ jenkins2_ec2_ami_list:
   jenkins2_ldap_mail_address_attribute_name: "mail"
   ```
 
-- `jenkins2_authorization_strategy_configure`: enable authorization strategy configuration
-  default: `True`
-- `jenkins2_authorization_strategy`: type of authorization strategy. Available: `logged-in`, `matrix-based`
-  default: `"logged-in"`
-- `jenkins2_authorization_strategy_logged_in_allow_anonymous_read`: allow anonymous read access
-  default: `"false"`
+- `jenkins2_authorization_strategy_configure`: enable authorization strategy configuration   
+   default: `True`
+- `jenkins2_authorization_strategy`: type of authorization strategy. Available: `logged-in`, `matrix-based`   
+   default: `"logged-in"`
+- `jenkins2_authorization_strategy_logged_in_allow_anonymous_read`: allow anonymous read access   
+   default: `"false"`
+
 
 =======
 * jenkins2_ssh_keys_slave_hosts - dict that describes slave hosts with remote ssh users, ex:
