@@ -389,7 +389,6 @@ jenkins2_jira_add_timestamps_for_comments: "true"
 jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"
 
 # Security configuration
-# Security Realm: basic, active-directory, ldap
 jenkins2_security_enable: True
 jenkins2_security_realm: "basic"
 
@@ -418,7 +417,6 @@ jenkins2_ldap_display_name_attribute_name: "displayname"
 jenkins2_ldap_mail_address_attribute_name: "mail"
 
 # Authorization stategy configuration
-# Strategy: logged-in, matrix-based
 jenkins2_authorization_strategy_configure: True
 jenkins2_authorization_strategy: "logged-in"
 jenkins2_authorization_strategy_logged_in_allow_anonymous_read: "false"

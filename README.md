@@ -173,51 +173,51 @@ Requirements
   - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)
      default: `gitlab_token`
 # Jira configuration
-  - `jenkins2_jira_enabled` - to enable jira config   
+  - `jenkins2_jira_enabled` - to enable jira config
      default: `False`
-  - `jenkins2_jira_url` - jira url   
+  - `jenkins2_jira_url` - jira url
      default: `https://jira.example.com`
-  - `jenkins2_jira_alternative_url` - jira alternative url   
+  - `jenkins2_jira_alternative_url` - jira alternative url
      default: `https://jira.example.com`
-  - `jenkins2_jira_use_http_auth` - This option forces Jenkins to connect to JIRA using HTTP Basic Authentication, instead of logging in over RPC   
+  - `jenkins2_jira_use_http_auth` - This option forces Jenkins to connect to JIRA using HTTP Basic Authentication, instead of logging in over RPC
      default: `true`
-  - `jenkins2_jira_support_wiki_notation` - if true JIRA supports Wiki notations in comments. When true, Jenkins will post comments that take advantage of the Wiki notation. If false, Jenkins will only post plain-text comments   
+  - `jenkins2_jira_support_wiki_notation` - if true JIRA supports Wiki notations in comments. When true, Jenkins will post comments that take advantage of the Wiki notation. If false, Jenkins will only post plain-text comments
      default: `true`
-  - `jenkins2_jira_record_scm_changes` - If true, scm changes will be recorded in JIRA : link to the scm repository browser and paths changes   
+  - `jenkins2_jira_record_scm_changes` - If true, scm changes will be recorded in JIRA : link to the scm repository browser and paths changes
      default: `false`
-  - `jenkins2_jira_disable_changelog_annotations` - Disable creating JIRA hyperlinks in the changeset   
+  - `jenkins2_jira_disable_changelog_annotations` - Disable creating JIRA hyperlinks in the changeset
      default: `false`
-  - `jenkins2_jira_issue_pattern` - You can define your own pattern to search for JIRA issue ids in the SCM logs   
+  - `jenkins2_jira_issue_pattern` - You can define your own pattern to search for JIRA issue ids in the SCM logs
      default: `PATTERN.*`
-  - `jenkins2_jira_update_relevant_issues` - If false, issues will be only updated if the build is SUCCESSful or UNSTABLE. If true, related JIRA issues will be always updated, regardless of the build result   
+  - `jenkins2_jira_update_relevant_issues` - If false, issues will be only updated if the build is SUCCESSful or UNSTABLE. If true, related JIRA issues will be always updated, regardless of the build result
      default: `true`
-  - `jenkins2_jira_credentials_id` - Jenkins credentials ID for jira   
+  - `jenkins2_jira_credentials_id` - Jenkins credentials ID for jira
      default: `jirauser`
-  - `jenkins2_jira_connection_timeout` - Connection timeout for JIRA REST API calls (in seconds)   
+  - `jenkins2_jira_connection_timeout` - Connection timeout for JIRA REST API calls (in seconds)
      default: `10`
-  - `jenkins2_jira_read_timeout` - Read timeout for JIRA REST API calls (in seconds)   
+  - `jenkins2_jira_read_timeout` - Read timeout for JIRA REST API calls (in seconds)
      default: `30`
-  - `jenkins2_jira_thread_executor_size` - Size of the Thread Pool Executor to query Jira   
+  - `jenkins2_jira_thread_executor_size` - Size of the Thread Pool Executor to query Jira
      default: `10`
-  - `jenkins2_jira_visible_for_group` - Enter the name of the JIRA group that has permission to view the comment, leave the field empty to make the comment available to all JIRA users   
+  - `jenkins2_jira_visible_for_group` - Enter the name of the JIRA group that has permission to view the comment, leave the field empty to make the comment available to all JIRA users
      default: ``
-  - `jenkins2_jira_visible_for_project_role` - Enter the name of the JIRA project role that has permission to view the comment, leave the field empty to make the comment available to all JIRA users   
+  - `jenkins2_jira_visible_for_project_role` - Enter the name of the JIRA project role that has permission to view the comment, leave the field empty to make the comment available to all JIRA users
      default: ``
-  - `jenkins2_jira_add_timestamps_for_comments` - If true, SCM change entries date and time will be recorded in JIRA   
+  - `jenkins2_jira_add_timestamps_for_comments` - If true, SCM change entries date and time will be recorded in JIRA
      default: `true`
-  - `jenkins2_jira_timestamp_format` - See javadoc for SimpleDateFormat for help. If not set, DateFormat.SHORT for the current locale will be used.    
+  - `jenkins2_jira_timestamp_format` - See javadoc for SimpleDateFormat for help. If not set, DateFormat.SHORT for the current locale will be used.
      default: `EEE, d MMM yyyy HH:mm:ss Z`
 
 
 # Seed job configuration
 ### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
-- `jenkins2_seed_job_enable` - enable jenkins seed job   
+- `jenkins2_seed_job_enable` - enable jenkins seed job
    default: `False`
-- `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label   
+- `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label
    default: `dsl_hybris_create_job.groovy`
-- `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them   
+- `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them
    default: `"true"`
-- `jenkins2_seed_job_name` - Jenkins seed job name   
+- `jenkins2_seed_job_name` - Jenkins seed job name
    default: `"seed_job"`
 
 
@@ -357,7 +357,7 @@ jenkins2_credentials:
   * `2` - UsersPrivateKeySource. _If this value is set Jenkins will use default private keys from `~/.ssh`._
 
 # EC2 plugin configuration
-- `jenkins2_ec2_enable` - enable jenkins ec2 plugin configure https://wiki.jenkins.io/display/JENKINS/Amazon+EC2+Plugin   
+- `jenkins2_ec2_enable` - enable jenkins ec2 plugin configure https://wiki.jenkins.io/display/JENKINS/Amazon+EC2+Plugin
    default: `False`
 ```yml
 jenkins2_ec2_cloud_parameters:
@@ -470,6 +470,48 @@ jenkins2_ec2_ami_list:
       enabled: False
     t2Unlimited: "false"
 ```
+
+# Security and Authorization configuration
+- `jenkins2_security_enable`: enable Jenkins security.
+  default: `True`
+- `jenkins2_security_realm`: Select type of Jenkins security. Avaible: `basic`, `ldap`, `active-directory`
+  default: `"basic"`
+
+  ### Default `active-directory` plugin configuration
+  ```yaml
+  jenkins2_active_directory_domain_name: "domain.com"
+  jenkins2_active_directory_domain_controller: "server.domain.com:3268"
+  jenkins2_active_directory_site: "null"
+  jenkins2_active_directory_bind_name: "user@domain.com"
+  jenkins2_active_directory_bind_pass: "password"
+  jenkins2_active_directory_start_tls: "true"
+  jenkins2_active_directory_remove_irrelevant_groups: "false"
+  ```
+
+  ### Default `LDAP` plugin configuration
+  ```yaml
+  jenkins2_ldap_server: "ldap.server.com:3268"
+  jenkins2_ldap_root_dn: "dc=server,dc=com"
+  jenkins2_ldap_user_search_base: ""
+  jenkins2_ldap_user_search: "mail={0}"
+  jenkins2_ldap_group_search_base: ""
+  jenkins2_ldap_group_search_filter: ""
+  jenkins2_ldap_group_membership_filter: "null"
+  jenkins2_ldap_manager_dn: "CN=User,OU=Auto Users,OU=Service,OU=Managed by Enterprise Admins,DC=server,DC=com"
+  jenkins2_ldap_manager_password: "Pa$$word"
+  jenkins2_ldap_inhibit_infer_root_dn: "true"
+  jenkins2_ldap_disable_mail_address_resolver: "false"
+  jenkins2_ldap_display_name_attribute_name: "displayname"
+  jenkins2_ldap_mail_address_attribute_name: "mail"
+  ```
+
+- `jenkins2_authorization_strategy_configure`: enable authorization strategy configuration
+  default: `True`
+- `jenkins2_authorization_strategy`: type of authorization strategy. Available: `logged-in`, `matrix-based`
+  default: `"logged-in"`
+- `jenkins2_authorization_strategy_logged_in_allow_anonymous_read`: allow anonymous read access
+  default: `"false"`
+
 =======
 * jenkins2_ssh_keys_slave_hosts - dict that describes slave hosts with remote ssh users, ex:
 
