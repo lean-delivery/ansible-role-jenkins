@@ -57,7 +57,7 @@ Requirements
      default: `''`
   - `jenkins2_config_java_options` - Options to pass to java when running Jenkins.   
      default: `"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_"`
-  - `jenkins2_config_http_port` - Port Jenkins is listening on.   
+  - `jenkins2_config_http_port` - Port Jenkins is listening on. If you use https for Jenkins and don't want to use insecure connection, set this variable to '-1'  
      default: `8080`
   - `jenkins2_config_listen_address` - IP address Jenkins listens on for HTTP requests. Default is all interfaces (0.0.0.0).   
      default: `''`
@@ -71,6 +71,23 @@ Requirements
      default: `20`
   - `jenkins2_config_args` - Pass arbitrary arguments to Jenkins. Full option list: java -jar jenkins.war --help   
      default: `''`
+# Jenkins HTTPS config
+  - 'jenkins2_config_https_enabled' - Enabling https for jenkins.   
+    default: 'false'
+  - 'generate_jks_from_pfx' - Set it to 'true' if you want to generate java keystore from pfx-certificate.   
+    default: 'false'
+  - 'jenkins2_config_keystore_path' - Set target location of keystore on a jenkins host.   
+    default: '{{ jenkins2_home_directory }}/keystore.jks'
+  - 'keystore_jks' - If you use existed keystore and do not need to generate it you should set path where this keystore file is placed. If you dont use such file, leave this option empty.   
+    default: ''
+  - 'jenkins2_config_keystore_password' Password for pfx-certificate and for keystore.   
+    default: ''
+  - 'jenkins2_config_path_to_cert' - Location of certificate in pfx format (source file for generating keystore)
+    default: '/home/user/example.com.pfx'
+  - 'jenkins2_config_https_port' - Port for https connection for example 8443. If you do not use https, leave this option empty.   
+    default: ''
+  - 'jenkins2_config_listen_https_address' - IP address Jenkins listens on for HTTPS requests. Default is all interfaces (0.0.0.0).  
+    default: ''
 # Jenkins proxy config
   - `jenkins2_proxy_url` - proxy url for plugins download config   
      default: `''`
