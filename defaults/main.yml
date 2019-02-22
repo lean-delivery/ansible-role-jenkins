@@ -17,12 +17,12 @@ generate_jks_from_pfx: false
 # If you use existed keystore (and not generate it) you should set path where it placed
 jenkins2_config_keystore_path: "{{ jenkins2_home_directory }}/keystore.jks"
 # If you have a ready keystore file set path to the *.jks file
-keystore_jks: "keystore.jks"
-jenkins2_config_keystore_password: "123456"
+keystore_jks: ""
+jenkins2_config_keystore_password: ""
 # Select path to pfx certificate file
 jenkins2_config_path_to_cert: "/home/user/example.com.pfx"
-jenkins2_config_https_port: 8443
-jenkins2_config_listen_https_address: ''
+jenkins2_config_https_port: ""
+jenkins2_config_listen_https_address: ""
 
 jenkins2_config_java_cmd: ''
 jenkins2_config_java_options: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false \
