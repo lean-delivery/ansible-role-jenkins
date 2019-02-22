@@ -10,23 +10,25 @@ lint:
   options:
     config-file: .yamllint
 platforms:
-  - name: test-epc-centos7-ansible-role-jenkins
+
+  - name: test-epc-centos7-jenkins
     image: CentOS7_64-bit
     shape: small
     region: EPAM-BY2
     wait_timeout: 3600
     groups:
       - rhel_family
-  - name: test-epc-ubuntu1804-ansible-role-jenkins
+  - name: test-epc-ubuntu1804-jenkins
     image: Ubuntu18.04_64-bit
     shape: small
     region: EPAM-BY2
     wait_timeout: 3600
     groups:
       - debian_family
+
 provisioner:
   name: ansible
-  log: False
+  log: True
   playbooks:
     create: ../resources/provisioning/EPC/create.yml
     prepare: ../resources/provisioning/EPC/prepare.yml
