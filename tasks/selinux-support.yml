@@ -3,15 +3,18 @@
   package:
     name: libselinux-python
     state: present
+  register: status
+  until: status is succeeded
   become: True
 
 - name: "Install ansible selinux configure libraries"
   package:
-    name: "{{ item }}"
+    name:
+      - policycoreutils-python
+      - libsemanage-python
     state: present
-  with_items:
-    - policycoreutils-python
-    - libsemanage-python
+  register: status
+  until: status is succeeded
   become: True
   when: ansible_selinux.status == "enabled"
 
