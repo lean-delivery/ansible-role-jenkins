@@ -5,8 +5,10 @@ stages:
   - deployment test
 
 before_script:
+  - rm -rf molecule/resources/provisioning
   - ansible --version
   - molecule --version
+  - git clone https://github.com/lean-delivery/ansible-molecule-drivers.git molecule/resources/provisioning
 
 variables:
   GET_SOURCES_ATTEMPTS: "5"
@@ -16,27 +18,28 @@ Ansible lint:
   before_script:
     - git clone https://github.com/lean-delivery/ansible-lint-rules.git ~/ansible-lint-rules
   script:
+    - ansible-lint --version
     - ansible-lint . -c .ansible-lint
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - delegated
+    - aws
 
 Docker jenkins:
   stage: deployment test
   script:
     - molecule test -s default
   tags:
-    - docker
+    - aws
 
 AWS jenkins:
   variables:
-    EPC_REGION: AWS-EUCENTRAL
+    AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule test -s cloud-aws-delegated
+    - molecule test -s cloud-aws-direct
   tags:
-    - delegated
+    - aws
 
 EPC jenkins:
   variables:
