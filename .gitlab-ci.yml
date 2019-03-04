@@ -27,7 +27,7 @@ Docker jenkins:
   script:
     - molecule test -s default
   tags:
-    - docker
+    - aws
 
 AWS jenkins:
   variables:
