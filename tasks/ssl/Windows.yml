@@ -1,0 +1,92 @@
+---
+- name: Check if keystore exists in role
+  stat:
+    path: '{{ jenkins2_local_keystore }}'
+  delegate_to: localhost
+  register: keystore_file
+
+- name: Check if keystore exists in jenkins2 directory
+  win_stat:
+    path: '{{ jenkins2_ssl_key_store_path }}\{{ jenkins2_ssl_key_store_name }}'
+  register: keystore_file_jenkins2
+
+- name: Copy keystore file
+  win_copy:
+    src: '{{ jenkins2_local_keystore }}'
+    dest: '{{ jenkins2_ssl_key_store }}'
+    force: True
+  when:
+    - keystore_file.stat.exists
+    - not keystore_file_jenkins2.stat.exists
+
+- name: Install OpenSSL
+  win_chocolatey:
+    name: openssl.light
+    state: present
+  when: not keystore_file.stat.exists or not keystore_file_jenkins2.stat.exists
+
+- name: Create private certificate
+  win_command: >-
+    openssl genrsa -out {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_pkey_file_name }}
+    {{ jenkins2_ssl_key_size | int }}
+  args:
+    creates: '{{ jenkins2_ssl_key_store_path }}\{{ jenkins2_ssl_key_store_name }}'
+  when: not keystore_file.stat.exists
+
+- name: Create CSR
+  win_command: >-
+    openssl req -nodes -newkey rsa:{{ jenkins2_ssl_key_size | int }}
+    -keyout {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_pkey_file_name }}
+    -out {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_cert_file_name }}.csr
+    -subj {{ jenkins2_win_ssl_subj }}
+  args:
+    creates: '{{ jenkins2_ssl_key_store_path }}\{{ jenkins2_ssl_key_store_name }}'
+  when: not keystore_file.stat.exists
+
+- name: Create certificates for keystore
+  win_command: >-
+    openssl x509 -req -days 365
+    -in {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_cert_file_name }}.csr
+    -signkey {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_pkey_file_name }}
+    -out {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_cert_file_name }}
+  args:
+    creates: '{{ jenkins2_ssl_key_store_path }}\{{ jenkins2_ssl_key_store_name }}'
+  when: not keystore_file.stat.exists
+
+- name: Export certificate and private key into a bundle
+  win_command: >-
+    openssl pkcs12 -export
+    -in {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_cert_file_name }}
+    -inkey {{ jenkins2_win_temp_dir }}\{{ jenkins2_local_pkey_file_name }}
+    -name {{ ansible_hostname  }}
+    -passout pass:{{ jenkins2_ssl_key_store_password }}
+    -out {{ jenkins2_win_temp_dir }}\{{ ansible_hostname  }}.p12
+  args:
+    chdir: '{{ jenkins2_win_temp_dir }}'
+    creates: '{{ jenkins2_ssl_key_store_path }}\{{ jenkins2_ssl_key_store_name }}'
+  when:
+    - not keystore_file.stat.exists
+
+- name: Get java directory
+  win_shell: '(Get-ChildItem Env:JAVA_HOME | \
+    Select-Object Value | ft -HideTableHeaders | Out-String).Trim()'
+  args:
+    creates: '{{ jenkins2_ssl_key_store_path }}\{{ jenkins2_ssl_key_store_name }}'
+  register: java_directory
+  when:
+    - not keystore_file.stat.exists
+
+- name: Import the PKCS12 file into a new java keystore
+  win_command: >-
+    keytool
+    -importkeystore
+    -deststorepass {{ jenkins2_ssl_key_store_password }}
+    -srcstorepass {{ jenkins2_ssl_key_store_password }}
+    -destkeystore {{ jenkins2_ssl_key_store_name }}
+    -srckeystore {{ jenkins2_win_temp_dir }}\{{ ansible_hostname  }}.p12
+    -srcstoretype PKCS12
+  args:
+    chdir: '{{ jenkins2_ssl_key_store_path }}'
+    creates: '{{ jenkins2_ssl_key_store_path }}\{{ jenkins2_ssl_key_store_name }}'
+  when:
+    - not keystore_file.stat.exists
