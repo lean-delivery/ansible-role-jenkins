@@ -30,14 +30,14 @@ jenkins2_proxy_password: ''
 jenkins2_proxy_no_proxy_hosts: ''
 
 # SSL
-jenkins2_local_keystore: True
+jenkins2_local_keystore: False
 jenkins2_local_keystore_path: '{{ role_path }}/files/{{ jenkins2_ssl_key_store_name }}'
 jenkins2_ssl_configure: True
 jenkins2_ssl_key_store_name: jenkins2-ssl.keystore.jks
 jenkins2_ssl_key_size: 4096
 jenkins2_ssl_key_store_password: 123456
 jenkins2_ssl_trust_store_password: 123456
-dest_jenkins2_ssl_path: '{{ jenkins2_home_directory }}'
+jenkins2_ssl_key_store: '{{ jenkins2_home_directory }}/{{ jenkins2_ssl_key_store_name }}'
 jenkins2_ssl_need_client_auth: 'false'
 jenkins2_ssl_want_client_auth: 'false'
 jenkins2_ssl_key_store_type: JKS
