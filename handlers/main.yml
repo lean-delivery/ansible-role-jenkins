@@ -24,3 +24,21 @@
   until: login_page.status == 200
   retries: 60
   delay: 1
+
+- name: "Restart Jenkins with HTTPS"
+  service:
+    name: "jenkins"
+    state: restarted
+  notify: Wait for Jenkins with HTTPS
+  become: True
+
+- name: "Wait for Jenkins with HTTPS"
+  uri:
+    url: "https://localhost:{{ jenkins2_config_https_port }}\
+    {{ jenkins2_context_path | default('') }}/login"
+    status_code: 200
+    validate_certs: False
+  register: login_page
+  until: login_page.status == 200
+  retries: 60
+  delay: 1

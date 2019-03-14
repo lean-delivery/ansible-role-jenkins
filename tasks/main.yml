@@ -122,3 +122,21 @@
 
 - include_tasks: "configure_security.yml"
   when: jenkins2_security_enable
+
+- name: "Disable insecure connection"
+  set_fact:
+    jenkins2_config_http_port: '-1'
+  when: jenkins2_http_disabled
+
+- name: "Apply Jenkins configuration file and check HTTPS"
+  template:
+    src: "{{ ansible_os_family }}_configuration.j2"
+    dest: /etc/{{ (ansible_os_family == "Debian") | ternary('default','sysconfig') }}/jenkins
+    owner: "root"
+    group: "root"
+    mode: "0644"
+    backup: True
+  become: True
+  notify:
+    - Restart Jenkins with HTTPS
+  when: jenkins2_https_enabled
