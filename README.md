@@ -108,11 +108,11 @@ Requirements
      default: `''`
   - `jenkins2_proxy_port` - Proxy server port   
      default: `0`
-  - `jenkins2_proxy_username` - username for proxy connection   
+  - `jenkins2_proxy_username` - Username for proxy connection   
      default: `''`
-  - `jenkins2_proxy_password` - password for proxy connection   
+  - `jenkins2_proxy_password` - Password for proxy connection   
      default: `''`
-  - `jenkins2_proxy_no_proxy_hosts` - hosts to skip from proxying   
+  - `jenkins2_proxy_no_proxy_hosts` - Hosts to skip from proxying   
      default: `''`
 # ssh key generation config
   - `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user   
