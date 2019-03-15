@@ -71,12 +71,42 @@ Requirements
      default: `20`
   - `jenkins2_config_args` - Pass arbitrary arguments to Jenkins. Full option list: java -jar jenkins.war --help   
      default: `''`
+# Enable HTTPS
+  - `jenkins2_https_enabled` - Use or not use secure connection.   
+     default: `True`
+  - `jenkins2_http_disabled` - Disable insecure connection.   
+     default: `False`
+  - `jenkins2_config_https_port` - Jenkins port for secure connection (https).   
+     default: `8443`
+  - `jenkins2_local_keystore` - If True - to search for keystore on ansible host on {{ jenkins2_local_keystore_path }}. If False - to check keystore on remote host.    
+     default: `False`
+  - `jenkins2_local_keystore_path` - Path to local keystore file (in order not to create self-signed)  
+     default: `{{ role_path }}/files/{{ jenkins2_ssl_key_store_name }}`
+  - `jenkins2_ssl_configure` - Configure or not ssl connection for jenkins.   
+     default: `True`
+  - `jenkins2_ssl_key_store_name` - File name of keystore. If file with such name exists in role folder/files - it will be used as keystore.  
+     default: `jenkins2-ssl.keystore.jks`
+  - `jenkins2_ssl_key_size` - Certificate key size.   
+     default: `4096`
+  - `jenkins2_ssl_key_store_password` - Keystore password.   
+     default: `123456`
+  - `jenkins2_ssl_key_store` - Full path to keystore file.   
+     default: '{{ jenkins2_home_directory }}/{{ jenkins2_ssl_key_store_name }}'
+  - `jenkins2_ssl_certificate_provider` - Only for Linux os. https://docs.ansible.com/ansible/latest/openssl_certificate_module.html.   
+     default: `selfsigned`
+# Certificate
+  - `jenkins2_ca_domain` - Certificate domain name.   
+     default: `example.com`
+  - `jenkins2_local_pkey_file_name` - Private cert name.   
+     default: `{{ ansible_hostname }}.ca-pkey.pem`
+  - `jenkins2_local_cert_file_name` - Public cert name.   
+     default: `{{ ansible_hostname }}.ca-cert.pem`
 # Jenkins proxy config
-  - `jenkins2_proxy_url` - proxy url for plugins download config   
+  - `jenkins2_proxy_url` - Proxy url for plugins download config   
      default: `''`
-  - `jenkins2_proxy_host` - proxy server host name   
+  - `jenkins2_proxy_host` - Proxy server host name   
      default: `''`
-  - `jenkins2_proxy_port` - proxy server port   
+  - `jenkins2_proxy_port` - Proxy server port   
      default: `0`
   - `jenkins2_proxy_username` - username for proxy connection   
      default: `''`
