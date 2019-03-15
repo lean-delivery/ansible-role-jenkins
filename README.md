@@ -84,7 +84,7 @@ Requirements
      default: `{{ role_path }}/files/{{ jenkins2_ssl_key_store_name }}`
   - `jenkins2_ssl_configure` - Configure or not ssl connection for jenkins.   
      default: `True`
-  - `jenkins2_ssl_key_store_name` - File name of keystore. If file with such name exists in role folder/files - it will be used as keystore.  
+  - `jenkins2_ssl_key_store_name` - Keystore file name. If file with such name exists in role folder/files - it will be used as keystore.  
      default: `jenkins2-ssl.keystore.jks`
   - `jenkins2_ssl_key_size` - Certificate key size.   
      default: `4096`
