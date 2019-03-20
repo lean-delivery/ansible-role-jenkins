@@ -1,7 +1,6 @@
 exclude_paths:
  - ./.travis.yml
  - ./molecule/
- - ./tasks/ssl/Linux_keystore_new.yml
 rulesdir:
   - ~/ansible-lint-rules/rules/
 use_default_rules: true
