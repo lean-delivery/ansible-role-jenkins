@@ -1,18 +1,18 @@
 ---
 # included file
-- name: "Apply Jenkins configuration file"
+- name: Apply Jenkins configuration file
   template:
     src: "{{ ansible_os_family }}_configuration.j2"
     dest: /etc/default/jenkins
-    owner: "root"
-    group: "root"
-    mode: "0644"
+    owner: root
+    group: root
+    mode: 0644
     backup: True
   become: True
   notify:
     - Restart Jenkins
 
-- name: "Add unlock script directory"
+- name: Add unlock script directory
   file:
     path: "{{ jenkins2_home_directory }}/init.groovy.d"
     owner: "{{ jenkins2_user }}"
@@ -20,41 +20,41 @@
     state: directory
   become: True
 
-- name: "Add script for unlock disabling"
+- name: Add script for unlock disabling
   template:
     src: "disable_unlock.groovy.j2"
     dest: "{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy"
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
-    mode: "0744"
+    mode: 0744
   become: True
 
-- name: "Create directory for user"
+- name: Create directory for user
   file:
     path: "{{ jenkins2_home_directory }}/users/{{ jenkins2_cli_username }}"
     state: directory
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
-    mode: "0755"
+    mode: 0755
   become: True
 
-- name: "Delete user directory"
+- name: Delete user directory
   file:
     path: "{{ jenkins2_home_directory }}/users/{{ jenkins2_cli_username }}"
     state: absent
   become: True
 
-- name: "Force all notified handlers to run"
+- name: Force all notified handlers to run
   meta: flush_handlers
 
-- name: "Wait for Jenkins starts"
+- name: Wait for Jenkins starts
   wait_for:
     path: "{{ jenkins2_home_directory }}/config.xml"
 
-- name: "Force all notified handlers to run"
+- name: Force all notified handlers to run
   meta: flush_handlers
 
-- name: "Remove unlock script"
+- name: Remove unlock script
   file:
     path: "{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy"
     state: absent
@@ -62,21 +62,21 @@
   notify:
     - Restart Jenkins
 
-- name: "Add script for password set"
+- name: Add script for password set
   template:
     src: "reset_user_password.groovy.j2"
     dest: "{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy"
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
-    mode: "0744"
+    mode: 0744
   become: True
   notify:
     - Restart Jenkins
 
-- name: "Force all notified handlers to run"
+- name: Force all notified handlers to run
   meta: flush_handlers
 
-- name: "Remove unlock script2"
+- name: Remove unlock script2
   file:
     path: "{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy"
     state: absent
@@ -84,5 +84,5 @@
   notify:
     - Restart Jenkins
 
-- name: "Force all notified handlers to run"
+- name: Force all notified handlers to run
   meta: flush_handlers
