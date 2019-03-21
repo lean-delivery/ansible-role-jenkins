@@ -1,5 +1,5 @@
 ---
-- name: "Configure Gitlab"
+- name: Configure Gitlab
   jenkins_script:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'set-gitlab-connection.groovy.j2') }}"

@@ -1,5 +1,5 @@
 ---
-- name: "Proxy Configuration"
+- name: Proxy Configuration
   jenkins_script:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'proxy_configuration.groovy.j2') }}"
@@ -8,7 +8,7 @@
     validate_certs: False
     timeout: 120
 
-- name: "Update Center Refresh"
+- name: Update Center Refresh
   jenkins_script:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'update_center_refresh.groovy.j2') }}"
@@ -17,7 +17,7 @@
     validate_certs: False
     timeout: 120
 
-- name: "Install Jenkins plugins"
+- name: Install Jenkins plugins
   jenkins_plugin:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     url_username: "{{ jenkins2_cli_username }}"
@@ -37,5 +37,5 @@
   notify:
     - Restart Jenkins
 
-- name: "Force all notified handlers to run"
+- name: Force all notified handlers to run
   meta: flush_handlers

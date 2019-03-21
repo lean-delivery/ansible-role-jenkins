@@ -1,5 +1,5 @@
 ---
-- name: "Configure EC2"
+- name: Configure EC2
   jenkins_script:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'set-ec2_configuration.groovy.j2') }}"

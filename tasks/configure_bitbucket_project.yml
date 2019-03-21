@@ -1,5 +1,5 @@
 ---
-- name: "Configure bitbucket project"
+- name: Configure bitbucket project
   jenkins_script:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'configure-bitbucket-project.groovy.j2') }}"

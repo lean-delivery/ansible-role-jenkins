@@ -1,5 +1,5 @@
 ---
-- name: "Configure SMTP"
+- name: Configure SMTP
   jenkins_script:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'add-smtp.groovy.j2') }}"
