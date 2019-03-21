@@ -75,8 +75,12 @@ PREFIX=/
 # --argumentsRealm.roles.$ADMIN_USER=admin
 # --webroot=~/.jenkins/war
 # --prefix=$PREFIX
+{% if jenkins2_https_enabled -%}
+JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort={{ jenkins2_config_http_port }} --httpsPort={{ jenkins2_config_https_port }} --httpsKeyStore={{ jenkins2_ssl_key_store }} --httpsKeyStorePassword={{ jenkins2_ssl_key_store_password }}"
+{% else -%}
 {% if jenkins2_config_listen_address != '' -%}
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX --httpListenAddress={{ jenkins2_config_listen_address }}"
 {% else -%}
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX "
+{% endif -%}
 {% endif -%}

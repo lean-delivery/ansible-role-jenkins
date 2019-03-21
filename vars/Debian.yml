@@ -12,3 +12,4 @@ requirements:
   - "python"
   - "python-pip"
   - "unzip"
+  - "openssl"
