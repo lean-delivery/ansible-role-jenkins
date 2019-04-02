@@ -440,3 +440,10 @@ jenkins2_ldap_mail_address_attribute_name: "mail"
 jenkins2_authorization_strategy_configure: True
 jenkins2_authorization_strategy: "logged-in"
 jenkins2_authorization_strategy_logged_in_allow_anonymous_read: "false"
+
+# jenkins windows master
+#jenkins2_windows_service: jenkins-windows
+jenkins2_windows_workdir: C:\Program Files (x86)\Jenkins
+jenkins2_windows_ssl_key_store: '{{ jenkins2_windows_workdir }}\{{ jenkins2_ssl_key_store_name }}'
+#jenkins2_windows_labels:
+#   - windows

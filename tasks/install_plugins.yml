@@ -25,7 +25,7 @@
     name: "{{ item }}"
     owner: "{{ jenkins2_user }}"
     validate_certs: False
-    jenkins_home: "{{ jenkins2_home_directory }}"
+    jenkins_home: '{{ (ansible_system == "Linux") | ternary('jenkins2_home_directory','jenkins2_windows_workdir') }}'
     state: present
     timeout: "{{ jenkins2_plugins_timeout }}"
   register: my_jenkins_plugins
