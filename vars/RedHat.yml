@@ -1,4 +1,5 @@
 ---
+jenkins2_default_path: '/var/lib/jenkins'
 requirements:
   - "gcc"
   - "python-devel"
