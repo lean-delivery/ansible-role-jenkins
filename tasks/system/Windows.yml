@@ -1,0 +1,15 @@
+---
+- name: "Load a variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+
+- name: "Become section"
+  block:
+    - name: "Install requirements"
+      package:
+        name: "{{ requirements }}"
+        state: "present"
+      register: status
+      until: status is succeeded
+  become: True
