@@ -1,15 +1,17 @@
 ---
 - name: Proxy Configuration
-  jenkins_script
-    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+  local_action:
+    module: jenkins_script
+    url: 'http://{{ jenkins2_host_ip }}:{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'proxy_configuration.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     timeout: 120
 
 - name: Update Center Refresh
-  jenkins_script
-    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+  local_action:
+    module: jenkins_script
+    url: 'http://{{ jenkins2_host_ip }}:{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'update_center_refresh.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
@@ -17,8 +19,9 @@
     timeout: 120
 
 - name: Install Jenkins plugins
-  jenkins_plugin
-    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+  local_action:
+    module: jenkins_plugin
+    url: 'http://{{ jenkins2_host_ip }}:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
     name: "{{ item }}"
@@ -33,7 +36,7 @@
   with_items:
     - '{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}'
   notify:
-    - Restart Jenkins
+    - Restart windows Jenkins
 
 - name: Force all notified handlers to run
   meta: flush_handlers

@@ -12,6 +12,7 @@ jenkins2_cli_password: admin
 jenkins2_win_update: False
 jenkins2_home_directory: '{{ jenkins2_default_path }}'
 jenkins2_host_ip: '{{ ansible_ip_addresses[0] }}'
+jenkins2_install_type: 'remote'
 
 jenkins2_config_java_cmd: ''
 jenkins2_config_java_options: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false \
@@ -19,7 +20,7 @@ jenkins2_config_java_options: "-Djava.awt.headless=true -Djenkins.install.runSet
 jenkins2_config_http_port: 8080
 jenkins2_config_listen_address: ''
 jenkins2_config_debug_level: 5
-jenkins2_config_enable_access_log: "no"
+jenkins2_config_enable_access_log: 'no'
 jenkins2_config_handler_max: 100
 jenkins2_config_handler_idle: 20
 jenkins2_config_args: ''
@@ -54,9 +55,9 @@ jenkins2_local_cert_file_name: '{{ ansible_hostname }}.ca-cert.pem'
 
 # SSH_KEYS generation properties
 jenkins2_ssh_keys_generate: False
-jenkins2_ssh_keys_private_keyname: "id_rsa"
+jenkins2_ssh_keys_private_keyname: 'id_rsa'
 jenkins2_ssh_keys_size: 4096
-jenkins2_ssh_keys_inv_slave_groupname: "jenkins_ssh_slaves"
+jenkins2_ssh_keys_inv_slave_groupname: 'jenkins_ssh_slaves'
 
 jenkins2_ssh_keys_slave_group: "{{ groups[jenkins2_ssh_keys_inv_slave_groupname]|default([''])}}"
 jenkins2_ssh_keys_slave_hosts: "{%- set users = [] %}
@@ -72,11 +73,11 @@ jenkins2_ssh_keys_slave_group_exist: "{{ ((jenkins2_ssh_keys_slave_group)[0]|def
 
 # SMTP properties
 jenkins2_smtp_enabled: True
-jenkins2_smtp_sysad_email: "usermail@test.com"
-jenkins2_smtp_user: "usermail@test.com"
-jenkins2_smtp_password: "password"
-jenkins2_smtp_port: "587"
-jenkins2_smtp_host: "smtp.office365.com"
+jenkins2_smtp_sysad_email: 'usermail@test.com'
+jenkins2_smtp_user: 'usermail@test.com'
+jenkins2_smtp_password: 'password'
+jenkins2_smtp_port: '587'
+jenkins2_smtp_host: 'smtp.office365.com'
 # Plugin installation
 jenkins2_plugins_timeout: 2000
 jenkins2_plugins_suggested:
@@ -260,16 +261,16 @@ jenkins2_sonarqube_analysis_properties: ''
 jenkins2_custom_files_enabled: False
 jenkins2_custom_files:
   log_parser:
-    src: "{{ role_path }}/files/pipeline_error_in_init_console"
-    dest: "{{ jenkins2_home_directory }}"
-    owner: "{{ jenkins2_user }}"
-    group: "{{ jenkins2_user }}"
-    mode: "0755"
+    src: '{{ role_path }}/files/pipeline_error_in_init_console'
+    dest: '{{ jenkins2_home_directory }}'
+    owner: '{{ jenkins2_user }}'
+    group: '{{ jenkins2_user }}'
+    mode: '0755'
 
 # Setup gitlab connection
 jenkins2_gitlab_enabled: False
-gitlab_external_url: "https://localhost"
-jenkins2_gitlab_token_cred: "gitlab_token"
+gitlab_external_url: 'https://localhost'
+jenkins2_gitlab_token_cred: 'gitlab_token'
 
 # Add seed job - job that run dsl config and seeds jobs
 # Add or replace dsl template
@@ -278,14 +279,14 @@ jenkins2_seed_job_enable: False
 jenkins2_seed_job_template: dsl_hybris_create_job.groovy
 # to ignore existing jobs and do not rewrite them
 jenkins2_seed_job_ignore_existing: "true"
-jenkins2_seed_job_name: "seed_job"
+jenkins2_seed_job_name: 'seed_job'
 
 # EC2 plugin configuration
 jenkins2_ec2_enable: False
 jenkins2_ec2_cloud_parameters:
-  cloud_name: "AWS_cloud"
-  credentials_id: "AWS_EC2_CREDS"
-  instance_cap_str: "2"
+  cloud_name: 'AWS_cloud'
+  credentials_id: 'AWS_EC2_CREDS'
+  instance_cap_str: '2'
   private_key: |
     -----BEGIN RSA PRIVATE KEY-----
     MIIEpQIBAAKCAQEAp4aKtv4Tw760QLb5eG4M0nKeO8cPPf68aSbYwhSNqn4n3+Pq
@@ -314,70 +315,70 @@ jenkins2_ec2_cloud_parameters:
     ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
     criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
     -----END RSA PRIVATE KEY-----
-  region: "us-east-1"
-  use_instance_profile_for_credentials: "false"
-  role_arn: ""
-  role_session_name: ""
+  region: 'us-east-1'
+  use_instance_profile_for_credentials: 'false'
+  role_arn: ''
+  role_session_name: ''
 jenkins2_ec2_ami_list:
   ci_ami:
-    ami: "ami-AAAAAAAA"
-    associatePublicIp: "false"
-    connectBySSHProcess: "true"
-    connectUsingPublicIp: "false"
-    customDeviceMapping: ""
-    deleteRootOnTermination: "true"
-    description: "Jenkins slave for CI"
-    ebsOptimized: "false"
-    iamInstanceProfile: ""
-    idleTerminationMinutes: "5"
-    initScript: ""
-    instanceCapStr: "5"
-    jvmopts: ""
-    labelString: "ci_slaves"
-    launchTimeoutStr: ""
-    numExecutors: "1"
-    remoteAdmin: "ec2-user"
-    remoteFS: "/opt/jenkins"
+    ami: 'ami-AAAAAAAA'
+    associatePublicIp: 'false'
+    connectBySSHProcess: 'true'
+    connectUsingPublicIp: 'false'
+    customDeviceMapping: ''
+    deleteRootOnTermination: 'true'
+    description: 'Jenkins slave for CI'
+    ebsOptimized: 'false'
+    iamInstanceProfile: ''
+    idleTerminationMinutes: '5'
+    initScript: ''
+    instanceCapStr: '5'
+    jvmopts: ''
+    labelString: 'ci_slaves'
+    launchTimeoutStr: ''
+    numExecutors: '1'
+    remoteAdmin: 'ec2-user'
+    remoteFS: '/opt/jenkins'
     securityGroups: "sg-11111111"
-    stopOnTerminate: "false"
-    subnetId: "subnet-SSSSSSSS"
+    stopOnTerminate: 'false'
+    subnetId: 'subnet-SSSSSSSS'
     tags:
       - {name: "Name", value: "CI Slave"}
       - {name: "Name2", value: "CI2 Slave"}
     tmpDir: ""
-    type: "t2.medium"
-    useDedicatedTenancy: "false"
-    useEphemeralDevices: "true"
-    usePrivateDnsName: "true"
-    userData: ""
-    zone: "us-east-1a,us-east-1b"
-    monitoring: "false"
+    type: 't2.medium'
+    useDedicatedTenancy: 'false'
+    useEphemeralDevices: 'true'
+    usePrivateDnsName: 'true'
+    userData: ''
+    zone: 'us-east-1a,us-east-1b'
+    monitoring: 'false'
     SpotConfiguration:
       enabled: True
-      spotMaxBidPrice: "0.001"
-    t2Unlimited: "false"
+      spotMaxBidPrice: '0.001'
+    t2Unlimited: 'false'
   fv_ami:
-    ami: "ami-BBBBBBBB"
-    associatePublicIp: "false"
-    connectBySSHProcess: "true"
-    connectUsingPublicIp: "false"
-    customDeviceMapping: ""
-    deleteRootOnTermination: "true"
-    description: "Jenkins slave for FV"
-    ebsOptimized: "false"
-    iamInstanceProfile: ""
-    idleTerminationMinutes: "5"
-    initScript: ""
-    instanceCapStr: "5"
-    jvmopts: ""
-    labelString: "ci_slaves"
-    launchTimeoutStr: ""
-    numExecutors: "1"
-    remoteAdmin: "ec2-user"
-    remoteFS: "/opt/jenkins"
-    securityGroups: "sg-11111111"
-    stopOnTerminate: "false"
-    subnetId: "subnet-SSSSSSSS"
+    ami: 'ami-BBBBBBBB'
+    associatePublicIp: 'false'
+    connectBySSHProcess: 'true'
+    connectUsingPublicIp: 'false'
+    customDeviceMapping: ''
+    deleteRootOnTermination: 'true'
+    description: 'Jenkins slave for FV'
+    ebsOptimized: 'false'
+    iamInstanceProfile: ''
+    idleTerminationMinutes: '5'
+    initScript: ''
+    instanceCapStr: '5'
+    jvmopts: ''
+    labelString: 'ci_slaves'
+    launchTimeoutStr: ''
+    numExecutors: '1'
+    remoteAdmin: 'ec2-user'
+    remoteFS: '/opt/jenkins'
+    securityGroups: 'sg-11111111'
+    stopOnTerminate: 'false'
+    subnetId: 'subnet-SSSSSSSS'
     tags:
       - {name: "Name", value: "FV Slave"}
     tmpDir: ""
