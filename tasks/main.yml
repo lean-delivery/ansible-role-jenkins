@@ -1,8 +1,16 @@
 ---
+- name: Choose platform based vars
+  include_vars: '{{ platform }}'
+  with_first_found:
+    - 'vars/{{ ansible_os_family }}.yml'
+    - not-supported.yml
+  loop_control:
+          loop_var: platform
+
 - name: Choose platform based task
   include_tasks: '{{ platform }}'
   with_first_found:
     - 'System-{{ ansible_system }}.yml'
     - not-supported.yml
   loop_control:
-  loop_var: platform
+          loop_var: platform

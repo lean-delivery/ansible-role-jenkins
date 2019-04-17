@@ -1,0 +1,13 @@
+---
+- name: Stop Jenkins service
+  win_service:
+    name: jenkins
+    state: stopped
+    enabled: yes
+
+- name: Dowload latest .war
+  win_get_url:
+    url: http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+    dest: '{{ jenkins2_home_directory }}'
+    registr: jenkins2_updated
+

@@ -9,7 +9,9 @@ jenkins2_key_validate_certs: True
 jenkins2_context_path: ''
 jenkins2_cli_username: admin
 jenkins2_cli_password: admin
-jenkins2_home_directory: {{ jenkins2_default_path }}
+jenkins2_win_update: False
+jenkins2_home_directory: '{{ jenkins2_default_path }}'
+jenkins2_host_ip: '{{ ansible_ip_addresses[0] }}'
 
 jenkins2_config_java_cmd: ''
 jenkins2_config_java_options: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false \
@@ -40,7 +42,7 @@ jenkins2_ssl_key_store_name: jenkins2-ssl.keystore.jks
 jenkins2_ssl_key_size: 4096
 jenkins2_ssl_key_store_password: 123456
 jenkins2_ssl_key_store: '{{ jenkins2_home_directory }}/{{ jenkins2_ssl_key_store_name }}'
-jenkins2_windows_ssl_key_store: '{{ jenkins2_home_directory }}\{{ jenkins2_ssl_key_store_name }}'
+#jenkins2_windows_ssl_key_store: '{{ jenkins2_home_directory }}\{{ jenkins2_ssl_key_store_name }}'
 # https://docs.ansible.com/ansible/latest/openssl_certificate_module.html
 jenkins2_ssl_certificate_provider: selfsigned
 
@@ -441,10 +443,3 @@ jenkins2_ldap_mail_address_attribute_name: "mail"
 jenkins2_authorization_strategy_configure: True
 jenkins2_authorization_strategy: "logged-in"
 jenkins2_authorization_strategy_logged_in_allow_anonymous_read: "false"
-
-# jenkins windows master
-#jenkins2_windows_service: jenkins-windows
-#jenkins2_windows_workdir: C:\Program Files (x86)\Jenkins
-
-#jenkins2_windows_labels:
-#   - windows
