@@ -17,20 +17,20 @@
 
 - name: Create group
   group:
-    name: "{{ jenkins2_user | default('jenkins') }}"
+    name: '{{ jenkins2_user | default('jenkins') }}'
     state: present
   become: True
 
 - name: Create user
   user:
-    name: "{{ jenkins2_user | default('jenkins') }}"
-    group: "{{ jenkins2_user | default('jenkins') }}"
+    name: '{{ jenkins2_user | default('jenkins') }}'
+    group: '{{ jenkins2_user | default('jenkins') }}'
     shell: /bin/bash
-    home: "{{ jenkins2_home_directory }}"
+    home: '{{ jenkins2_home_directory }}'
   become: True
 
 - name: Jenkins repository install
-  include_tasks: "{{ platform }}"
+  include_tasks: '{{ platform }}'
   with_first_found:
     - repository_install/{{ ansible_os_family }}.yml
     - not-supported.yml
@@ -39,7 +39,7 @@
 
 - name: Jenkins Installation
   package:
-    name: "{{ jenkins2_package_version }}"
+    name: '{{ jenkins2_package_version }}'
     state: present
   register: jenkins_was_installed
   until: jenkins_was_installed is success
@@ -47,10 +47,10 @@
 
 - name: Create symlink
   file:
-    src: "{{ jenkins2_home_directory }}"
+    src: '{{ jenkins2_home_directory }}'
     dest: /var/lib/jenkins
-    owner: "{{ jenkins2_user | default('jenkins') }}"
-    group: "{{ jenkins2_user | default('jenkins') }}"
+    owner: '{{ jenkins2_user | default('jenkins') }}'
+    group: '{{ jenkins2_user | default('jenkins') }}'
     state: link
   become: True
   when: jenkins2_home_directory != '/var/lib/jenkins'
@@ -65,7 +65,7 @@
   when: jenkins_was_installed is defined and jenkins_was_installed is changed
 
 - name: SSL preparation
-  include_tasks: "{{ platform }}"
+  include_tasks: '{{ platform }}'
   with_first_found:
     - ssl/{{ ansible_system }}.yml
     - not-supported.yml
@@ -74,44 +74,44 @@
   when:
     - jenkins2_ssl_configure
 
-- include_tasks: install_plugins.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/install_plugins.yml
   when: jenkins_was_installed is defined
 
-- include_tasks: configure_smtp.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_smtp.yml
   when: jenkins2_smtp_enabled
 
-- include_tasks: set_credentials.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/set_credentials.yml
   when: jenkins2_credentials_enabled
 
-- include_tasks: configure_pipeline_libraries.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_pipeline_libraries.yml
   when: jenkins2_pipeline_libraries_enabled
 
-- include_tasks: configure_bitbucket_project.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_bitbucket_project.yml
   when: jenkins2_bitbucket_project_enabled
 
-- include_tasks: configure_sonarqube.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_sonarqube.yml
   when: jenkins2_sonarqube_enabled
 
-- include_tasks: configure_jira.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_jira.yml
   when: jenkins2_jira_enabled
 
-- include_tasks: copy_custom_files.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/copy_custom_files.yml
   when: jenkins2_custom_files_enabled
 
-- include_tasks: configure_gitlab.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_gitlab.yml
   when: jenkins2_gitlab_enabled
 
-- include_tasks: add_new_jobs.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/add_new_jobs.yml
   when: jenkins2_seed_job_enable
 
-- include_tasks: configure_ec2.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_ec2.yml
   when: jenkins2_ec2_enable
 
-- include_tasks: configure_ssh_keys.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_ssh_keys.yml
   when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
     jenkins_was_installed is defined and jenkins_was_installed is changed
 
-- include_tasks: configure_security.yml
+- include_tasks: {{ jenkins2_install_type}}_installation/configure_security.yml
   when: jenkins2_security_enable
 
 - name: Disable insecure connection
@@ -121,8 +121,8 @@
 
 - name: Apply Jenkins configuration file and check HTTPS
   template:
-    src: "{{ ansible_os_family }}_configuration.j2"
-    dest: /etc/{{ (ansible_os_family == "Debian") | ternary('default','sysconfig') }}/jenkins
+    src: '{{ ansible_os_family }}_configuration.j2'
+    dest: /etc/{{ (ansible_os_family == 'Debian') | ternary('default','sysconfig') }}/jenkins
     owner: root
     group: root
     mode: 0644

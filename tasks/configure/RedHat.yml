@@ -2,7 +2,7 @@
 # included file
 - name: Apply Jenkins configuration file
   template:
-    src: "{{ ansible_os_family }}_configuration.j2"
+    src: '{{ ansible_os_family }}_configuration.j2'
     dest: /etc/sysconfig/jenkins
     owner: root
     group: root

@@ -2,7 +2,7 @@
 - name: Configure Sonarqube
   local_action:
     module: jenkins_script
-    url: 'http://{{ jenkins2_host_ip }}::{{ jenkins2_config_http_port }}'
+    url: 'http://{{ inventory_hostname }}::{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'configure_sonarqube.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'

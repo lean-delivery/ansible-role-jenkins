@@ -21,12 +21,12 @@
     url: 'http://localhost:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
-    name: "{{ item }}"
-    owner: "{{ jenkins2_user }}"
+    name: '{{ item }}'
+    owner: '{{ jenkins2_user }}'
     validate_certs: False
     jenkins_home: '{{ jenkins2_home_directory }}'
     state: present
-    timeout: "{{ jenkins2_plugins_timeout }}"
+    timeout: '{{ jenkins2_plugins_timeout }}'
   register: my_jenkins_plugins
   retries: 10
   delay: 3

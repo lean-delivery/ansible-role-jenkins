@@ -3,7 +3,4 @@
   win_copy:
     src: "{{ item.value.src }}"
     dest: "{{ item.value.dest }}"
-    #    owner: "{{ item.value.owner }}"
-    #    group: "{{ item.value.group }}"
-    #    mode: "{{ item.value.mode }}"
   with_dict: "{{ jenkins2_custom_files }}"

@@ -1,35 +1,35 @@
 ---
-- name: "Choose stable Jenkins"
+- name: 'Choose stable Jenkins'
   set_fact:
     key_value: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
     base_url: https://pkg.jenkins.io/redhat-stable
-  when: jenkins2_release_line=="stable"
+  when: jenkins2_release_line=='stable'
 
-- name: "Choose recent Jenkins"
+- name: 'Choose recent Jenkins'
   set_fact:
     key_value: https://pkg.jenkins.io/redhat/jenkins.io.key
     base_url: https://pkg.jenkins.io/redhat
-  when: jenkins2_release_line=="latest"
+  when: jenkins2_release_line=='latest'
 
-- name: "Jenkins Key"
+- name: 'Jenkins Key'
   environment:
-    http_proxy: "{{ jenkins2_proxy_url }}"
-    HTTP_PROXY: "{{ jenkins2_proxy_url }}"
-    https_proxy: "{{ jenkins2_proxy_url }}"
-    HTTPS_PROXY: "{{ jenkins2_proxy_url }}"
+    http_proxy: '{{ jenkins2_proxy_url }}'
+    HTTP_PROXY: '{{ jenkins2_proxy_url }}'
+    https_proxy: '{{ jenkins2_proxy_url }}'
+    HTTPS_PROXY: '{{ jenkins2_proxy_url }}'
   rpm_key:
-    key: "{{ key_value }}"
-    validate_certs: "{{ jenkins2_key_validate_certs }}"
+    key: '{{ key_value }}'
+    validate_certs: '{{ jenkins2_key_validate_certs }}'
     state: present
   register: status
   until: status is succeeded
   become: True
 
-- name: "Jenkins Repository"
+- name: 'Jenkins Repository'
   yum_repository:
     name: jenkinsrepo
     description: Jenkins YUM Repository
-    baseurl: "{{ base_url }}"
+    baseurl: '{{ base_url }}'
     gpgcheck: True
     state: present
   become: True

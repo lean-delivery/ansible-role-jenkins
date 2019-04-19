@@ -1,16 +1,16 @@
 ---
 jenkins2_default_path: '/var/lib/jenkins'
 requirements:
-  - "gcc"
-  - "openssl"
-  - "python-dev"
-  - "libssl-dev"
-  - "openssh-client"
-  - "git"
-  - "net-tools"
-  - "wget"
-  - "lsof"
-  - "python"
-  - "python-pip"
-  - "unzip"
-  - "openssl"
+  - 'gcc'
+  - 'openssl'
+  - 'python-dev'
+  - 'libssl-dev'
+  - 'openssh-client'
+  - 'git'
+  - 'net-tools'
+  - 'wget'
+  - 'lsof'
+  - 'python'
+  - 'python-pip'
+  - 'unzip'
+  - 'openssl'

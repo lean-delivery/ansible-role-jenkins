@@ -11,12 +11,11 @@ jenkins2_cli_username: admin
 jenkins2_cli_password: admin
 jenkins2_win_update: False
 jenkins2_home_directory: '{{ jenkins2_default_path }}'
-jenkins2_host_ip: '{{ ansible_ip_addresses[0] }}'
 jenkins2_install_type: 'remote'
 
 jenkins2_config_java_cmd: ''
-jenkins2_config_java_options: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false \
--Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_"
+jenkins2_config_java_options: '-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false \
+-Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_'
 jenkins2_config_http_port: 8080
 jenkins2_config_listen_address: ''
 jenkins2_config_debug_level: 5
@@ -43,7 +42,7 @@ jenkins2_ssl_key_store_name: jenkins2-ssl.keystore.jks
 jenkins2_ssl_key_size: 4096
 jenkins2_ssl_key_store_password: 123456
 jenkins2_ssl_key_store: '{{ jenkins2_home_directory }}/{{ jenkins2_ssl_key_store_name }}'
-#jenkins2_windows_ssl_key_store: '{{ jenkins2_home_directory }}\{{ jenkins2_ssl_key_store_name }}'
+jenkins2_windows_ssl_key_store: '{{ jenkins2_home_directory }}\{{ jenkins2_ssl_key_store_name }}'
 # https://docs.ansible.com/ansible/latest/openssl_certificate_module.html
 jenkins2_ssl_certificate_provider: selfsigned
 
@@ -59,17 +58,17 @@ jenkins2_ssh_keys_private_keyname: 'id_rsa'
 jenkins2_ssh_keys_size: 4096
 jenkins2_ssh_keys_inv_slave_groupname: 'jenkins_ssh_slaves'
 
-jenkins2_ssh_keys_slave_group: "{{ groups[jenkins2_ssh_keys_inv_slave_groupname]|default([''])}}"
-jenkins2_ssh_keys_slave_hosts: "{%- set users = [] %}
+jenkins2_ssh_keys_slave_group: '{{ groups[jenkins2_ssh_keys_inv_slave_groupname]|default([''])}}'
+jenkins2_ssh_keys_slave_hosts: '{%- set users = [] %}
     {%- for host in jenkins2_ssh_keys_slave_group %}
     {{- users.append(dict(host=host, users=hostvars[host]['jenkins_ssh_user']|default([]))) }}
     {%- endfor %}
-    {{- users -}}"
-jenkins2_ssh_keys_slave_ips: "{%- set ips = [] %}{%- for host in jenkins2_ssh_keys_slave_group %}
+    {{- users -}}'
+jenkins2_ssh_keys_slave_ips: '{%- set ips = [] %}{%- for host in jenkins2_ssh_keys_slave_group %}
     {{- ips.append(dict(host=host, ips=hostvars[host]['ansible_all_ipv4_addresses']|default([]))) }}
     {%- endfor %}
-    {{- ips -}}"
-jenkins2_ssh_keys_slave_group_exist: "{{ ((jenkins2_ssh_keys_slave_group)[0]|default(''))  != ''}}"
+    {{- ips -}}'
+jenkins2_ssh_keys_slave_group_exist: '{{ ((jenkins2_ssh_keys_slave_group)[0]|default(''))  != ''}}'
 
 # SMTP properties
 jenkins2_smtp_enabled: True
@@ -195,8 +194,8 @@ jenkins2_credentials:
     type: 'password'
     id: 'GIT_CREDENTIALS'
     description: 'gitlab credentials username with password'
-    username: "{{ gitlab_master_username | default('admin') }}"
-    password: "{{ gitlab_master_password | default('password') }}"
+    username: '{{ gitlab_master_username | default('admin') }}'
+    password: '{{ gitlab_master_password | default('password') }}'
   jenkinshttpconnectionuser:
     type: 'password'
     id: 'Jenkins_http_connection'
@@ -207,25 +206,25 @@ jenkins2_credentials:
     type: 'password'
     id: 'GIT_CREDENTIALS_TOKEN'
     description: 'to use with GL10.2+ but could be used with earlier versions'
-    username: "{{ gitlab_master_username | default('admin') }}"
-    password: "{{ gitlab_master_token | default('ToKen12345') }}"
+    username: '{{ gitlab_master_username | default('admin') }}'
+    password: '{{ gitlab_master_token | default('ToKen12345') }}'
   aws_credentials:
     type: 'password'
     id: 'AWS_CREDENTIALS'
     description: 'for operations in AWS'
-    username: "{{ aws_access_key | default('AWSaccessKey') }}"
-    password: "{{ aws_secret_key | default('AWSsecretKey') }}"
+    username: '{{ aws_access_key | default('AWSaccessKey') }}'
+    password: '{{ aws_secret_key | default('AWSsecretKey') }}'
   gitlabtoken:
     type: 'gitlabtoken'
     id: 'gitlab_token'
     description: 'gitlab connection with token'
-    token: "{{ gitlab_master_token | default('ToKen12345') }}"
+    token: '{{ gitlab_master_token | default('ToKen12345') }}'
   aws_ec2_credentials:
     type: 'aws_creds'
     id: 'AWS_EC2_CREDS'
     description: 'for ec2 plugin to create ec2 for slave instances'
-    access_key: "{{ aws_access_key | default('AWSaccessKey') }}"
-    sec_key: "{{ aws_secret_key | default('AWSsecretKey') }}"
+    access_key: '{{ aws_access_key | default('AWSaccessKey') }}'
+    sec_key: '{{ aws_secret_key | default('AWSsecretKey') }}'
   bitbucket_project:
     type: 'password'
     id: 'bitbucket_project'
@@ -278,7 +277,7 @@ jenkins2_seed_job_enable: False
 # DSL template file name. Do not forget to setup all needed variables for template
 jenkins2_seed_job_template: dsl_hybris_create_job.groovy
 # to ignore existing jobs and do not rewrite them
-jenkins2_seed_job_ignore_existing: "true"
+jenkins2_seed_job_ignore_existing: 'true'
 jenkins2_seed_job_name: 'seed_job'
 
 # EC2 plugin configuration
@@ -339,13 +338,13 @@ jenkins2_ec2_ami_list:
     numExecutors: '1'
     remoteAdmin: 'ec2-user'
     remoteFS: '/opt/jenkins'
-    securityGroups: "sg-11111111"
+    securityGroups: 'sg-11111111'
     stopOnTerminate: 'false'
     subnetId: 'subnet-SSSSSSSS'
     tags:
-      - {name: "Name", value: "CI Slave"}
-      - {name: "Name2", value: "CI2 Slave"}
-    tmpDir: ""
+      - {name: 'Name', value: 'CI Slave'}
+      - {name: 'Name2', value: 'CI2 Slave'}
+    tmpDir: ''
     type: 't2.medium'
     useDedicatedTenancy: 'false'
     useEphemeralDevices: 'true'
@@ -380,67 +379,67 @@ jenkins2_ec2_ami_list:
     stopOnTerminate: 'false'
     subnetId: 'subnet-SSSSSSSS'
     tags:
-      - {name: "Name", value: "FV Slave"}
-    tmpDir: ""
-    type: "t2.medium"
-    useDedicatedTenancy: "false"
-    useEphemeralDevices: "true"
-    usePrivateDnsName: "true"
-    userData: ""
-    zone: "us-east-1a,us-east-1b"
-    monitoring: "false"
+      - {name: 'Name', value: 'FV Slave'}
+    tmpDir: ''
+    type: 't2.medium'
+    useDedicatedTenancy: 'false'
+    useEphemeralDevices: 'true'
+    usePrivateDnsName: 'true'
+    userData: ''
+    zone: 'us-east-1a,us-east-1b'
+    monitoring: 'false'
     SpotConfiguration:
       enabled: False
-    t2Unlimited: "false"
+    t2Unlimited: 'false'
 
 # Jira configuration
 jenkins2_jira_enabled: False
-jenkins2_jira_url: "https://jira.example.com"
-jenkins2_jira_alternative_url: "https://jira.example.com"
-jenkins2_jira_use_http_auth: "true"
-jenkins2_jira_support_wiki_notation: "true"
-jenkins2_jira_record_scm_changes: "false"
-jenkins2_jira_disable_changelog_annotations: "false"
-jenkins2_jira_issue_pattern: "PATTERN.*"
-jenkins2_jira_update_relevant_issues: "true"
-jenkins2_jira_credentials_id: "jirauser"
-jenkins2_jira_connection_timeout: "10"
-jenkins2_jira_read_timeout: "30"
-jenkins2_jira_thread_executor_size: "10"
-jenkins2_jira_visible_for_group: ""
-jenkins2_jira_visible_for_project_role: ""
-jenkins2_jira_add_timestamps_for_comments: "true"
-jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"
+jenkins2_jira_url: 'https://jira.example.com'
+jenkins2_jira_alternative_url: 'https://jira.example.com'
+jenkins2_jira_use_http_auth: 'true'
+jenkins2_jira_support_wiki_notation: 'true'
+jenkins2_jira_record_scm_changes: 'false'
+jenkins2_jira_disable_changelog_annotations: 'false'
+jenkins2_jira_issue_pattern: 'PATTERN.*'
+jenkins2_jira_update_relevant_issues: 'true'
+jenkins2_jira_credentials_id: 'jirauser'
+jenkins2_jira_connection_timeout: '10'
+jenkins2_jira_read_timeout: '30'
+jenkins2_jira_thread_executor_size: '10'
+jenkins2_jira_visible_for_group: ''
+jenkins2_jira_visible_for_project_role: ''
+jenkins2_jira_add_timestamps_for_comments: 'true'
+jenkins2_jira_timestamp_format: 'EEE, d MMM yyyy HH:mm:ss Z'
 
 # Security configuration
 jenkins2_security_enable: True
-jenkins2_security_realm: "basic"
+jenkins2_security_realm: 'basic'
 
 # Configure active directory
-jenkins2_active_directory_domain_name: "domain.com"
-jenkins2_active_directory_domain_controller: "server.domain.com:3268"
-jenkins2_active_directory_site: "null"
-jenkins2_active_directory_bind_name: "user@domain.com"
-jenkins2_active_directory_bind_pass: "password"
-jenkins2_active_directory_start_tls: "true"
-jenkins2_active_directory_remove_irrelevant_groups: "false"
+jenkins2_active_directory_domain_name: 'domain.com'
+jenkins2_active_directory_domain_controller: 'server.domain.com:3268'
+jenkins2_active_directory_site: 'null'
+jenkins2_active_directory_bind_name: 'user@domain.com'
+jenkins2_active_directory_bind_pass: 'password'
+jenkins2_active_directory_start_tls: 'true'
+jenkins2_active_directory_remove_irrelevant_groups: 'false'
 
 # Configure ldap
-jenkins2_ldap_server: "ldap.server.com:3268"
-jenkins2_ldap_root_dn: "dc=server,dc=com"
-jenkins2_ldap_user_search_base: ""
-jenkins2_ldap_user_search: "mail={0}"
-jenkins2_ldap_group_search_base: ""
-jenkins2_ldap_group_search_filter: ""
-jenkins2_ldap_group_membership_filter: "null"
-jenkins2_ldap_manager_dn: "CN=User,OU=Auto Users,OU=Service,OU=Managed by Enterprise Admins,DC=server,DC=com"
-jenkins2_ldap_manager_password: "Pa$$word"
-jenkins2_ldap_inhibit_infer_root_dn: "true"
-jenkins2_ldap_disable_mail_address_resolver: "false"
-jenkins2_ldap_display_name_attribute_name: "displayname"
-jenkins2_ldap_mail_address_attribute_name: "mail"
+jenkins2_ldap_server: 'ldap.server.com:3268'
+jenkins2_ldap_root_dn: 'dc=server,dc=com'
+jenkins2_ldap_user_search_base: ''
+jenkins2_ldap_user_search: 'mail={0}'
+jenkins2_ldap_group_search_base: ''
+jenkins2_ldap_group_search_filter: ''
+jenkins2_ldap_group_membership_filter: 'null'
+jenkins2_ldap_manager_dn: 'CN=User,OU=Auto Users,OU=Service,OU=Managed by Enterprise Admins,DC=server,DC=com'
+jenkins2_ldap_manager_password: 'Pa$$word'
+jenkins2_ldap_inhibit_infer_root_dn: 'true'
+jenkins2_ldap_disable_mail_address_resolver: 'false'
+jenkins2_ldap_display_name_attribute_name: 'displayname'
+jenkins2_ldap_mail_address_attribute_name: 'mail'
 
 # Authorization stategy configuration
 jenkins2_authorization_strategy_configure: True
-jenkins2_authorization_strategy: "logged-in"
-jenkins2_authorization_strategy_logged_in_allow_anonymous_read: "false"
+jenkins2_authorization_strategy: 'logged-in'
+jenkins2_authorization_strategy_logged_in_allow_anonymous_read: 'false'

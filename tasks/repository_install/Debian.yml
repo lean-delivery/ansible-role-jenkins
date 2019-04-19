@@ -1,33 +1,33 @@
 ---
-- name: "Choose stable Jenkins"
+- name: 'Choose stable Jenkins'
   set_fact:
     key_value: https://pkg.jenkins.io/debian-stable/jenkins.io.key
-    base_url: "deb https://pkg.jenkins.io/debian-stable binary/"
-  when: jenkins2_release_line=="stable"
+    base_url: 'deb https://pkg.jenkins.io/debian-stable binary/'
+  when: jenkins2_release_line=='stable'
 
-- name: "Choose recent Jenkins"
+- name: 'Choose recent Jenkins'
   set_fact:
     key_value: https://pkg.jenkins.io/debian/jenkins.io.key
-    base_url: "deb https://pkg.jenkins.io/debian binary/"
-  when: jenkins2_release_line=="latest"
+    base_url: 'deb https://pkg.jenkins.io/debian binary/'
+  when: jenkins2_release_line=='latest'
 
-- name: "Jenkins Key"
+- name: 'Jenkins Key'
   environment:
-    http_proxy: "{{ jenkins2_proxy_url }}"
-    HTTP_PROXY: "{{ jenkins2_proxy_url }}"
-    https_proxy: "{{ jenkins2_proxy_url }}"
-    HTTPS_PROXY: "{{ jenkins2_proxy_url }}"
+    http_proxy: '{{ jenkins2_proxy_url }}'
+    HTTP_PROXY: '{{ jenkins2_proxy_url }}'
+    https_proxy: '{{ jenkins2_proxy_url }}'
+    HTTPS_PROXY: '{{ jenkins2_proxy_url }}'
   apt_key:
-    url: "{{ key_value }}"
-    validate_certs: "{{ jenkins2_key_validate_certs }}"
+    url: '{{ key_value }}'
+    validate_certs: '{{ jenkins2_key_validate_certs }}'
     state: present
   register: status
   until: status is succeeded
   become: True
 
-- name: "Jenkins Repository"
+- name: 'Jenkins Repository'
   apt_repository:
-    repo: "{{ base_url }}"
+    repo: '{{ base_url }}'
     update_cache: True
     state: present
   become: True

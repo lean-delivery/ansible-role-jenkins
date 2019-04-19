@@ -2,7 +2,7 @@
 
 - name: Create a directory .ssh if it doesn't exist
   file:
-    path: "{{ jenkins2_home_directory }}/.ssh"
+    path: '{{ jenkins2_home_directory }}/.ssh'
     state: directory
     mode: 0700
   become: True
@@ -25,7 +25,7 @@
   openssl_privatekey:
     path: "{{ jenkins2_home_directory }}/.ssh/\
     {{ jenkins2_ssh_keys_private_keyname }}"
-    size: "{{ jenkins2_ssh_keys_size }}"
+    size: '{{ jenkins2_ssh_keys_size }}'
   become: True
   when: not private_key_stat.stat.exists|bool
 
@@ -48,56 +48,56 @@
 
 - name: Create user on remote host
   user:
-    name: "{{ item.1 }}"
+    name: '{{ item.1 }}'
     state: present
-  delegate_to: "{{ item.0.host }}"
+  delegate_to: '{{ item.0.host }}'
   become: True
   with_subelements:
-    - "{{ jenkins2_ssh_keys_slave_hosts }}"
+    - '{{ jenkins2_ssh_keys_slave_hosts }}'
     - users
   when: item.1 is defined
 
 - name: Set authorized key on remote host
   authorized_key:
-    user: "{{ item.1 }}"
+    user: '{{ item.1 }}'
     state: present
-    key: "{{ ssh_public_key_fingerprint.stdout }}"
-  delegate_to: "{{ item.0.host }}"
+    key: '{{ ssh_public_key_fingerprint.stdout }}'
+  delegate_to: '{{ item.0.host }}'
   become: True
   with_subelements:
-    - "{{ jenkins2_ssh_keys_slave_hosts }}"
+    - '{{ jenkins2_ssh_keys_slave_hosts }}'
     - users
   when: item.1 is defined
 
 - name: Generate knownhost pairs
-  command: "ssh-keyscan -t rsa {{ item.1 }}"
+  command: 'ssh-keyscan -t rsa {{ item.1 }}'
   register: result_knownhost
   with_subelements:
-    - "{{ jenkins2_ssh_keys_slave_ips }}"
+    - '{{ jenkins2_ssh_keys_slave_ips }}'
     - ips
   changed_when: True
 
 - name: Tell the host about our servers it might want to ssh to
   lineinfile:
-    path: "{{ jenkins2_home_directory }}/.ssh/known_hosts"
-    line: "{{ item.item[0].host|lower }},{{ item.stdout }}"
+    path: '{{ jenkins2_home_directory }}/.ssh/known_hosts'
+    line: '{{ item.item[0].host|lower }},{{ item.stdout }}'
     create: True
     mode: 0644
   become: True
   with_items:
-    - "{{ result_knownhost.results }}"
+    - '{{ result_knownhost.results }}'
 
 - name: Set corect folders owners/permissions
   file:
-    path: "{{ item.dst }}"
-    owner: "{{ jenkins2_user | default('jenkins') }}"
-    group: "{{ jenkins2_user | default('jenkins') }}"
-    mode: "{{ item.mode }}"
+    path: '{{ item.dst }}"
+    owner: '{{ jenkins2_user | default('jenkins') }}"
+    group: '{{ jenkins2_user | default('jenkins') }}"
+    mode: '{{ item.mode }}"
   become: True
   with_items:
-    - {dst: "{{ jenkins2_home_directory }}/.ssh", mode: "0700"}
+    - {dst: '{{ jenkins2_home_directory }}/.ssh', mode: '0700'}
     - {dst: "{{ jenkins2_home_directory }}/.ssh/\
-        {{ jenkins2_ssh_keys_private_keyname }}", mode: "0600"}
+        {{ jenkins2_ssh_keys_private_keyname }}", mode: '0600'}
     - {dst: "{{ jenkins2_home_directory }}/.ssh/\
-        {{ jenkins2_ssh_keys_private_keyname }}.pub", mode: "0600"}
-    - {dst: "{{ jenkins2_home_directory }}/.ssh/known_hosts", mode: "0644"}
+        {{ jenkins2_ssh_keys_private_keyname }}.pub", mode: '0600'}
+    - {dst: '{{ jenkins2_home_directory }}/.ssh/known_hosts', mode: "0644"}

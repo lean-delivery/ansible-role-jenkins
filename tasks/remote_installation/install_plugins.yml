@@ -2,7 +2,7 @@
 - name: Proxy Configuration
   local_action:
     module: jenkins_script
-    url: 'http://{{ jenkins2_host_ip }}:{{ jenkins2_config_http_port }}'
+    url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'proxy_configuration.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
@@ -11,7 +11,7 @@
 - name: Update Center Refresh
   local_action:
     module: jenkins_script
-    url: 'http://{{ jenkins2_host_ip }}:{{ jenkins2_config_http_port }}'
+    url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'update_center_refresh.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
@@ -21,7 +21,7 @@
 - name: Install Jenkins plugins
   local_action:
     module: jenkins_plugin
-    url: 'http://{{ jenkins2_host_ip }}:{{ jenkins2_config_http_port }}'
+    url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
     name: "{{ item }}"
