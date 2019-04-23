@@ -1,0 +1,79 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: ec2
+lint:
+  name: yamllint
+  options:
+    config-file: .yamllint
+platforms:
+  - name: test-aws-Windows2012R2-jenkins-master
+    aws_image_id: ami-075a1811b5270e1b2
+    aws_region: us-east-1
+    instance_type: m5.large
+    vpc_subnet_id: subnet-05a2ef2b767afec50
+    assign_public_ip: False
+    spot_price: 0.14
+    aws_sec_group:
+      - default
+    wait_timeout: 1800
+    groups:
+      - windows
+
+  - name: test-aws-Windows2016-jenkins-master
+    aws_image_id: ami-075a1811b5270e1b2
+    aws_region: us-east-1
+    instance_type: m5.large
+    vpc_subnet_id: subnet-05a2ef2b767afec50
+    assign_public_ip: False
+    spot_price: 0.14
+    aws_sec_group:
+      - default
+    wait_timeout: 1800
+    groups:
+      - windows
+
+  - name: test-aws-Windows2019-jenkins-master
+    aws_image_id: ami-0fa12e99d404ff4b5
+    aws_region: us-east-1
+    instance_type: m5.large
+    vpc_subnet_id: subnet-05a2ef2b767afec50
+    assign_public_ip: False
+    spot_price: 0.14
+    aws_sec_group:
+      - default
+    wait_timeout: 1800
+    groups:
+      - windows
+
+provisioner:
+  name: ansible
+  log: False
+  connection_options:
+    ansible_connection: winrm
+  inventory:
+    group_vars:
+      windows:
+        ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', True) }}"
+        ansible_winrm_transport: credssp
+        ansible_winrm_server_cert_validation: ignore
+  playbooks:
+    create: ../resources/provisioning/WINRM/create.yml
+    destroy: ../resources/provisioning/WINRM/destroy.yml
+  lint:
+    name: ansible-lint
+  env:
+    ANSIBLE_LIBRARY: ${ANSIBLE_LIBRARY}
+scenario:
+  name: cloud-aws-windows
+verifier:
+  name: testinfra
+  options:
+    verbose: true
+  directory: ../resources/tests/
+  lint:
+    name: flake8
+
