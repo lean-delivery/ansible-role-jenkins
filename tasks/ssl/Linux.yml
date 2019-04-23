@@ -10,8 +10,8 @@
   copy:
     src: '{{ jenkins2_local_keystore_path }}'
     dest: '{{ jenkins2_ssl_key_store }}'
-    owner: '{{ jenkins2_user | default('jenkins') }}'
-    group: '{{ jenkins2_user | default('jenkins') }}'
+    owner: "{{ jenkins2_user | default('jenkins') }}"
+    group: "{{ jenkins2_user | default('jenkins') }}"
     mode: 0644
     remote_src: '{{ not jenkins2_local_keystore }}'
   become: True

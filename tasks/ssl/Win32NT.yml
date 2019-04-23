@@ -1,5 +1,34 @@
 ---
-- name: Create Self-Signed certificate
-  win_shell: New-SelfSignedCertificate  -DnsName "{{ ansible_hostname }}" -CertStoreLocation cert:\LocalMachine\My
-    #    Export-Certificate -Cert $NewCert -FilePath {{ jenkins2_home_directory }}
-    #  become_method: runas
+- name: Check if keystore exists
+  win_stat:
+    path: '{{ jenkins2_local_keystore_path }}'
+  register: keystore_file
+  when: jenkins2_local_keystore
+
+- name: Create certificate pair
+  win_shell: >-
+    {{ jenkins2_java_windows_path + '\bin\keytool.exe -genkeypair 
+    -keyalg RSA -alias ' + inventory_hostname + 
+    ' -keystore ' + jenkins2_windows_ssl_key_store +
+    ' -storepass ' + jenkins2_ssl_key_store_password|string +
+    ' -keypass ' + jenkins2_ssl_key_password|string +
+    ' --dname "CN=jsmith,OU=Engineering,O=mycompany.com,L=Raleigh,S=NC,C=US" 
+    -validity 360 -keysize ' + jenkins2_ssl_key_size|string }}
+  when: jenkins2_local_keystore
+
+- name: Export public sertificate
+  win_shell: >-
+    {{ jenkins2_java_windows_path + '\bin\keytool.exe -exportcert 
+    -alias ' + inventory_hostname + 
+    ' -keystore ' + jenkins2_windows_ssl_key_store +
+    ' -storepass ' + jenkins2_ssl_key_store_password|string +
+    ' -keypass ' + jenkins2_ssl_key_password|string +
+    ' -file ' + jenkins2_cert_file_path|string }}
+  when: jenkins2_local_keystore
+
+- name: Create keystore and import key
+  include_tasks: >-
+    {{ ansible_system }}_keystore_{{ ansible_version.full is version('2.7', '<') |
+    ternary('old','new') }}.yml
+  when:
+    - not keystore_file.stat.exists

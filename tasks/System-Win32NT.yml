@@ -1,14 +1,14 @@
 ---
 - name: Create windows group
   win_group:
-    name: '{{ jenkins2_user | default('jenkins') }}-users'
+    name: "{{ jenkins2_user | default('jenkins') }}-users"
     state: present
 
 - name: Create user
   win_user:
-    name: '{{ jenkins2_user | default('jenkins') }}'
+    name: "{{ jenkins2_user | default('jenkins') }}"
     state: present
-    groups: '{{ jenkins2_user | default('jenkins') }}-users'
+    groups: "{{ jenkins2_user | default('jenkins') }}-users"
 
 - name: Create {{ jenkins2_home_directory }}
   win_file:
@@ -17,8 +17,8 @@
 
 - name: Download 2.164.2 version
   win_get_url:
-    url: 'http://ftp.osuosl.org/pub/\
-         jenkins/windows-stable/jenkins-2.164.2.zip'
+    url: "http://ftp.osuosl.org/pub/\
+         jenkins/windows-stable/jenkins-2.164.2.zip"
     dest: '{{ jenkins2_home_directory }}\'
 
 - name: UnZIP archiv
@@ -98,8 +98,8 @@
 - include_tasks: '{{ jenkins2_install_type}}_installation/configure_ec2.yml'
   when: jenkins2_ec2_enable
 
-  # include_tasks: '{{ jenkins2_install_type}}_installation/configure_ssh_keys.yml'
-  # when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
+  include_tasks: '{{ jenkins2_install_type}}_installation/configure_ssh_keys.yml'
+  #  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
   #   jenkins_was_installed is defined and jenkins_was_installed is changed
 
 - include_tasks: '{{ jenkins2_install_type}}_installation/configure_security.yml'
