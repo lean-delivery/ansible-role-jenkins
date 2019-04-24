@@ -4,6 +4,14 @@
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: '{{ jenkins2_home_directory }}\{{ jenkins2_seed_job_template }}'
   register: dsl_file_copied
+  when: ('{{ platform }}' == Win32NT)
+  
+-name: Copy DSL file to jenkins
+  win_template:
+    src: '{{ jenkins2_seed_job_template }}.j2'
+    dest: '{{ jenkins2_home_directory }}/{{ jenkins2_seed_job_template }}'
+  register: dsl_file_copied
+  when: ('{{ platform }}' == Linux)
 
 - name: Set variable for changed
   set_fact:
