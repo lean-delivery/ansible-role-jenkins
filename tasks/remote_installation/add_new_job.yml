@@ -28,7 +28,7 @@
   when: dsl_copied
 
 - name: Run Seed Job
-   local_action:
+  local_action:
     module: jenkins_script
     script: "{{ lookup('template', 'run_seed_job.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
@@ -38,7 +38,7 @@
   when: dsl_copied
 
 - name: Disable seed job
-   local_action:
+  local_action:
     module: jenkins_job
     name: '{{ jenkins2_seed_job_name }}'
     password: '{{ jenkins2_cli_password }}'
