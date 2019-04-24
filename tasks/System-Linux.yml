@@ -17,14 +17,14 @@
 
 - name: Create group
   group:
-    name: '{{ jenkins2_user | default('jenkins') }}'
+    name: "{ jenkins2_user | default('jenkins') }}"
     state: present
   become: True
 
 - name: Create user
   user:
-    name: '{{ jenkins2_user | default('jenkins') }}'
-    group: '{{ jenkins2_user | default('jenkins') }}'
+    name: "{{ jenkins2_user | default('jenkins') }}"
+    group: "{{ jenkins2_user | default('jenkins') }}"
     shell: /bin/bash
     home: '{{ jenkins2_home_directory }}'
   become: True
@@ -49,8 +49,8 @@
   file:
     src: '{{ jenkins2_home_directory }}'
     dest: /var/lib/jenkins
-    owner: '{{ jenkins2_user | default('jenkins') }}'
-    group: '{{ jenkins2_user | default('jenkins') }}'
+    owner: "{{ jenkins2_user | default('jenkins') }}"
+    group: "{ jenkins2_user | default('jenkins') }}"
     state: link
   become: True
   when: jenkins2_home_directory != '/var/lib/jenkins'
