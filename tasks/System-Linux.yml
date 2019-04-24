@@ -74,44 +74,44 @@
   when:
     - jenkins2_ssl_configure
 
-- include_tasks: {{ jenkins2_install_type}}_installation/install_plugins.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/install_plugins.yml'
   when: jenkins_was_installed is defined
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_smtp.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_smtp.yml'
   when: jenkins2_smtp_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/set_credentials.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/set_credentials.yml'
   when: jenkins2_credentials_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_pipeline_libraries.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_pipeline_libraries.yml'
   when: jenkins2_pipeline_libraries_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_bitbucket_project.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_bitbucket_project.yml'
   when: jenkins2_bitbucket_project_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_sonarqube.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_sonarqube.yml'
   when: jenkins2_sonarqube_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_jira.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_jira.yml'
   when: jenkins2_jira_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/copy_custom_files.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/copy_custom_files.yml'
   when: jenkins2_custom_files_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_gitlab.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_gitlab.yml'
   when: jenkins2_gitlab_enabled
 
-- include_tasks: {{ jenkins2_install_type}}_installation/add_new_jobs.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/add_new_jobs.yml'
   when: jenkins2_seed_job_enable
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_ec2.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_ec2.yml'
   when: jenkins2_ec2_enable
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_ssh_keys.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_ssh_keys.yml'
   when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
     jenkins_was_installed is defined and jenkins_was_installed is changed
 
-- include_tasks: {{ jenkins2_install_type}}_installation/configure_security.yml
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_security.yml'
   when: jenkins2_security_enable
 
 - name: Disable insecure connection
