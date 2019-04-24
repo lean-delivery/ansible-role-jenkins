@@ -7,8 +7,7 @@
 
 - name: Create certificate pair
   win_shell: >-
-    {{ jenkins2_java_windows_path + '\bin\keytool.exe -genkeypair 
-    -keyalg RSA -alias ' + inventory_hostname + 
+    {{ jenkins2_java_windows_path + '\bin\keytool.exe -genkeypair -keyalg RSA -alias ' + inventory_hostname +
     ' -keystore ' + jenkins2_windows_ssl_key_store +
     ' -storepass ' + jenkins2_ssl_key_store_password|string +
     ' -keypass ' + jenkins2_ssl_key_password|string +
@@ -18,8 +17,7 @@
 
 - name: Export public sertificate
   win_shell: >-
-    {{ jenkins2_java_windows_path + '\bin\keytool.exe -exportcert 
-    -alias ' + inventory_hostname + 
+    {{ jenkins2_java_windows_path + '\bin\keytool.exe -exportcert -alias ' + inventory_hostname +
     ' -keystore ' + jenkins2_windows_ssl_key_store +
     ' -storepass ' + jenkins2_ssl_key_store_password|string +
     ' -keypass ' + jenkins2_ssl_key_password|string +

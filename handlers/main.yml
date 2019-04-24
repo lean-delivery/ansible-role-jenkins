@@ -25,7 +25,7 @@
   until: login_page.status == 200
   retries: 60
   delay: 5
-  
+
 # handlers for windows
 - name: Restart windows Jenkins
   win_service:

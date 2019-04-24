@@ -89,10 +89,10 @@
 
 - name: Set corect folders owners/permissions
   file:
-    path: '{{ item.dst }}"
-    owner: '{{ jenkins2_user | default('jenkins') }}"
-    group: '{{ jenkins2_user | default('jenkins') }}"
-    mode: '{{ item.mode }}"
+    path: '{{ item.dst }}'
+    owner: "{{ jenkins2_user | default('jenkins') }}"
+    group: "{{ jenkins2_user | default('jenkins') }}"
+    mode: '{{ item.mode }}'
   become: True
   with_items:
     - {dst: '{{ jenkins2_home_directory }}/.ssh', mode: '0700'}

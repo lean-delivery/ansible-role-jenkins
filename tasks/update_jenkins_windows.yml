@@ -10,4 +10,3 @@
     url: http://mirrors.jenkins.io/war-stable/latest/jenkins.war
     dest: '{{ jenkins2_home_directory }}'
     registr: jenkins2_updated
-

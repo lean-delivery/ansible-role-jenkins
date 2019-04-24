@@ -1,13 +1,13 @@
 ---
--name: Copy DSL file to jenkins on Windows
+- name: Copy DSL file to jenkins on Windows
   win_template:
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: "{{ jenkins2_home_directory }}\{{ jenkins2_seed_job_template }}"
   register: dsl_file_copied
   when: ('{{ platform }}' == Win32NT)
-  
--name: Copy DSL file to jenkins
-  win_template:
+
+- name: Copy DSL file to jenkins
+  template:
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: '{{ jenkins2_home_directory }}/{{ jenkins2_seed_job_template }}'
   register: dsl_file_copied
