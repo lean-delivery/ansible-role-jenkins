@@ -11,8 +11,8 @@
     ' -keystore ' + jenkins2_windows_ssl_key_store +
     ' -storepass ' + jenkins2_ssl_key_store_password|string +
     ' -keypass ' + jenkins2_ssl_key_password|string +
-    ' --dname "CN=jsmith,OU=Engineering,O=mycompany.com,L=Raleigh,S=NC,C=US" 
-    -validity 360 -keysize ' + jenkins2_ssl_key_size|string }}
+    ' --dname "CN=jsmith,OU=Engineering,O=mycompany.com,L=Raleigh,S=NC,C=US" -validity 360 -keysize ' +
+    jenkins2_ssl_key_size|string }}
   when: jenkins2_local_keystore
 
 - name: Export public sertificate
