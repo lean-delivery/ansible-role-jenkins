@@ -98,9 +98,9 @@
 - include_tasks: '{{ jenkins2_install_type}}_installation/configure_ec2.yml'
   when: jenkins2_ec2_enable
 
-  include_tasks: '{{ jenkins2_install_type}}_installation/configure_ssh_keys.yml'
-  #  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
-  #   jenkins_was_installed is defined and jenkins_was_installed is changed
+- include_tasks: '{{ jenkins2_install_type}}_installation/configure_ssh_keys.yml'
+  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
+    jenkins_was_installed is defined and jenkins_was_installed is changed
 
 - include_tasks: '{{ jenkins2_install_type}}_installation/configure_security.yml'
   when: jenkins2_security_enable
