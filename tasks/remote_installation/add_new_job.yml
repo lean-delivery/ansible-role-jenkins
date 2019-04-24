@@ -4,14 +4,14 @@
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: '{{ jenkins2_home_directory }}\{{ jenkins2_seed_job_template }}'
   register: dsl_file_copied
-  when: '{{ ansible_system }}' == Win32NT
+  when: '{{ ansible_system }}' == 'Win32NT'
 
 - name: Copy DSL file to jenkins
   template:
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: '{{ jenkins2_home_directory }}/{{ jenkins2_seed_job_template }}'
   register: dsl_file_copied
-  when: '{{ ansible_system }}' == Linux
+  when: '{{ ansible_system }}' == 'Linux'
 
 - name: Set variable for changed
   set_fact:
