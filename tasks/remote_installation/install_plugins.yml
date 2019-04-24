@@ -1,26 +1,25 @@
 ---
 - name: Proxy Configuration
-  local_action:
-    module: jenkins_script
+  jenkins_script:
     url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'proxy_configuration.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     timeout: 120
+  delegate_to: localhost
 
 - name: Update Center Refresh
-  local_action:
-    module: jenkins_script
+  jenkins_script:
     url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'update_center_refresh.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: False
     timeout: 120
+  delegate_to: localhost
 
 - name: Install Jenkins plugins
-  local_action:
-    module: jenkins_plugin
+  jenkins_plugin:
     url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
@@ -30,6 +29,7 @@
     jenkins_home: '{{ jenkins2_home_directory }}'
     state: present
     timeout: "{{ jenkins2_plugins_timeout }}"
+  delegate_to: localhost
   register: my_jenkins_plugins
   retries: 10
   delay: 3

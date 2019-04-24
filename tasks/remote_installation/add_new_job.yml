@@ -4,45 +4,45 @@
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: '{{ jenkins2_home_directory }}\{{ jenkins2_seed_job_template }}'
   register: dsl_file_copied
-  when: ('{{ platform }}' == Win32NT)
+  when: ('{{ ansible_system }}' == Win32NT)
 
 - name: Copy DSL file to jenkins
   template:
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: '{{ jenkins2_home_directory }}/{{ jenkins2_seed_job_template }}'
   register: dsl_file_copied
-  when: ('{{ platform }}' == Linux)
+  when: ('{{ ansible_system }}' == Linux)
 
 - name: Set variable for changed
   set_fact:
     dsl_copied: dsl_file_copied.changed
 
 - name: Create seed job
-  local_action:
-    module: jenkins_job
+  jenkins_job:
     config: "{{ lookup('template', 'seedJob.xml.j2') }}"
     name: '{{ jenkins2_seed_job_name }}'
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
     url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
+  delegate_to: localhost
   when: dsl_copied
 
 - name: Run Seed Job
-  local_action:
-    module: jenkins_script
+  jenkins_script:
     script: "{{ lookup('template', 'run_seed_job.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: False
     timeout: 120
+  delegate_to: localhost
   when: dsl_copied
 
 - name: Disable seed job
-  local_action:
-    module: jenkins_job
+  jenkins_job:
     name: '{{ jenkins2_seed_job_name }}'
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
     url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     enabled: False
+  delegate_to: localhost
   when: dsl_copied

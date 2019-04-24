@@ -1,10 +1,10 @@
 ---
 - name: Configure SMTP
-  local_action:
-    module: jenkins_script
+  jenkins_script:
     url: 'http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}'
     script: "{{ lookup('template', 'add-smtp.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: False
     timeout: 120
+  delegate_to: localhost
