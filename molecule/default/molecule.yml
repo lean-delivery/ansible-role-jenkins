@@ -31,7 +31,7 @@ platforms:
       - debian_family
 provisioner:
   name: ansible
-  log: False
+  log: True
   playbooks:
     prepare: ../default/prepare.yml
   lint:

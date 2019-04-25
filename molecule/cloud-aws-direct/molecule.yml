@@ -72,7 +72,7 @@ platforms:
 
 provisioner:
   name: ansible
-  log: False
+  log: True
   inventory:
     group_vars:
       s3:
