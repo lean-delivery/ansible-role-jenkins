@@ -34,8 +34,8 @@
       until: status is succeeded
       become: True
 
-- name: Prepare host to S3 transport
-  hosts: s3
+- name: Update hosts python modules
+  hosts: all
   gather_facts: True
   tasks:
     - name: 'Install pip package'
