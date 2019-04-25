@@ -65,6 +65,7 @@ provisioner:
         ansible_winrm_server_cert_validation: ignore
   playbooks:
     create: ../resources/provisioning/WINRM/create.yml
+    prepare: ../cloud-aws-windows/prepare.yml
     destroy: ../resources/provisioning/WINRM/destroy.yml
   lint:
     name: ansible-lint
