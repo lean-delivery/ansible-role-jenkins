@@ -15,4 +15,4 @@
         mode: get
         overwrite: different
       retries: 5
-delay: 2
+  delay: 2
