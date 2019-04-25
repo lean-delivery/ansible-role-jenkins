@@ -78,4 +78,4 @@
         host: '{{ item.address }}'
         delay: 10
         timeout: 320
-      loop: "{{ lookup('file', molecule_instance_config) | molecule_from_yaml }}"
+      loop: "{{ lookup('file', molecule_instance_config) | molecule_yaml }}"
