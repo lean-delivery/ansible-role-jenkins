@@ -8,11 +8,7 @@
   hosts: s3
   roles:
     - role: lean_delivery.java
-      transport: s3
-      transport_s3_bucket: java-molecule-s3-test
-      transport_s3_path: /java/jdk-8u202-linux-x64.tar.gz
-      transport_s3_aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
-      transport_s3_aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+      transport: local
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: True
       jenkins2_pipeline_libraries_url: "https://example.com/example.git"
