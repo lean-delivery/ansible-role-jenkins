@@ -73,14 +73,20 @@ platforms:
 provisioner:
   name: ansible
   log: False
+  inventory:
+    group_vars:
+      s3:
+        transport: s3
+        transport_s3_bucket: java-molecule-s3-test
+        transport_s3_path: /java/jdk-8u202-linux-x64.tar.gz
+        transport_s3_aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+        transport_s3_aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../cloud-aws-direct/prepare.yml
     destroy: ../resources/provisioning/AWS/destroy.yml
   lint:
     name: ansible-lint
-  env:
-    ANSIBLE_LIBRARY: ${ANSIBLE_LIBRARY}
 scenario:
   name: cloud-aws-direct
 verifier:
