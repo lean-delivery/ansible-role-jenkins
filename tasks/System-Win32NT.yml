@@ -33,9 +33,9 @@
     arguments: 'JENKINSDIR={{ jenkins2_home_directory }}'
     state: present
   register: jenkins_install_package_win
-  retries: 15
-  delay: 5
-  until: jenkins_install_package_win is succeeded
+#  retries: 15
+  delay: 200
+#  until: jenkins_install_package_win is succeeded
 
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml
