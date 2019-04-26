@@ -7,6 +7,7 @@
 - name: Create user
   win_user:
     name: "{{ jenkins2_user | default('jenkins') }}"
+    password: '{{  jenkins2_user_default-pass  }}'
     state: present
     groups: "{{ jenkins2_user | default('jenkins') }}-users"
 
@@ -41,10 +42,10 @@
   register: jenkins_install_package_win
   retries: 15
   delay: 200
+  until: jenkins_install_package_win is succeeded
   become: True
   become_method: runas
   become_user: "{{ jenkins2_user | default('jenkins') }}"
-  until: jenkins_install_package_win is succeeded
 
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml
