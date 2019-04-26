@@ -29,7 +29,7 @@ platforms:
     instance_type: m5.large
     profile_name: epmldi-instance-profile
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: True
     spot_price: 0.14
     aws_sec_group:
       - default
@@ -43,7 +43,7 @@ platforms:
     instance_type: m5.large
     profile_name: epmldi-instance-profile
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: True
     spot_price: 0.14
     aws_sec_group:
       - default
