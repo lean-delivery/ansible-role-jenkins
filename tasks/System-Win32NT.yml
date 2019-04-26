@@ -41,9 +41,9 @@
   register: jenkins_install_package_win
   retries: 15
   delay: 200
-  become: True
-  become_method: runas
-  become_user: "{{ jenkins2_user | default('jenkins') }}"
+  # become: True
+  # become_method: runas
+  # become_user: "{{ jenkins2_user | default('jenkins') }}"
   until: jenkins_install_package_win is succeeded
 
 - name: Update to latest
