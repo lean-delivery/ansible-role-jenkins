@@ -33,6 +33,7 @@ platforms:
     spot_price: 0.14
     aws_sec_group:
       - default
+      - epam-by-ru
     wait_timeout: 1800
     groups:
       - windows
@@ -46,6 +47,7 @@ platforms:
     spot_price: 0.14
     aws_sec_group:
       - default
+      - epam-by-ru
     wait_timeout: 1800
     groups:
       - windows
