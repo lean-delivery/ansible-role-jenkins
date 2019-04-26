@@ -7,7 +7,7 @@
 - name: Create user
   win_user:
     name: "{{ jenkins2_user | default('jenkins') }}"
-    password: '{{  jenkins2_user_default-pass  }}'
+    password: '{{ jenkins2_user_default_pass }}'
     state: present
     groups: "{{ jenkins2_user | default('jenkins') }}-users"
 
