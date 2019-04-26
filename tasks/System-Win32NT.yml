@@ -41,7 +41,7 @@
     state: present
   register: jenkins_install_package_win
   retries: 15
-  delay: 200
+  delay: 2
   until: jenkins_install_package_win is succeeded
   become: True
   become_method: runas
