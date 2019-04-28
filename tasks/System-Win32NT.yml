@@ -46,11 +46,11 @@
 #  become: True
 #  become_method: runas
 #  become_user: "{{ jenkins2_user | default('jenkins') }}"
-   win_msi:
-     path: '{{ jenkins2_home_directory }}\jenkins.msi'
-     extra_args: 'JENKINSDIR={{ jenkins2_home_directory }}'
-     state: present
-     wait: True
+  win_msi:
+    path: '{{ jenkins2_home_directory }}\jenkins.msi'
+    extra_args: 'JENKINSDIR={{ jenkins2_home_directory }}'
+    state: present
+    wait: True
 
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml
