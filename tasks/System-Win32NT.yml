@@ -43,8 +43,9 @@
 #  retries: 15
 #  delay: 2
 #  until: jenkins_install_package_win is succeeded
-#  become: True
-#  become_method: runas
+  validate_certs: False
+  become: True
+  become_method: runas
 #  become_user: "{{ jenkins2_user | default('jenkins') }}"
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml
