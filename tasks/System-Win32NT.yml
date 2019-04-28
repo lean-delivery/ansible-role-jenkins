@@ -37,17 +37,14 @@
 - name: Jenkins installation
   win_package:
     path: '{{ jenkins2_home_directory }}\jenkins.msi'
-    arguments: 'JENKINSDIR={{ jenkins2_home_directory }}'
+    arguments: 'JENKINSDIR="{{ jenkins2_home_directory }}"'
     state: present
     validate_certs: False
   register: jenkins_install_package_win
-#  retries: 15
-#  delay: 2
-#  until: jenkins_install_package_win is succeeded
-  become: True
-  become_method: runas
-  become_user: System
-  #"{{ jenkins2_user | default('jenkins') }}"
+  retries: 15
+  delay: 2
+  until: jenkins_install_package_win is succeeded
+
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml
   when: jenkins2_win_update

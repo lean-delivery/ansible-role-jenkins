@@ -24,9 +24,9 @@
     ' -file ' + jenkins2_cert_file_path|string }}
   when: jenkins2_local_keystore
 
-- name: Create keystore and import key
-  include_tasks: >-
-    {{ ansible_system }}_keystore_{{ ansible_version.full is version('2.7', '<') |
-    ternary('old','new') }}.yml
-  when:
-    - not keystore_file.stat.exists
+#- name: Create keystore and import key
+#  include_tasks: >-
+#    {{ ansible_system }}_keystore_{{ ansible_version.full is version('2.7', '<') |
+#    ternary('old','new') }}.yml
+#  when:
+#    - not keystore_file.stat.exists
