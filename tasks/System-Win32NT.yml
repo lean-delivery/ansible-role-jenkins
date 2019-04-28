@@ -39,11 +39,11 @@
     path: '{{ jenkins2_home_directory }}\jenkins.msi'
     arguments: 'JENKINSDIR={{ jenkins2_home_directory }}'
     state: present
+    validate_certs: False
   register: jenkins_install_package_win
 #  retries: 15
 #  delay: 2
 #  until: jenkins_install_package_win is succeeded
-  validate_certs: False
   become: True
   become_method: runas
 #  become_user: "{{ jenkins2_user | default('jenkins') }}"
