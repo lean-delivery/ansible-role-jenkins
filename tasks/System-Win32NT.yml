@@ -35,17 +35,22 @@
     delete_archive: True
 
 - name: Jenkins installation
-  win_package:
-    path: '{{ jenkins2_home_directory }}\jenkins.msi'
-    arguments: 'JENKINSDIR={{ jenkins2_home_directory }}'
-    state: present
-  register: jenkins_install_package_win
-  retries: 15
-  delay: 2
-  until: jenkins_install_package_win is succeeded
+#  win_package:
+#    path: '{{ jenkins2_home_directory }}\jenkins.msi'
+#    arguments: 'JENKINSDIR={{ jenkins2_home_directory }}'
+#    state: present
+#  register: jenkins_install_package_win
+#  retries: 15
+#  delay: 2
+#  until: jenkins_install_package_win is succeeded
 #  become: True
 #  become_method: runas
 #  become_user: "{{ jenkins2_user | default('jenkins') }}"
+   win_msi:
+     path: '{{ jenkins2_home_directory }}\jenkins.msi'
+     extra_args: 'JENKINSDIR={{ jenkins2_home_directory }}'
+     state: present
+     wait: True
 
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml
