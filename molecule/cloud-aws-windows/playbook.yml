@@ -7,12 +7,12 @@
 - name: Converge
   hosts: all
   roles:
-    - role: lean_delivery.java
-      transport: local
-      transport_local: /tmp/jdk-8u202-windows-x64.exe
-      java_tarball_install: False
-      java_major_version: 8
-      java_minor_version: 202
+#    - role: lean_delivery.java
+#      transport: local
+#      transport_local: /tmp/jdk-8u202-windows-x64.exe
+#      java_tarball_install: False
+#      java_major_version: 8
+#      java_minor_version: 202
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: True
       jenkins2_pipeline_libraries_url: "https://example.com/example.git"

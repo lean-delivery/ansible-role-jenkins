@@ -11,13 +11,13 @@
     state: present
     groups: "{{ jenkins2_user | default('jenkins') }}-users"
 
-- name: grant the '{{ jenkins2_user }}' user the SeTcbPrivilege right
-  win_user_right:
-    name: SeTcbPrivilege
-    users: "{{ jenkins2_user | default('jenkins') }}"
-    action: add
+#- name: grant the '{{ jenkins2_user }}' user the SeTcbPrivilege right
+#  win_user_right:
+#    name: SeTcbPrivilege
+#    users: "{{ jenkins2_user | default('jenkins') }}"
+#    action: add
 
-- name: Create {{ jenkins2_home_directory }}
+- name: Create '{{ jenkins2_home_directory }}'
   win_file:
     path: '{{ jenkins2_home_directory }}\'
     state: directory
@@ -43,9 +43,9 @@
   retries: 15
   delay: 2
   until: jenkins_install_package_win is succeeded
-  become: True
-  become_method: runas
-  become_user: "{{ jenkins2_user | default('jenkins') }}"
+#  become: True
+#  become_method: runas
+#  become_user: "{{ jenkins2_user | default('jenkins') }}"
 
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml

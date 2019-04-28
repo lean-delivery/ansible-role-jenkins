@@ -68,14 +68,14 @@ provisioner:
 #        transport_s3_path: /java/jdk-8u202-linux-x64.tar.gz
 #        transport_s3_aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 #        transport_s3_aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
-      local:
-        transport: local
-        transport_local: /tmp/jdk-8u202-windows-x64.exe
-        java_major_version: 8
-        java_minor_version: 202
+#      local:
+#        transport: local
+#        transport_local: /tmp/jdk-8u202-windows-x64.exe
+#        java_major_version: 8
+#        java_minor_version: 202
   playbooks:
     create: ../resources/provisioning/WINRM/create.yml
-    prepare: ../cloud-aws-windows/prepare.yml
+#    prepare: ../cloud-aws-windows/prepare.yml
     destroy: ../resources/provisioning/WINRM/destroy.yml
   lint:
     name: ansible-lint
