@@ -46,7 +46,8 @@
 #  until: jenkins_install_package_win is succeeded
   become: True
   become_method: runas
-#  become_user: "{{ jenkins2_user | default('jenkins') }}"
+  become_user: System
+  #"{{ jenkins2_user | default('jenkins') }}"
 - name: Update to latest
   include_tasks: update_jenkins_windows.yml
   when: jenkins2_win_update
