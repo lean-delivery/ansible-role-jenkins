@@ -38,7 +38,6 @@
     name: jenkins
     state: started
     enabled: True
-    delay: 100
   notify: Wait for windows Jenkins
 
 - name: Wait for windows Jenkins
@@ -48,6 +47,7 @@
           {{ jenkins2_context_path | default('') }}/login"
     return_content: True
     status_code: 200
+    delay: 100
   register: login_page_win
   until: login_page_win.status_code == 200
   retries: 30
