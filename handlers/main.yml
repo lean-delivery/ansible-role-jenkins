@@ -47,8 +47,8 @@
           {{ jenkins2_context_path | default('') }}/login"
     return_content: True
     status_code: 200
-    delay: 100
   register: login_page_win
+  ignore_errors: True
   until: login_page_win.status_code == 200
   retries: 30
   delay: 5
