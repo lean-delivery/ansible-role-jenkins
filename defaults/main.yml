@@ -3,6 +3,7 @@
 jenkins2_user: jenkins
 jenkins2_package_version: jenkins
 jenkins2_user_default_pass: Jenk1ns
+jenkins2_default_url: localhost
 # Choose release line between stable and latest
 jenkins2_release_line: stable
 jenkins2_jenkins2_disable_gpg_check: False
