@@ -38,6 +38,7 @@
     name: jenkins
     state: started
     enabled: True
+    delay: 120
   notify: Wait for windows Jenkins
 
 - name: Wait for windows Jenkins
