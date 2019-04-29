@@ -10,6 +10,10 @@
   template:
     src: '{{ jenkins2_seed_job_template }}.j2'
     dest: '{{ jenkins2_home_directory }}/{{ jenkins2_seed_job_template }}'
+    owner: '{{ jenkins2_user }}'
+    group: '{{ jenkins2_user }}'
+    mode: 0644
+    backup: True
   register: dsl_file_copied
   when: ansible_facts['ansible_system']  == 'Linux'
 
