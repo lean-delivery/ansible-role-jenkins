@@ -33,7 +33,7 @@ Ansible lint:
   tags:
     - aws
 
-AWS jenkins:
+.AWS jenkins:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
