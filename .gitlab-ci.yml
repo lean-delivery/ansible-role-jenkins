@@ -47,7 +47,7 @@ AWS Windows jenkins:
     AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule test -s cloud-aws-windows
+    - molecule --debug test -s cloud-aws-windows
   tags:
     - aws
 
