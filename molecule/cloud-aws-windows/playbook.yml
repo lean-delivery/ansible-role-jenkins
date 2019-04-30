@@ -6,6 +6,10 @@
 
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: Get facts
+      setup:
+      register: setup_facts
   roles:
 #    - role: lean_delivery.java
 #      transport: local

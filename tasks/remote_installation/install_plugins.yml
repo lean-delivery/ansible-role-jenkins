@@ -9,7 +9,7 @@
 #  delegate_to: localhost
 - name: debuging1
   debug:
-    msg: '{{ jenkins2_inventory_ip }}'
+    var: '{{ jenkins2_inventory_ip }}'
 
 - name: Update Center Refresh
   jenkins_script:
