@@ -27,7 +27,7 @@
     name: '{{ jenkins2_seed_job_name }}'
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
-    url: 'http://{{ jenkins_inventory_ip }}:{{ jenkins2_config_http_port }}'
+    url: 'http://{{ jenkins2_inventory_ip }}:{{ jenkins2_config_http_port }}'
   delegate_to: localhost
   when: dsl_copied
 
@@ -46,7 +46,7 @@
     name: '{{ jenkins2_seed_job_name }}'
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
-    url: 'http://{{ jenkins_inventory_ip }}:{{ jenkins2_config_http_port }}'
+    url: 'http://{{ jenkins2_inventory_ip }}:{{ jenkins2_config_http_port }}'
     enabled: False
   delegate_to: localhost
   when: dsl_copied
