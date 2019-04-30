@@ -62,7 +62,7 @@ provisioner:
         ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', True) }}"
         ansible_winrm_transport: credssp
         ansible_winrm_server_cert_validation: ignore
-        jenkins2_inventory_ip: setup_facts.ansible_facts.ansible_ip_addresses[0]
+        jenkins2_inventory_ip: 'setup_facts.ansible_facts.ansible_ip_addresses[0]'
 #      s3:
 #        transport: s3
 #        transport_s3_bucket: java-molecule-s3-test
