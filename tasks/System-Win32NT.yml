@@ -74,7 +74,7 @@
     - jenkins2_ssl_configure
 
 - include_tasks: '{{ jenkins2_install_type }}_installation/install_plugins.yml'
-  when: jenkins_install_package_win is defined
+  when: jenkins_install_package is defined
 
 - include_tasks: '{{ jenkins2_install_type }}_installation/configure_smtp.yml'
   when: jenkins2_smtp_enabled
