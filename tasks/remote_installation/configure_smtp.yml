@@ -6,5 +6,5 @@
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: False
-    timeout: 120
+    timeout: 1000
   delegate_to: localhost
