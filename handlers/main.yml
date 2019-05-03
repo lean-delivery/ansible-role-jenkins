@@ -51,7 +51,7 @@
   #until: login_page_win.status_code == 200
   #retries: 30
   #delay: 5
-  win_wait_for:
+  wait_for:
     host: '{{ jenkins2_inventory_ip }}'
     port: '{{ jenkins2_config_http_port }}'
     delay: 10
