@@ -31,7 +31,7 @@
   win_service:
     name: jenkins
     state: restarted
-  notify: Wait for windows Jenkins
+  notify: Wait for windows port
 
 - name: Start windows Jenkins
   win_service:
