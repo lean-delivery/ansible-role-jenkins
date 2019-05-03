@@ -52,8 +52,8 @@
   #retries: 30
   #delay: 5
   win_wait_for:
-    host: {{ jenkins2_inventory_ip }}
-    port: {{ jenkins2_config_http_port }}
+    host: '{{ jenkins2_inventory_ip }}'
+    port: '{{ jenkins2_config_http_port }}'
     delay: 10
   delegate_to: localhost
 
