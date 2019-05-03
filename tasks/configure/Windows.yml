@@ -33,9 +33,10 @@
   win_file:
     path: '{{ jenkins2_home_directory }}\init.groovy.d\basic-security.groovy'
     state: absent
-  notify:
-    - Restart windows Jenkins
-
+#  notify:
+#    - Restart windows Jenkins
+- name: Force all notified handlers to run
+  meta: flush_handlers
 #- name: Restart windows Jenkins
 #  win_service:
 #    name: jenkins
@@ -57,8 +58,8 @@
   win_template:
     src: "reset_user_password.groovy.j2"
     dest: '{{ jenkins2_home_directory }}\init.groovy.d\basic-security.groovy'
-  notify:
-    - Restart windows Jenkins
+#  notify:
+#    - Restart windows Jenkins
 
 - name: Force all notified handlers to run
   meta: flush_handlers
@@ -67,8 +68,8 @@
   win_file:
     path: '{{ jenkins2_home_directory }}\init.groovy.d\basic-security.groovy'
     state: absent
-  notify:
-    - Restart windows Jenkins
+#  notify:
+#    - Restart windows Jenkins
 
 - name: Force all notified handlers to run
   meta: flush_handlers
