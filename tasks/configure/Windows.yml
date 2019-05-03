@@ -26,8 +26,8 @@
   win_wait_for:
     path: '{{ jenkins2_home_directory }}\config.xml'
 
-- name: Force all notified handlers to run
-  meta: flush_handlers
+#- name: Force all notified handlers to run
+#  meta: flush_handlers
 
 - name: Remove unlock script
   win_file:
