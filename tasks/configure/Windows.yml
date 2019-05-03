@@ -60,6 +60,9 @@
   notify:
     - Restart windows Jenkins
 
+- name: Force all notified handlers to run
+  meta: flush_handlers
+
 - name: Remove unlock script2
   win_file:
     path: '{{ jenkins2_home_directory }}\init.groovy.d\basic-security.groovy'
