@@ -1,14 +1,14 @@
 ---
 - name: Copy custom files windows
   win_copy:
-    src: "{{ item.value.src }}"
-    dest: "{{ item.value.dest }}"
-  with_dict: "{{ jenkins2_custom_files }}"
+    src: '{{ item.value.src }}'
+    dest: '{{ item.value.dest }}'
+  with_dict: '{{ jenkins2_custom_files }}'
   when: setup_facts.ansible_facts.ansible_system  == 'Win32NT'
 
 - name: Copy custom files
   copy:
-    src: "{{ item.value.src }}"
-    dest: "{{ item.value.dest }}"
-  with_dict: "{{ jenkins2_custom_files }}"
+    src: '{{ item.value.src }}'
+    dest: '{{ item.value.dest }}'
+  with_dict: '{{ jenkins2_custom_files }}'
   when: setup_facts.ansible_facts.ansible_system  == 'Linux'
