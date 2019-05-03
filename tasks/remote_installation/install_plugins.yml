@@ -26,7 +26,7 @@
     name: "{{ item }}"
     owner: "{{ jenkins2_user }}"
     validate_certs: False
-    jenkins_home: '{{ jenkins2_home_directory }}'
+    jenkins_home: '{{ jenkins2_home_directory }}\'
     state: present
     timeout: "{{ jenkins2_plugins_timeout }}"
   delegate_to: localhost
