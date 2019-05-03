@@ -30,12 +30,12 @@
   become: True
 
 - name: Jenkins repository install
-  include_tasks: '{{ platform }}'
+  include_tasks: '{{ family }}'
   with_first_found:
     - repository_install/{{ ansible_os_family }}.yml
     - not-supported.yml
   loop_control:
-    loop_var: platform
+    loop_var: family
 
 - name: Jenkins Installation
   package:
@@ -56,12 +56,12 @@
   when: jenkins2_home_directory != '/var/lib/jenkins'
 
 - name: Platform configuration
-  include_tasks: '{{ platform }}'
+  include_tasks: '{{ family }}'
   with_first_found:
     - configure/{{ ansible_os_family }}.yml
     - not-supported.yml
   loop_control:
-    loop_var: platform
+    loop_var: family
   when: jenkins_was_installed is defined and jenkins_was_installed is changed
 
 - name: SSL preparation

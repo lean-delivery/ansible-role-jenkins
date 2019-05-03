@@ -1,0 +1,46 @@
+---
+# handlers file for ansible-role-jenkins
+- name: Restart Jenkins
+  service:
+    name: jenkins
+    state: restarted
+  notify: Wait for Jenkins
+  become: True
+
+- name: Start Jenkins
+  service:
+    name: jenkins
+    state: started
+    enabled: True
+  notify: Wait for Jenkins
+  become: True
+
+- name: Wait for Jenkins
+  uri:
+    url: "http://{{ jenkins2_default_url }}\
+          :{{ jenkins2_config_http_port }}\
+          {{ jenkins2_context_path | default('') }}/login"
+    status_code: 200
+  register: login_page
+  until: login_page.status == 200
+  retries: 60
+  delay: 5
+
+- name: Restart Jenkins with HTTPS
+  service:
+    name: jenkins
+    state: restarted
+  notify: Wait for Jenkins with HTTPS
+  become: True
+
+- name: Wait for Jenkins with HTTPS
+  uri:
+    url: "https://{{ jenkins2_default_url }}\
+          :{{ jenkins2_config_http_port }}\
+          {{ jenkins2_context_path | default('') }}/login"
+    status_code: 200
+    validate_certs: False
+  register: login_page
+  until: login_page.status == 200
+  retries: 60
+  delay: 5

@@ -56,12 +56,12 @@
     enabled: True
 
 - name: Platform configuration
-  include_tasks: '{{ platform }}'
+  include_tasks: '{{ family }}'
   with_first_found:
     - configure/{{ ansible_os_family }}.yml
     - not-supported.yml
   loop_control:
-    loop_var: platform
+    loop_var: family
 
 - name: SSL preparation
   include_tasks: '{{ platform }}'
