@@ -35,7 +35,6 @@
   delay: 10
   with_items:
     - '{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}'
-  timeout: 120
   notify:
     - Restart windows Jenkins
 

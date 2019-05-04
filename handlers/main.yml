@@ -58,7 +58,7 @@
   register: login_page_win
   until: login_page_win.status_code == 200
   retries: 30
-  delay: 5
+  delay: 10
 
 - name: Restart Jenkins with HTTPS
   service:
