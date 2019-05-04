@@ -32,9 +32,10 @@
   delegate_to: localhost
   register: my_jenkins_plugins
   retries: 10
-  delay: 3
+  delay: 10
   with_items:
     - '{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}'
+  timeout: 120
   notify:
     - Restart windows Jenkins
 
