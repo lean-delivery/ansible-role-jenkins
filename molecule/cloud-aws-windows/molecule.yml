@@ -23,22 +23,8 @@ platforms:
 #   wait_timeout: 1800
 #   groups:
 #     - windows
-  - name: test-aws-Windows2016-jenkins-master
-    aws_image_id: ami-0a125a00b5b736e77
-    aws_region: us-east-1
-    instance_type: m5.large
-    profile_name: epmldi-instance-profile
-    vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
-    spot_price: 0.14
-    aws_sec_group:
-      - default
-      - epam-by-ru
-    wait_timeout: 1800
-    groups:
-      - windows
-#  - name: test-aws-Windows2019-jenkins-master
-#    aws_image_id: ami-03ad37b4adab50a4c
+#  - name: test-aws-Windows2016-jenkins-master
+#    aws_image_id: ami-0a125a00b5b736e77
 #    aws_region: us-east-1
 #    instance_type: m5.large
 #    profile_name: epmldi-instance-profile
@@ -51,6 +37,20 @@ platforms:
 #    wait_timeout: 1800
 #    groups:
 #      - windows
+  - name: test-aws-Windows2019-jenkins-master
+    aws_image_id: ami-03ad37b4adab50a4c
+    aws_region: us-east-1
+    instance_type: m5.large
+    profile_name: epmldi-instance-profile
+    vpc_subnet_id: subnet-05a2ef2b767afec50
+    assign_public_ip: False
+    spot_price: 0.14
+    aws_sec_group:
+      - default
+      - epam-by-ru
+    wait_timeout: 1800
+    groups:
+      - windows
 provisioner:
   name: ansible
   log: True
