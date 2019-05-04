@@ -29,7 +29,7 @@
     jenkins_home: '{{ jenkins2_home_directory }}\'
     state: present
     timeout: "{{ jenkins2_plugins_timeout }}"
-  delegate_to: localhost
+#  delegate_to: localhost
   register: my_jenkins_plugins
   retries: 10
   delay: 10
