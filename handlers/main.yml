@@ -4,6 +4,7 @@
   service:
     name: jenkins
     state: restarted
+  delay: 1000
   notify: Wait for Jenkins
   become: True
 
