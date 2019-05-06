@@ -18,9 +18,6 @@
     timeout: 120
   delegate_to: localhost
 
-- name: Force all notified handlers to run
-  meta: flush_handlers
-
 - name: Install Jenkins plugins
   jenkins_plugin:
     url: 'http://{{ jenkins2_inventory_ip }}:{{ jenkins2_config_http_port }}'
