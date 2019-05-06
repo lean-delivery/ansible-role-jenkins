@@ -4,7 +4,6 @@
   service:
     name: jenkins
     state: restarted
-  delay: 1000
   notify: Wait for Jenkins
   become: True
 
@@ -32,6 +31,7 @@
   win_service:
     name: jenkins
     state: restarted
+    delay: 100
   notify:
     - Wait for windows port
     - Wait for windows Jenkins
@@ -47,7 +47,7 @@
   win_wait_for:
     host: '{{ jenkins2_inventory_ip }}'
     port: '{{ jenkins2_config_http_port }}'
-    delay: 1000
+    delay: 100
 
 - name: Wait for windows Jenkins
   win_uri:
