@@ -22,9 +22,9 @@
           {{ jenkins2_context_path | default('') }}/login"
     status_code: 200
   register: login_page
-  until: login_page.status == 200
+  until: login_page_win.status_code is defined and (login_page.status == 200)
   retries: 60
-  delay: 5
+  delay: 10
 
 # handlers for windows
 - name: Restart windows Jenkins
