@@ -1,3 +1,4 @@
 ---
 jenkins2_default_path: 'C:\Program Files (x86)\Jenkins'
+jenkins2_install_type: 'remote'
 requirements: []
