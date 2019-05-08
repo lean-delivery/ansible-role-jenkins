@@ -29,7 +29,7 @@ Ansible lint:
 Docker jenkins:
   stage: deployment test
   script:
-    - molecule test -s default
+    - molecule --debug test -s default
   tags:
     - aws
 
@@ -56,6 +56,6 @@ EPC jenkins:
     EPC_REGION: EPAM-BY2
   stage: deployment test
   script:
-    - molecule test -s cloud-epc-delegated
+    - molecule --debug test -s cloud-epc-delegated
   tags:
     - delegated
