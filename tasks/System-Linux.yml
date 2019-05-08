@@ -16,10 +16,10 @@
   become: True
 
 - name: Create group
-    group:
-      name: '{{ jenkins2_user | default("jenkins") }}'
-      state: present
-    become: True
+  group:
+    name: "{{ jenkins2_user | default('jenkins') }}"
+    state: present
+  become: True
 
 - name: Create user
   user:
