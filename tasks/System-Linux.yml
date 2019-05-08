@@ -17,7 +17,7 @@
 
 - name: Create group
     group:
-      name: "{{ jenkins2_user | default('jenkins') }}"
+      name: '{{ jenkins2_user | default("jenkins") }}'
       state: present
     become: True
 
