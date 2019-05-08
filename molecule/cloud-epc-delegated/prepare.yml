@@ -35,7 +35,9 @@
       become: True
 
 - name: Update hosts python modules
-  hosts: all
+  hosts:
+    - rhel_family
+    - debian_family
   gather_facts: True
   tasks:
     - name: 'Install pip package'

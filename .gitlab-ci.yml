@@ -26,7 +26,7 @@ Ansible lint:
   tags:
     - aws
 
-.Docker jenkins:
+Docker jenkins:
   stage: deployment test
   script:
     - molecule test -s default
@@ -42,7 +42,7 @@ Ansible lint:
   tags:
     - aws
 
-AWS Windows jenkins:
+.AWS Windows jenkins:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
@@ -51,7 +51,7 @@ AWS Windows jenkins:
   tags:
     - aws
 
-.EPC jenkins:
+EPC jenkins:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test
