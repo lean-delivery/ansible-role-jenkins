@@ -9,6 +9,7 @@
   roles:
     - role: lean_delivery.java
       transport: local
+      transport_local: /tmp/jdk-8u202-linux-x64.tar.gz
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: True
       jenkins2_pipeline_libraries_url: "https://example.com/example.git"
