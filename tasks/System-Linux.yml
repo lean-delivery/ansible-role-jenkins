@@ -1,4 +1,23 @@
 ---
+- name: Install pip package
+  pip:
+    name:
+      - pip
+    state: present
+    extra_args: --upgrade
+  register: installed_packages
+  until: installed_packages is success
+  become: True
+
+- name: Pip version
+  command: pip --version
+  register: pip_version
+  tags:
+    - skip_ansible_lint
+
+- debug:
+    msg: "{{ pip_version }}"
+
 - name: Install pip packages
   pip:
     name:
