@@ -2,13 +2,13 @@
 - name: Install pip packages
   pip:
     name:
+      - pip
       - jira
       - pyOpenSSL
       - python-gitlab
       - python-jenkins
       - lxml
       - awscli
-      - pip
     state: present
     extra_args: --upgrade
   register: installed_packages
