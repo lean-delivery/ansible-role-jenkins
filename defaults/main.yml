@@ -32,7 +32,7 @@ jenkins2_proxy_no_proxy_hosts: ''
 # SSH_KEYS generation properties
 jenkins2_ssh_keys_generate: False
 jenkins2_ssh_keys_private_keyname: "id_rsa"
-jenkins2_ssh_keys_size: 4096
+jenkins2_ssh_keys_size: 1024
 jenkins2_ssh_keys_inv_slave_groupname: "jenkins_ssh_slaves"
 
 jenkins2_ssh_keys_slave_group: "{{ groups[jenkins2_ssh_keys_inv_slave_groupname]|default([''])}}"
@@ -93,7 +93,7 @@ jenkins2_plugins_list: []
 
 # Set Credentials
 jenkins2_credentials_enabled: True
-jenkins2_credentials:
+jenkins2_credentials_base:
   slave:
     type: 'password'
     id: 'ci_slave'
@@ -206,6 +206,22 @@ jenkins2_credentials:
     description: 'username and password for bitbucket project'
     username: 'bitbucketProjectUser'
     password: 'bitbucketProjectPassword'
+
+jenkins2_credentials_generated_ssh_keys:
+  slave_ssh:
+    type: 'key'
+    keySource: 0
+    key: "{{ jenkins_master_key | default('') }}"
+    id: 'slave_ssh'
+    username: 'jenkins'
+    passphrase: ''
+    description: 'credentials for slave node (ssh key auth)'
+
+jenkins2_credentials: >-
+  {{ (jenkins2_ssh_keys_generate) | ternary(
+  jenkins2_credentials_base|combine(jenkins2_credentials_generated_ssh_keys) ,
+  jenkins2_credentials_base
+  )}}
 
 # Configure pipeline libraries
 jenkins2_pipeline_libraries_enabled: False

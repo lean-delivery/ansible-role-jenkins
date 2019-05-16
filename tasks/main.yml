@@ -10,17 +10,15 @@
 
 - name: "Install pip packages"
   pip:
-    name: "{{ item }}"
+    name:
+      - jira
+      - pyOpenSSL
+      - python-gitlab
+      - python-jenkins
+      - lxml
+      - awscli
     state: present
     extra_args: --upgrade
-  with_items:
-    - jira
-    - pyOpenSSL
-    - python-gitlab
-    - python-jenkins
-    - lxml
-    - awscli
-    - pip
   register: installed_packages
   until: installed_packages is success
   become: True
@@ -65,6 +63,9 @@
   until: jenkins_was_installed is success
   become: True
 
+- include_tasks: "configure_ssh_keys.yml"
+  when: jenkins2_ssh_keys_generate
+
 - name: "Jenkins confuguration"
   include_tasks: "{{ platform }}"
   with_first_found:
@@ -106,7 +107,3 @@
 
 - include_tasks: "configure_ec2.yml"
   when: jenkins2_ec2_enable
-
-- include_tasks: "configure_ssh_keys.yml"
-  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
-    jenkins_was_installed is defined and jenkins_was_installed is changed
