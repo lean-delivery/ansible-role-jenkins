@@ -1,21 +1,24 @@
 ---
-- name: "Install ansible selinux support library"
+- name: Install ansible selinux support library
   package:
     name: libselinux-python
     state: present
+  register: status
+  until: status is succeeded
   become: True
 
-- name: "Install ansible selinux configure libraries"
+- name: Install ansible selinux configure libraries
   package:
-    name: "{{ item }}"
+    name:
+      - policycoreutils-python
+      - libsemanage-python
     state: present
-  with_items:
-    - policycoreutils-python
-    - libsemanage-python
+  register: status
+  until: status is succeeded
   become: True
   when: ansible_selinux.status == "enabled"
 
-- name: "Enable connections to HTTP port"
+- name: Enable connections to HTTP port
   seport: ports="{{ selinux_ports }}" proto=tcp setype=http_port_t state=present
   become: True
   when: ansible_selinux.status == "enabled" and ansible_selinux.mode != "disabled"

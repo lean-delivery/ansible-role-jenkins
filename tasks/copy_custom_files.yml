@@ -1,5 +1,5 @@
 ---
-- name: "Copy custom files"
+- name: Copy custom files
   copy:
     src: "{{ item.value.src }}"
     dest: "{{ item.value.dest }}"
