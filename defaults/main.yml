@@ -32,8 +32,8 @@ jenkins2_proxy_no_proxy_hosts: ''
 # SSH_KEYS generation properties
 jenkins2_ssh_keys_generate: False
 jenkins2_ssh_keys_private_keyname: "id_rsa"
-jenkins2_ssh_keys_size: 1024
-jenkins2_ssh_keys_inv_slave_groupname: "jenkins_ssh_slaves"
+jenkins2_ssh_keys_size: 2048
+jenkins2_ssh_slave_key_fetch: '/tmp/slave.pub'
 
 jenkins2_ssh_keys_slave_group: "{{ groups[jenkins2_ssh_keys_inv_slave_groupname]|default([''])}}"
 jenkins2_ssh_keys_slave_hosts: "{%- set users = [] %}

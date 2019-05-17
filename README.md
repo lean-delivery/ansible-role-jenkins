@@ -85,14 +85,40 @@ Requirements
   - `jenkins2_proxy_no_proxy_hosts` - hosts to skip from proxying
      default: `''`
 # ssh key generation config
-  - `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user
-     default: `False`
-  - `jenkins2_ssh_keys_private_keyname` - private key name
-     default: `id_rsa`
-  - `jenkins2_ssh_keys_size` - ssh rsa key strength size
-     default: `4096`
-  - `jenkins2_ssh_keys_inv_slave_groupname` - slave group name in inventory file
-     default: `jenkins_ssh_slaves`
+
+- `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user
+   default: `False`
+- `jenkins2_ssh_keys_private_keyname` - private key name
+   default: `id_rsa`
+- `jenkins2_ssh_keys_size` - ssh rsa key strength size
+   default: `2048`
+
+Ssh generation able to you use these keys connect slave nodes. After generation, private key added to credentials, slave key fetched to ansible host..
+With lean_delivery.jenkins_slave role you can use something like this:
+
+```yaml
+- name: Install and Configure Jenkins
+  hosts: master
+  vars:
+    jenkins2_ssh_keys_generate: True
+  roles:
+    - role: lean_delivery.jenkins
+
+- name: Install Jenkins to nodes
+  hosts: j-nodes
+  vars:
+    master_host: "jenkins-master.example.com"
+    slave_linux_host: "slave_name.example.com"
+    slave_agent_name: "{{ inventory_hostname }}"
+    slave_linux_jenkins_cred_id: slave_ssh
+    slave_linux_jenkins_username: jenkins
+    slave_linux_user_group: jenkins
+    slave_linux_jenkins_password: some_strong_password
+    slave_linux_jenkins_public_key: >-
+      {{ lookup('file', '/tmp/slave.pub') }}
+```
+
+
 # smtp settings
   - `jenkins2_smtp_enabled` - to set the smtp configuration
      default: `True`

@@ -21,29 +21,16 @@
 
   - name: "Generate a pair of keys"
     command: >-
-      {{ 'ssh-keygen -q -t rsa -f' +
-      jenkins2_home_directory + '/.ssh/' + jenkins2_ssh_keys_private_keyname +
-      ' -C "" -N ""' }}
+      {{ 'ssh-keygen
+      -q
+      -b ' + jenkins2_ssh_keys_size|string + '
+      -t rsa
+      -f ' + jenkins2_home_directory + '/.ssh/' +
+             jenkins2_ssh_keys_private_keyname +
+      ' -C "Jenkins"
+      -N ""' }}
     changed_when: False
     when: not private_key_stat.stat.exists|bool
-
-  # - name: "Generate openssl private key for user jenkins"
-  #   openssl_privatekey:
-  #     path: "{{ jenkins2_home_directory }}/.ssh/\
-  #     {{ jenkins2_ssh_keys_private_keyname }}"
-  #     size: "{{ jenkins2_ssh_keys_size }}"
-  #   register: openssl_privatekey_file
-  #   when: not private_key_stat.stat.exists|bool
-  #
-  # - name: "Generate openssl public key for user jenkins"
-  #   openssl_publickey:
-  #     path: "{{ jenkins2_home_directory }}/.ssh/\
-  #     {{ jenkins2_ssh_keys_private_keyname }}.pub"
-  #     privatekey_path: "{{ jenkins2_home_directory }}/.ssh/\
-  #     {{ jenkins2_ssh_keys_private_keyname }}"
-  #     format: OpenSSH
-  #   register: openssl_publickey_file
-  #   when: not public_key_stat.stat.exists|bool
 
   - name: "Set corect folders owners/permissions"
     file:
@@ -57,7 +44,6 @@
           {{ jenkins2_ssh_keys_private_keyname }}", mode: "0600"}
       - {dst: "{{ jenkins2_home_directory }}/.ssh/\
           {{ jenkins2_ssh_keys_private_keyname }}.pub", mode: "0600"}
-      # - {dst: "{{ jenkins2_home_directory }}/.ssh/known_hosts", mode: "0644"}
 
   - name: "Slurp the private key"
     slurp:
@@ -69,15 +55,10 @@
     set_fact:
       jenkins_master_key: "{{ jenkins_key['content'] | b64decode }}"
 
-  - name: "Slurp the public key"
-    slurp:
+  - name: "Fetch pub key to ansible host"
+    fetch:
       src: "{{ jenkins2_home_directory }}/.ssh/\
       {{ jenkins2_ssh_keys_private_keyname }}.pub"
-    register: jenkins_key_pub
+      dest: "{{ jenkins2_ssh_slave_key_fetch }}"
+      flat: yes
   become: True
-
-- name: "Add jenkins_slave_key to dummy host"
-  add_host:
-    name:   "JENKINS_SLAVE_KEYS_HOLDER"
-    jenkins_slave_key:  "{{ jenkins_key_pub['content'] | b64decode }}"
-  changed_when: False
