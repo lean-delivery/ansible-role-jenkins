@@ -60,5 +60,5 @@
       src: "{{ jenkins2_home_directory }}/.ssh/\
       {{ jenkins2_ssh_keys_private_keyname }}.pub"
       dest: "{{ jenkins2_ssh_slave_key_fetch }}"
-      flat: yes
+      flat: True
   become: True
