@@ -115,7 +115,6 @@ Requirements
   - `jenkins2_proxy_no_proxy_hosts` - Hosts to skip from proxying   
      default: `''`
 # ssh key generation config
-<<<<<<< HEAD
 
 - `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user
    default: `False`
@@ -150,16 +149,6 @@ With lean_delivery.jenkins_slave role you can use something like this:
 ```
 
 
-=======
-  - `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user   
-     default: `False`
-  - `jenkins2_ssh_keys_private_keyname` - private key name   
-     default: `id_rsa`
-  - `jenkins2_ssh_keys_size` - ssh rsa key strength size   
-     default: `4096`
-  - `jenkins2_ssh_keys_inv_slave_groupname` - slave group name in inventory file   
-     default: `jenkins_ssh_slaves`
->>>>>>> f2abf6ac4607ca79642c3403e00613c4b45f209c
 # smtp settings
   - `jenkins2_smtp_enabled` - to set the smtp configuration   
      default: `True`
