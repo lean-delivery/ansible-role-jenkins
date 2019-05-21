@@ -8,6 +8,10 @@
   hosts: all
   roles:
     - role: lean_delivery.java
+      java_major_version: 8
+      java_package: 'jdk'
+      transport: repositories
+      java_tarball_install: False
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: True
       jenkins2_pipeline_libraries_url: "https://example.com/example.git"
@@ -30,5 +34,5 @@
       aws_key: "aws_key_name"
       aws_subnet_id: "subnet-AAAAAAAA"
       artifact_bucket_name: "s3_artifact_test"
-      jenkins2_ec2_enable: True
+      jenkins2_ec2_enable: False
       jenkins2_jira_enabled: True
