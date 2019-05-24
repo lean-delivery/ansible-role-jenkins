@@ -41,9 +41,9 @@ Requirements
   - `jenkins2_release_line` - package version to be installed: stable or latest   
      default: `stable`
   - `jenkins2_disable_gpg_check` - gpg check skipped (only for yum)   
-     default: `False`
+     default: `false`
   - `jenkins2_key_validate_certs` - validate certs during key install (only for yum)   
-     default: `True`
+     default: `true`
   - `jenkins2_context_path` - Jenkins context path   
      default: `''`
   - `jenkins2_cli_username` - user for jenkins cli connection   
@@ -73,17 +73,17 @@ Requirements
      default: `''`
 # Enable HTTPS
   - `jenkins2_https_enabled` - Use or not use secure connection.   
-     default: `True`
+     default: `true`
   - `jenkins2_http_disabled` - Disable insecure connection.   
-     default: `False`
+     default: `false`
   - `jenkins2_config_https_port` - Jenkins port for secure connection (https).   
      default: `8443`
-  - `jenkins2_local_keystore` - If True - to search for keystore on ansible host on {{ jenkins2_local_keystore_path }}. If False - to check keystore on remote host.    
-     default: `False`
+  - `jenkins2_local_keystore` - If true - to search for keystore on ansible host on {{ jenkins2_local_keystore_path }}. If false - to check keystore on remote host.    
+     default: `false`
   - `jenkins2_local_keystore_path` - Path to local keystore file (in order not to create self-signed)  
      default: `{{ role_path }}/files/{{ jenkins2_ssl_key_store_name }}`
   - `jenkins2_ssl_configure` - Configure or not ssl connection for jenkins.   
-     default: `True`
+     default: `true`
   - `jenkins2_ssl_key_store_name` - Keystore file name. If file with such name exists in role folder/files - it will be used as keystore.  
      default: `jenkins2-ssl.keystore.jks`
   - `jenkins2_ssl_key_size` - Certificate key size.   
@@ -116,7 +116,7 @@ Requirements
      default: `''`
 # ssh key generation config
   - `jenkins2_ssh_keys_generate` - add ability to generate SSH key pairs under jenkins user   
-     default: `False`
+     default: `false`
   - `jenkins2_ssh_keys_private_keyname` - private key name   
      default: `id_rsa`
   - `jenkins2_ssh_keys_size` - ssh rsa key strength size   
@@ -125,7 +125,7 @@ Requirements
      default: `jenkins_ssh_slaves`
 # smtp settings
   - `jenkins2_smtp_enabled` - to set the smtp configuration   
-     default: `True`
+     default: `true`
   - `jenkins2_smtp_sysad_email` - jenkins admin email   
      default: `usermail@test.com`
   - `jenkins2_smtp_user` - jenkins admin email   
@@ -143,11 +143,11 @@ Requirements
      default: `[]`
 # credentials configuration
   - `jenkins2_credentials_enabled` - to add credentials   
-     default: `True`
+     default: `true`
   - `jenkins2_credentials` - credentials map
 # pipeline libraries configuration
   - `jenkins2_pipeline_libraries_enabled` - to configure Global Pipeline Libraries   
-     default: `False`
+     default: `false`
   - `jenkins2_pipeline_libraries_name` - Library Name to be used in the @Library annotation   
      default: `Pipeline_Libraries`
   - `jenkins2_pipeline_libraries_url` - URL of remote repository   
@@ -156,7 +156,7 @@ Requirements
      default: `'master'`
 # bitbucket project configuration
   - `jenkins2_bitbucket_project_enabled` - to configure Bitbucket Team/Project   
-     default: `False`
+     default: `false`
   - `jenkins2_bitbucket_project_owner` - Name of the Bitbucket Team or Bitbucket User Account. It could be a Bitbucket Project also, if using Bitbucket Server. In this case (Bitbucket Server): Use the project key, not the project name. If using a user account instead of a project, add a "~" character before the username, i.e. "~joe".   
      default: `Bitbucket_Project_Owner`
   - `jenkins2_bitbucket_project_repo_regexp` - A Java regular expression to restrict the repo names. Repo names that do not match the supplied regular expression will be ignored.   
@@ -171,7 +171,7 @@ Requirements
      default: `'master|develop|PR-[0-9]+'`
 # sonarqube configuration
   - `jenkins2_sonarqube_enabled` - to add SonarQube configuration   
-     default: `False`
+     default: `false`
   - `jenkins2_sonarqube_name` - SonarQube Name   
      default: `SonarQube`
   - `jenkins2_sonarqube_url` - SonarQube Server URL   
@@ -186,7 +186,7 @@ Requirements
      default: `''`
 # custom files copy
   - `jenkins2_custom_files_enabled` - to copy custom files to Jenkins   
-     default: `False`
+     default: `false`
   - `jenkins2_custom_files` - map with files parameters   
       default:
     `log_parser:
@@ -197,14 +197,14 @@ Requirements
       mode: "0755"`
 # Gitlab configuration
   - `jenkins2_gitlab_enabled` - to enable gitlab config   
-     default: `False`
+     default: `false`
   - `gitlab_external_url` - gitlab external url   
      default: `https://localhost`
   - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)   
      default: `gitlab_token`
 # Jira configuration
   - `jenkins2_jira_enabled` - to enable jira config   
-     default: `False`
+     default: `false`
   - `jenkins2_jira_url` - jira url   
      default: `https://jira.example.com`
   - `jenkins2_jira_alternative_url` - jira alternative url   
@@ -242,7 +242,7 @@ Requirements
 # Seed job configuration
 ### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
 - `jenkins2_seed_job_enable` - enable jenkins seed job   
-   default: `False`
+   default: `false`
 - `jenkins2_seed_job_template` - DSL template file name without .j2. ***Do not forget to setup all needed variables for template*** For default template need following variables: gitlab_external_url, gitlab_project_group, gitlab_project_name, ci_test_jenkins_slave_label, feature_verification_jenkins_slave_label   
    default: `dsl_hybris_create_job.groovy`
 - `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them   
@@ -261,7 +261,7 @@ Use variable `jenkins2_credentials` to set properties of credentials
 - gitlab_master_token
 
 ```yml
-jenkins2_credentials_enabled: True # Set False to disable credentials configuration
+jenkins2_credentials_enabled: true # Set false to disable credentials configuration
 jenkins2_credentials:
   slave:
     type: 'password'
@@ -388,7 +388,7 @@ jenkins2_credentials:
 
 # EC2 plugin configuration
 - `jenkins2_ec2_enable` - enable jenkins ec2 plugin configure https://wiki.jenkins.io/display/JENKINS/Amazon+EC2+Plugin   
-   default: `False`
+   default: `false`
 ```yml
 jenkins2_ec2_cloud_parameters:
   cloud_name: "AWS_cloud"
@@ -462,7 +462,7 @@ jenkins2_ec2_ami_list:
     zone: "us-east-1a,us-east-1b"
     monitoring: "false"
     SpotConfiguration:
-      enabled: True
+      enabled: true
       spotMaxBidPrice: "0.001"
   fv_ami:
     ami: "ami-BBBBBBBB"
@@ -497,13 +497,13 @@ jenkins2_ec2_ami_list:
     zone: "us-east-1a,us-east-1b"
     monitoring: "false"
     SpotConfiguration:
-      enabled: False
+      enabled: false
     t2Unlimited: "false"
 ```
 
 # Security and Authorization configuration
 - `jenkins2_security_enable`: enable Jenkins security.   
-   default: `True`
+   default: `true`
 - `jenkins2_security_realm`: Select type of Jenkins security. Avaible: `basic`, `ldap`, `active-directory`
    default: `"basic"`
 
@@ -536,7 +536,7 @@ jenkins2_ec2_ami_list:
   ```
 
 - `jenkins2_authorization_strategy_configure`: enable authorization strategy configuration   
-   default: `True`
+   default: `true`
 - `jenkins2_authorization_strategy`: type of authorization strategy. Available: `logged-in`, `matrix-based`   
    default: `"logged-in"`
 - `jenkins2_authorization_strategy_logged_in_allow_anonymous_read`: allow anonymous read access   
@@ -574,7 +574,7 @@ Example Playbook
 - name: Install and Configure Jenkins
   hosts: jenkins
   vars:
-    jenkins2_ssh_keys_generate: True
+    jenkins2_ssh_keys_generate: true
     jenkins2_ssh_keys_slave_hosts:
       - {host: 'slave1.example.com', users: ['root', 'jenkins']}
       - {host: 'slave2.example.com', users: ['root', 'jenkins']}

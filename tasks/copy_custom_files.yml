@@ -7,4 +7,4 @@
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode }}"
   with_dict: "{{ jenkins2_custom_files }}"
-  become: True
+  become: true
