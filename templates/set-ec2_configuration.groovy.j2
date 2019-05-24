@@ -21,7 +21,7 @@ import jenkins.model.Jenkins
     {{ TagList.append( "tag_" + key + "_" + dict_item['name']) }}
   {% endfor %}
 
-  {% if value.SpotConfiguration.enabled == True %}
+  {% if value.SpotConfiguration.enabled == true %}
     def spotConfig_{{ key }} = new SpotConfiguration("{{ value.SpotConfiguration.spotMaxBidPrice }}")
   {% endif -%}
 
@@ -29,7 +29,7 @@ import jenkins.model.Jenkins
   SlaveTemplate slaveTemplate_{{ key }} = new SlaveTemplate(
     '{{ value.ami }}',
     '{{ value.zone }}',
-    {{ (value.SpotConfiguration.enabled == True) | ternary("spotConfig_" + key, 'null') }},
+    {{ (value.SpotConfiguration.enabled == true) | ternary("spotConfig_" + key, 'null') }},
     '{{ value.securityGroups }}',
     '{{ value.remoteFS }}',
     InstanceType.fromValue('{{ value.type }}'),

@@ -5,7 +5,7 @@
     state: present
   register: status
   until: status is succeeded
-  become: True
+  become: true
 
 - name: Install ansible selinux configure libraries
   package:
@@ -15,10 +15,10 @@
     state: present
   register: status
   until: status is succeeded
-  become: True
+  become: true
   when: ansible_selinux.status == "enabled"
 
 - name: Enable connections to HTTP port
   seport: ports="{{ selinux_ports }}" proto=tcp setype=http_port_t state=present
-  become: True
+  become: true
   when: ansible_selinux.status == "enabled" and ansible_selinux.mode != "disabled"

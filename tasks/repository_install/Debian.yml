@@ -23,11 +23,11 @@
     state: present
   register: status
   until: status is succeeded
-  become: True
+  become: true
 
 - name: "Jenkins Repository"
   apt_repository:
     repo: "{{ base_url }}"
-    update_cache: True
+    update_cache: true
     state: present
-  become: True
+  become: true
