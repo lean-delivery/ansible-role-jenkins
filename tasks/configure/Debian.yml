@@ -7,8 +7,8 @@
     owner: root
     group: root
     mode: 0644
-    backup: True
-  become: True
+    backup: true
+  become: true
   notify:
     - Restart Jenkins
 
@@ -18,7 +18,7 @@
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
     state: directory
-  become: True
+  become: true
 
 - name: Add script for unlock disabling
   template:
@@ -27,7 +27,7 @@
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
     mode: 0744
-  become: True
+  become: true
 
 - name: Create directory for user
   file:
@@ -36,13 +36,13 @@
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
     mode: 0755
-  become: True
+  become: true
 
 - name: Delete user directory
   file:
     path: "{{ jenkins2_home_directory }}/users/{{ jenkins2_cli_username }}"
     state: absent
-  become: True
+  become: true
 
 - name: Force all notified handlers to run
   meta: flush_handlers
@@ -58,7 +58,7 @@
   file:
     path: "{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy"
     state: absent
-  become: True
+  become: true
   notify:
     - Restart Jenkins
 
@@ -69,7 +69,7 @@
     owner: "{{ jenkins2_user }}"
     group: "{{ jenkins2_user }}"
     mode: 0744
-  become: True
+  become: true
   notify:
     - Restart Jenkins
 
@@ -80,7 +80,7 @@
   file:
     path: "{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy"
     state: absent
-  become: True
+  become: true
   notify:
     - Restart Jenkins
 

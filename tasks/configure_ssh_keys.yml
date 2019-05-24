@@ -29,7 +29,7 @@
              jenkins2_ssh_keys_private_keyname +
       ' -C "Jenkins"
       -N ""' }}
-    changed_when: False
+    changed_when: false
     when: not private_key_stat.stat.exists|bool
 
   - name: "Set corect folders owners/permissions"
@@ -60,5 +60,5 @@
       src: "{{ jenkins2_home_directory }}/.ssh/\
       {{ jenkins2_ssh_keys_private_keyname }}.pub"
       dest: "{{ jenkins2_ssh_slave_key_fetch }}"
-      flat: True
-  become: True
+      flat: true
+  become: true

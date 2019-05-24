@@ -7,8 +7,8 @@
     owner: root
     group: root
     mode: 0644
-    backup: True
-  become: True
+    backup: true
+  become: true
   notify:
     - Restart Jenkins
 

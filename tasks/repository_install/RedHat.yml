@@ -23,13 +23,13 @@
     state: present
   register: status
   until: status is succeeded
-  become: True
+  become: true
 
 - name: "Jenkins Repository"
   yum_repository:
     name: jenkinsrepo
     description: Jenkins YUM Repository
     baseurl: "{{ base_url }}"
-    gpgcheck: True
+    gpgcheck: true
     state: present
-  become: True
+  become: true

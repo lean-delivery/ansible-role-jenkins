@@ -5,7 +5,7 @@
     script: "{{ lookup('template', 'proxy_configuration.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
-    validate_certs: False
+    validate_certs: false
     timeout: 120
 
 - name: Update Center Refresh
@@ -14,7 +14,7 @@
     script: "{{ lookup('template', 'update_center_refresh.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
-    validate_certs: False
+    validate_certs: false
     timeout: 120
 
 - name: Install Jenkins plugins
@@ -24,7 +24,7 @@
     url_password: "{{ jenkins2_cli_password }}"
     name: "{{ item }}"
     owner: "{{ jenkins2_user }}"
-    validate_certs: False
+    validate_certs: false
     jenkins_home: "{{ jenkins2_home_directory }}"
     state: present
     timeout: "{{ jenkins2_plugins_timeout }}"
@@ -33,7 +33,7 @@
   delay: 3
   with_items:
     - "{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}"
-  become: True
+  become: true
   notify:
     - Restart Jenkins
 
