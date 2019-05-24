@@ -23,7 +23,7 @@
   register: login_page
   until: login_page.status == 200
   retries: 60
-  delay: 1
+  delay: 5
 
 - name: Restart Jenkins with HTTPS
   service:
@@ -41,4 +41,4 @@
   register: login_page
   until: login_page.status == 200
   retries: 60
-  delay: 1
+  delay: 5
