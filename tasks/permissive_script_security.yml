@@ -3,7 +3,7 @@
     path: /etc/sysconfig/jenkins
     regexp: '^(.+\=\_)'
     line: '\1 -Dpermissive-script-security.enabled=no_security"'
-    backrefs: yes
+    backrefs: true
   notify:
     - Restart Jenkins
   when:
