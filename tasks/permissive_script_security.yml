@@ -1,0 +1,10 @@
+- name: Enable Permissive Script Security
+  lineinfile:
+    path: /etc/sysconfig/jenkins
+    regexp: '^(.+\=\_)'
+    line: '\1 -Dpermissive-script-security.enabled=no_security"'
+    backrefs: yes
+  notify:
+    - Restart Jenkins
+  when:
+    - ansible_os_family == "RedHat"

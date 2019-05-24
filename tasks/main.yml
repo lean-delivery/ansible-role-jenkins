@@ -140,3 +140,6 @@
   notify:
     - Restart Jenkins with HTTPS
   when: jenkins2_https_enabled
+  
+- include_tasks: permissive_script_security.yml
+  when: jenkins2_permissive_script_enabled
