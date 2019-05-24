@@ -216,6 +216,11 @@ jenkins2_credentials:
     id: 'gitlab_token'
     description: 'gitlab connection with token'
     token: "{{ gitlab_master_token | default('ToKen12345') }}"
+  githubtoken:
+    type: 'secrettext'
+    id: 'github_token'
+    description: 'GiHub connection with token'
+    token: "{{ github_master_token | default('ToKen12345') }}"
   aws_ec2_credentials:
     type: 'aws_creds'
     id: 'AWS_EC2_CREDS'
@@ -267,6 +272,13 @@ jenkins2_custom_files:
 jenkins2_gitlab_enabled: false
 gitlab_external_url: "https://localhost"
 jenkins2_gitlab_token_cred: "gitlab_token"
+
+# Setup github connection
+jenkins2_github_enabled: False
+github_external_url: "https://api.github.com"
+github_manage_hooks: "true"
+github_client_cache_size: 20
+jenkins2_github_token_cred: "github_token"
 
 # Add seed job - job that run dsl config and seeds jobs
 # Add or replace dsl template
