@@ -22,13 +22,13 @@
     extra_args: --upgrade
   register: installed_packages
   until: installed_packages is success
-  become: True
+  become: true
 
 - name: Create group
   group:
     name: "{{ jenkins2_user | default('jenkins') }}"
     state: present
-  become: True
+  become: true
 
 - name: Create user
   user:
@@ -36,7 +36,7 @@
     group: "{{ jenkins2_user | default('jenkins') }}"
     shell: /bin/bash
     home: "{{ jenkins2_home_directory }}"
-  become: True
+  become: true
 
 - name: SSL preparation
   include_tasks: '{{ platform }}'
@@ -55,7 +55,7 @@
     owner: "{{ jenkins2_user | default('jenkins') }}"
     group: "{{ jenkins2_user | default('jenkins') }}"
     state: link
-  become: True
+  become: true
   when: jenkins2_home_directory != '/var/lib/jenkins'
 
 - name: Jenkins repository install
@@ -72,7 +72,7 @@
     state: present
   register: jenkins_was_installed
   until: jenkins_was_installed is success
-  become: True
+  become: true
 
 - name: "Jenkins confuguration"
   include_tasks: "{{ platform }}"
@@ -135,8 +135,8 @@
     owner: root
     group: root
     mode: 0644
-    backup: True
-  become: True
+    backup: true
+  become: true
   notify:
     - Restart Jenkins with HTTPS
   when: jenkins2_https_enabled
