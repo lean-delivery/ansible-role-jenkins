@@ -123,7 +123,7 @@ Requirements
 - `jenkins2_ssh_keys_size` - ssh rsa key strength size
    default: `2048`
 
-Ssh generation able to you use these keys connect slave nodes. After generation, private key added to credentials, slave key fetched to ansible host..
+Ssh generation able to you use these keys connect slave nodes. After generation, private key added to credentials, slave key fetched to ansible host.
 With lean_delivery.jenkins_slave role you can use something like this:
 
 ```yaml
@@ -146,6 +146,8 @@ With lean_delivery.jenkins_slave role you can use something like this:
     slave_linux_jenkins_password: some_strong_password
     slave_linux_jenkins_public_key: >-
       {{ lookup('file', '/tmp/slave.pub') }}
+  roles:
+    - role: lean_delivery.jenkins_slave
 ```
 
 
@@ -569,29 +571,6 @@ jenkins2_ec2_ami_list:
    default: `"false"`
 
 =======
-* jenkins2_ssh_keys_slave_hosts - dict that describes slave hosts with remote ssh users, ex:
-
-  jenkins2_ssh_keys_slave_hosts:
-    - host: test-jenkins-s1
-      users:
-        - user1
-        - user2
-
-  vars:
-    jenkins2_ssh_keys_slave_hosts:
-      - {host: 'test-jenkins-s1', users: ['user1', 'user2']}
-
-NOTE: - Please use <users> reserved word for vars way
-      - Please use <jenkins_ssh_user> reserved word for inventory way
-
-Example Inventory
-----------------
-[jenkins]
-server.example.com
-
-[jenkins_ssh_slaves]
-slave1.example.com
-slave2.example.com
 
 Example Playbook
 ----------------
@@ -601,9 +580,6 @@ Example Playbook
   hosts: jenkins
   vars:
     jenkins2_ssh_keys_generate: true
-    jenkins2_ssh_keys_slave_hosts:
-      - {host: 'slave1.example.com', users: ['root', 'jenkins']}
-      - {host: 'slave2.example.com', users: ['root', 'jenkins']}
   roles:
     - role: lean_delivery.java
     - role: lean_delivery.jenkins

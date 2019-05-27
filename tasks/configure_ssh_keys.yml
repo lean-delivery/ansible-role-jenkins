@@ -29,8 +29,7 @@
              jenkins2_ssh_keys_private_keyname +
       ' -C "Jenkins"
       -N ""' }}
-    changed_when: false
-    when: not private_key_stat.stat.exists|bool
+    when: not private_key_stat.stat.exists | bool
 
   - name: "Set corect folders owners/permissions"
     file:

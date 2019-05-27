@@ -55,18 +55,6 @@ jenkins2_ssh_keys_private_keyname: "id_rsa"
 jenkins2_ssh_keys_size: 2048
 jenkins2_ssh_slave_key_fetch: '/tmp/slave.pub'
 
-jenkins2_ssh_keys_slave_group: "{{ groups[jenkins2_ssh_keys_inv_slave_groupname]|default([''])}}"
-jenkins2_ssh_keys_slave_hosts: "{%- set users = [] %}
-    {%- for host in jenkins2_ssh_keys_slave_group %}
-    {{- users.append(dict(host=host, users=hostvars[host]['jenkins_ssh_user']|default([]))) }}
-    {%- endfor %}
-    {{- users -}}"
-jenkins2_ssh_keys_slave_ips: "{%- set ips = [] %}{%- for host in jenkins2_ssh_keys_slave_group %}
-    {{- ips.append(dict(host=host, ips=hostvars[host]['ansible_all_ipv4_addresses']|default([]))) }}
-    {%- endfor %}
-    {{- ips -}}"
-jenkins2_ssh_keys_slave_group_exist: "{{ ((jenkins2_ssh_keys_slave_group)[0]|default(''))  != ''}}"
-
 # SMTP properties
 jenkins2_smtp_enabled: true
 jenkins2_smtp_sysad_email: "usermail@test.com"
