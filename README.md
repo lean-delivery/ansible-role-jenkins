@@ -204,11 +204,11 @@ Requirements
      default: `gitlab_token`
 # Github configuration
   - `jenkins2_github_enabled` - to enable github config   
-     default: `False`
+     default: `false`
   - `github_external_url` - github external url   
      default: `https://localhost`
   - `github_manage_hooks` - manage github hooks   
-      default: `True`
+      default: `true`
   - `github_client_cache_size` - github client cache size    
       default: `20`
   - `jenkins2_github_token_cred` - github token ID (from credentials: secrettext in example below)   

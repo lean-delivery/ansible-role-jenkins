@@ -274,11 +274,11 @@ gitlab_external_url: "https://localhost"
 jenkins2_gitlab_token_cred: "gitlab_token"
 
 # Setup github connection
-jenkins2_github_enabled: False
+jenkins2_github_enabled: false
 github_external_url: "https://api.github.com"
-github_manage_hooks: "true"
+github_manage_hooks: true
 github_client_cache_size: 20
-jenkins2_github_token_cred: "github_token"
+jenkins2_github_token_cred: github_token
 
 # Add seed job - job that run dsl config and seeds jobs
 # Add or replace dsl template
