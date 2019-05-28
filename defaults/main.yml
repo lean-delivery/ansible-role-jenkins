@@ -443,4 +443,4 @@ jenkins2_authorization_strategy: "logged-in"
 jenkins2_authorization_strategy_logged_in_allow_anonymous_read: "false"
 
 # Permissive script plugin
-jenkins2_permissive_script_enabled: True
+jenkins2_permissive_script_enabled: true

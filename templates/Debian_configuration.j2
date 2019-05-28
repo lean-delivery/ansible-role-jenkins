@@ -5,14 +5,8 @@ NAME={{ jenkins2_user }}
 
 # arguments to pass to java
 
-{% if jenkins2_permissive_script_enabled -%}
-SCRIPT_SECURITY="-Dpermissive-script-security.enabled=no_security"
-{% else %}
-SCRIPT_SECURITY=""
-{% endif %}
-
 # Allow graphs etc. to work even when an X server is present
-JAVA_ARGS="{{ jenkins2_config_java_cmd }} $SCRIPT_SECURITY"
+JAVA_ARGS="{{ jenkins2_config_java_cmd }}{{ (jenkins2_permissive_script_enabled | bool) | ternary(" -Dpermissive-script-security.enabled=no_security","") }}"
 
 #JAVA_ARGS="-Xmx256m"
 

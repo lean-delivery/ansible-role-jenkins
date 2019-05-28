@@ -45,13 +45,7 @@ JENKINS_USER="{{ jenkins2_user }}"
 # Options to pass to java when running Jenkins.
 #
 
-{% if jenkins2_permissive_script_enabled -%}
-SCRIPT_SECURITY="-Dpermissive-script-security.enabled=no_security"
-{% else %}
-SCRIPT_SECURITY=""
-{% endif %}
-
-JENKINS_JAVA_OPTIONS="{{ jenkins2_config_java_options }} $SCRIPT_SECURITY"
+JENKINS_JAVA_OPTIONS="{{ jenkins2_config_java_options }}{{ (jenkins2_permissive_script_enabled | bool) | ternary(" -Dpermissive-script-security.enabled=no_security","") }}"
 
 ## Type:        integer(0:65535)
 ## Default:     8080

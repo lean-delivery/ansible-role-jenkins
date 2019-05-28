@@ -239,8 +239,8 @@ Requirements
      default: `EEE, d MMM yyyy HH:mm:ss Z`
 	 
 # Enable Permissive Script Security Plugin
-  - `jenkins2_permissive_script_enabled` - Use or not use permissive script security.   
-     default: `True`
+  - `jenkins2_permissive_script_enabled` -enable permissive script security.   
+     default: `true`
 
 # Seed job configuration
 ### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
