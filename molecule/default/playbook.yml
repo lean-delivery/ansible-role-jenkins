@@ -1,26 +1,25 @@
 ---
 - name: Force gathering facts
   hosts: all
-  gather_facts: True
+  gather_facts: true
   roles: []
 
 - name: Converge
   hosts: all
   roles:
     - role: lean_delivery.java
-      transport: s3
-      transport_s3_bucket: java-molecule-s3-test
-      transport_s3_path: /java/jdk-8u202-linux-x64.tar.gz
-      transport_s3_aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
-      transport_s3_aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+      java_major_version: 8
+      java_package: 'jdk'
+      transport: repositories
+      java_tarball_install: false
     - role: ansible-role-jenkins
-      jenkins2_pipeline_libraries_enabled: True
+      jenkins2_pipeline_libraries_enabled: true
       jenkins2_pipeline_libraries_url: "https://example.com/example.git"
-      jenkins2_bitbucket_project_enabled: True
-      jenkins2_sonarqube_enabled: True
-      jenkins2_custom_files_enabled: True
-      jenkins2_gitlab_enabled: True
-      jenkins2_seed_job_enable: True
+      jenkins2_bitbucket_project_enabled: true
+      jenkins2_sonarqube_enabled: false
+      jenkins2_custom_files_enabled: true
+      jenkins2_gitlab_enabled: true
+      jenkins2_seed_job_enable: true
       gitlab_external_url: "https://localhost"
       gitlab_project_group: "test"
       gitlab_project_name: "test"
@@ -35,5 +34,5 @@
       aws_key: "aws_key_name"
       aws_subnet_id: "subnet-AAAAAAAA"
       artifact_bucket_name: "s3_artifact_test"
-      jenkins2_ec2_enable: True
-      jenkins2_jira_enabled: True
+      jenkins2_ec2_enable: false
+      jenkins2_jira_enabled: true

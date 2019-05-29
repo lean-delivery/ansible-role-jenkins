@@ -5,7 +5,7 @@
     script: "{{ lookup('template', 'configure-security.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
-    validate_certs: False
+    validate_certs: false
     timeout: 120
   notify:
     - Restart Jenkins

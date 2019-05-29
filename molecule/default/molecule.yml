@@ -10,14 +10,14 @@ lint:
   options:
     config-file: .yamllint
 platforms:
-#  - name: test-docker-centos7-jenkins
-#    image: leandelivery/docker-systemd:centos7
-#    privileged: True
-#    groups:
-#      - rhel_family
+  - name: test-docker-centos7-jenkins
+    image: leandelivery/docker-systemd:centos7
+    privileged: true
+    groups:
+      - rhel_family
   - name: test-docker-ubuntu1804-jenkins
     image: leandelivery/docker-systemd:ubuntu-18.04
-    privileged: True
+    privileged: true
     security_opts:
       - seccomp=unconfined
     volumes:
@@ -31,7 +31,7 @@ platforms:
       - debian_family
 provisioner:
   name: ansible
-  log: True
+  log: true
   lint:
     name: ansible-lint
 scenario:

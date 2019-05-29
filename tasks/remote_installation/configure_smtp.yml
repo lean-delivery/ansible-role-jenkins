@@ -5,6 +5,5 @@
     script: "{{ lookup('template', 'add-smtp.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
-    validate_certs: False
-    timeout: 1000
-  delegate_to: localhost
+    validate_certs: false
+    timeout: 120

@@ -6,8 +6,8 @@ jenkins2_user_default_pass: Jenk1ns
 jenkins2_default_url: localhost
 # Choose release line between stable and latest
 jenkins2_release_line: stable
-jenkins2_jenkins2_disable_gpg_check: False
-jenkins2_key_validate_certs: True
+jenkins2_jenkins2_disable_gpg_check: false
+jenkins2_key_validate_certs: true
 jenkins2_context_path: ''
 jenkins2_cli_username: admin
 jenkins2_cli_password: admin
@@ -36,12 +36,12 @@ jenkins2_proxy_password: ''
 jenkins2_proxy_no_proxy_hosts: ''
 
 # SSL
-jenkins2_https_enabled: True
-jenkins2_http_disabled: False
+jenkins2_https_enabled: true
+jenkins2_http_disabled: false
 jenkins2_config_https_port: 8443
-jenkins2_local_keystore: False
+jenkins2_local_keystore: false
 jenkins2_local_keystore_path: '{{ role_path }}/files/{{ jenkins2_ssl_key_store_name }}'
-jenkins2_ssl_configure: True
+jenkins2_ssl_configure: true
 jenkins2_ssl_key_store_name: jenkins2-ssl.keystore.jks
 jenkins2_ssl_key_size: 4096
 jenkins2_ssl_key_store_password: 123456
@@ -58,8 +58,8 @@ jenkins2_local_cert_file_name: '{{ ansible_hostname }}.ca-cert.pem'
 jenkins2_cert_file_path: '{{ jenkins2_home_directory }}\{{ jenkins2_local_cert_file_name }}'
 
 # SSH_KEYS generation properties
-jenkins2_ssh_keys_generate: False
-jenkins2_ssh_keys_private_keyname: 'id_rsa'
+jenkins2_ssh_keys_generate: false
+jenkins2_ssh_keys_private_keyname: "id_rsa"
 jenkins2_ssh_keys_size: 4096
 jenkins2_ssh_keys_inv_slave_groupname: 'jenkins_ssh_slaves'
 
@@ -76,12 +76,12 @@ jenkins2_ssh_keys_slave_ips: '{%- set ips = [] %}{%- for host in jenkins2_ssh_ke
 jenkins2_ssh_keys_slave_group_exist: '{{ ((jenkins2_ssh_keys_slave_group)[0]|default(''))  != ''}}'
 
 # SMTP properties
-jenkins2_smtp_enabled: True
-jenkins2_smtp_sysad_email: 'usermail@test.com'
-jenkins2_smtp_user: 'usermail@test.com'
-jenkins2_smtp_password: 'password'
-jenkins2_smtp_port: '587'
-jenkins2_smtp_host: 'smtp.office365.com'
+jenkins2_smtp_enabled: true
+jenkins2_smtp_sysad_email: "usermail@test.com"
+jenkins2_smtp_user: "usermail@test.com"
+jenkins2_smtp_password: "password"
+jenkins2_smtp_port: "587"
+jenkins2_smtp_host: "smtp.office365.com"
 # Plugin installation
 jenkins2_plugins_timeout: 2000
 jenkins2_plugins_suggested:
@@ -122,7 +122,7 @@ jenkins2_plugins_suggested:
 jenkins2_plugins_list: []
 
 # Set Credentials
-jenkins2_credentials_enabled: True
+jenkins2_credentials_enabled: true
 jenkins2_credentials:
   slave:
     type: 'password'
@@ -238,13 +238,13 @@ jenkins2_credentials:
     password: 'bitbucketProjectPassword'
 
 # Configure pipeline libraries
-jenkins2_pipeline_libraries_enabled: False
+jenkins2_pipeline_libraries_enabled: false
 jenkins2_pipeline_libraries_name: 'Pipeline_Libraries'
 jenkins2_pipeline_libraries_url: ''
 jenkins2_pipeline_libraries_version: 'master'
 
 # Configure bitbucket project
-jenkins2_bitbucket_project_enabled: False
+jenkins2_bitbucket_project_enabled: false
 jenkins2_bitbucket_project_owner: 'Bitbucket_Project_Owner'
 jenkins2_bitbucket_project_repo_regexp: ''
 jenkins2_bitbucket_project_discover_branches_strategy: 1
@@ -253,7 +253,7 @@ jenkins2_bitbucket_project_scan_interval: 60
 jenkins2_bitbucket_project_autobuild_branches: 'master|develop|PR-[0-9]+'
 
 # Configure SonarQube
-jenkins2_sonarqube_enabled: False
+jenkins2_sonarqube_enabled: false
 jenkins2_sonarqube_name: 'SonarQube'
 jenkins2_sonarqube_url: 'http://localhost:9000'
 jenkins2_sonarqube_token: ''
@@ -262,7 +262,7 @@ jenkins2_sonarqube_arguments: ''
 jenkins2_sonarqube_analysis_properties: ''
 
 # Add custom files
-jenkins2_custom_files_enabled: False
+jenkins2_custom_files_enabled: false
 jenkins2_custom_files:
   log_parser:
     src: '{{ role_path }}/files/pipeline_error_in_init_console'
@@ -272,13 +272,13 @@ jenkins2_custom_files:
     mode: '0755'
 
 # Setup gitlab connection
-jenkins2_gitlab_enabled: False
-gitlab_external_url: 'https://localhost'
-jenkins2_gitlab_token_cred: 'gitlab_token'
+jenkins2_gitlab_enabled: false
+gitlab_external_url: "https://localhost"
+jenkins2_gitlab_token_cred: "gitlab_token"
 
 # Add seed job - job that run dsl config and seeds jobs
 # Add or replace dsl template
-jenkins2_seed_job_enable: False
+jenkins2_seed_job_enable: false
 # DSL template file name. Do not forget to setup all needed variables for template
 jenkins2_seed_job_template: dsl_hybris_create_job.groovy
 # to ignore existing jobs and do not rewrite them
@@ -286,7 +286,7 @@ jenkins2_seed_job_ignore_existing: 'true'
 jenkins2_seed_job_name: 'seed_job'
 
 # EC2 plugin configuration
-jenkins2_ec2_enable: False
+jenkins2_ec2_enable: false
 jenkins2_ec2_cloud_parameters:
   cloud_name: 'AWS_cloud'
   credentials_id: 'AWS_EC2_CREDS'
@@ -358,9 +358,9 @@ jenkins2_ec2_ami_list:
     zone: 'us-east-1a,us-east-1b'
     monitoring: 'false'
     SpotConfiguration:
-      enabled: True
-      spotMaxBidPrice: '0.001'
-    t2Unlimited: 'false'
+      enabled: true
+      spotMaxBidPrice: "0.001"
+    t2Unlimited: "false"
   fv_ami:
     ami: 'ami-BBBBBBBB'
     associatePublicIp: 'false'
@@ -394,31 +394,31 @@ jenkins2_ec2_ami_list:
     zone: 'us-east-1a,us-east-1b'
     monitoring: 'false'
     SpotConfiguration:
-      enabled: False
-    t2Unlimited: 'false'
+      enabled: false
+    t2Unlimited: "false"
 
 # Jira configuration
-jenkins2_jira_enabled: False
-jenkins2_jira_url: 'https://jira.example.com'
-jenkins2_jira_alternative_url: 'https://jira.example.com'
-jenkins2_jira_use_http_auth: 'true'
-jenkins2_jira_support_wiki_notation: 'true'
-jenkins2_jira_record_scm_changes: 'false'
-jenkins2_jira_disable_changelog_annotations: 'false'
-jenkins2_jira_issue_pattern: 'PATTERN.*'
-jenkins2_jira_update_relevant_issues: 'true'
-jenkins2_jira_credentials_id: 'jirauser'
-jenkins2_jira_connection_timeout: '10'
-jenkins2_jira_read_timeout: '30'
-jenkins2_jira_thread_executor_size: '10'
-jenkins2_jira_visible_for_group: ''
-jenkins2_jira_visible_for_project_role: ''
-jenkins2_jira_add_timestamps_for_comments: 'true'
-jenkins2_jira_timestamp_format: 'EEE, d MMM yyyy HH:mm:ss Z'
+jenkins2_jira_enabled: false
+jenkins2_jira_url: "https://jira.example.com"
+jenkins2_jira_alternative_url: "https://jira.example.com"
+jenkins2_jira_use_http_auth: "true"
+jenkins2_jira_support_wiki_notation: "true"
+jenkins2_jira_record_scm_changes: "false"
+jenkins2_jira_disable_changelog_annotations: "false"
+jenkins2_jira_issue_pattern: "PATTERN.*"
+jenkins2_jira_update_relevant_issues: "true"
+jenkins2_jira_credentials_id: "jirauser"
+jenkins2_jira_connection_timeout: "10"
+jenkins2_jira_read_timeout: "30"
+jenkins2_jira_thread_executor_size: "10"
+jenkins2_jira_visible_for_group: ""
+jenkins2_jira_visible_for_project_role: ""
+jenkins2_jira_add_timestamps_for_comments: "true"
+jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"
 
 # Security configuration
-jenkins2_security_enable: True
-jenkins2_security_realm: 'basic'
+jenkins2_security_enable: true
+jenkins2_security_realm: "basic"
 
 # Configure active directory
 jenkins2_active_directory_domain_name: 'domain.com'
@@ -445,6 +445,6 @@ jenkins2_ldap_display_name_attribute_name: 'displayname'
 jenkins2_ldap_mail_address_attribute_name: 'mail'
 
 # Authorization stategy configuration
-jenkins2_authorization_strategy_configure: True
-jenkins2_authorization_strategy: 'logged-in'
-jenkins2_authorization_strategy_logged_in_allow_anonymous_read: 'false'
+jenkins2_authorization_strategy_configure: true
+jenkins2_authorization_strategy: "logged-in"
+jenkins2_authorization_strategy_logged_in_allow_anonymous_read: "false"
