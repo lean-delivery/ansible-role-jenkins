@@ -276,7 +276,7 @@ jenkins2_gitlab_token_cred: "gitlab_token"
 # Setup github connection
 jenkins2_github_enabled: false
 github_external_url: "https://api.github.com"
-github_manage_hooks: true
+github_manage_hooks: "true"
 github_client_cache_size: 20
 jenkins2_github_token_cred: github_token
 
