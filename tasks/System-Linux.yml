@@ -7,7 +7,7 @@
     extra_args: --upgrade
   register: installed_packages
   until: installed_packages is success
-  become: True
+  become: true
 
 - name: Pip version
   command: pip --version
@@ -32,13 +32,13 @@
     extra_args: --upgrade
   register: installed_packages
   until: installed_packages is success
-  become: True
+  become: true
 
 - name: Create group
   group:
     name: "{{ jenkins2_user | default('jenkins') }}"
     state: present
-  become: True
+  become: true
 
 - name: Create user
   user:
@@ -46,7 +46,7 @@
     group: "{{ jenkins2_user | default('jenkins') }}"
     shell: /bin/bash
     home: '{{ jenkins2_home_directory }}'
-  become: True
+  become: true
 
 - name: Jenkins repository install
   include_tasks: '{{ family }}'
@@ -62,7 +62,7 @@
     state: present
   register: jenkins_was_installed
   until: jenkins_was_installed is success
-  become: True
+  become: true
 
 - name: Create symlink
   file:
@@ -71,7 +71,7 @@
     owner: "{{ jenkins2_user | default('jenkins') }}"
     group: "{ jenkins2_user | default('jenkins') }}"
     state: link
-  become: True
+  become: true
   when: jenkins2_home_directory != '/var/lib/jenkins'
 
 - name: Platform configuration
@@ -145,8 +145,8 @@
     owner: root
     group: root
     mode: 0644
-    backup: True
-  become: True
+    backup: true
+  become: true
   notify:
     - Restart Jenkins with HTTPS
   when: jenkins2_https_enabled

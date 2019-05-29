@@ -39,7 +39,7 @@ scenario:
 verifier:
   name: testinfra
   options:
-    verbose: True
+    verbose: true
   directory: ../resources/tests/
   lint:
     name: flake8

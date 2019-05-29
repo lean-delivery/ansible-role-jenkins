@@ -13,7 +13,7 @@
     owner: '{{ jenkins2_user }}'
     group: '{{ jenkins2_user }}'
     mode: 0644
-    backup: True
+    backup: true
   register: dsl_file_copied
   when: setup_facts.ansible_facts.ansible_system  == 'Linux'
 
@@ -36,7 +36,7 @@
     script: "{{ lookup('template', 'run_seed_job.groovy.j2') }}"
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
-    validate_certs: False
+    validate_certs: false
     timeout: 120
   delegate_to: localhost
   when: dsl_copied
@@ -47,6 +47,6 @@
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
     url: 'http://{{ jenkins2_inventory_ip }}:{{ jenkins2_config_http_port }}'
-    enabled: False
+    enabled: false
   delegate_to: localhost
   when: dsl_copied

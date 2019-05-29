@@ -3,7 +3,7 @@
   win_service:
     name: jenkins
     state: stopped
-    enabled: True
+    enabled: true
 
 - name: Dowload latest .war
   win_get_url:

@@ -16,7 +16,7 @@ platforms:
 #   instance_type: m5.large
 #   profile_name: epmldi-instance-profile
 #   vpc_subnet_id: subnet-05a2ef2b767afec50
-#   assign_public_ip: False
+#   assign_public_ip: false
 #   spot_price: 0.14
 #   aws_sec_group:
 #     - default
@@ -29,7 +29,7 @@ platforms:
 #    instance_type: m5.large
 #    profile_name: epmldi-instance-profile
 #    vpc_subnet_id: subnet-05a2ef2b767afec50
-#    assign_public_ip: False
+#    assign_public_ip: false
 #    spot_price: 0.14
 #    aws_sec_group:
 #      - default
@@ -43,7 +43,7 @@ platforms:
     instance_type: m5.large
     profile_name: epmldi-instance-profile
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     spot_price: 0.14
     aws_sec_group:
       - default
@@ -53,13 +53,13 @@ platforms:
       - windows
 provisioner:
   name: ansible
-  log: True
+  log: true
   connection_options:
     ansible_connection: winrm
   inventory:
     group_vars:
       windows:
-        ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', True) }}"
+        ansible_password: "{{ lookup('env', 'WINRM_ADMIN_PWD') | default('M0leCule123!', true) }}"
         ansible_winrm_transport: credssp
         ansible_winrm_server_cert_validation: ignore
         jenkins2_inventory_ip: '{{ setup_facts.ansible_facts.ansible_ip_addresses[0] }}'
@@ -90,4 +90,3 @@ verifier:
   directory: ../resources/tests/
   lint:
     name: flake8
-

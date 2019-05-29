@@ -32,14 +32,14 @@
   win_unzip:
     src: '{{ jenkins2_home_directory }}\jenkins-2.164.2.zip'
     dest: '{{ jenkins2_home_directory }}\'
-    delete_archive: True
+    delete_archive: true
 
 - name: Jenkins installation
   win_package:
     path: '{{ jenkins2_home_directory }}\jenkins.msi'
     arguments: 'JENKINSDIR="{{ jenkins2_home_directory }}"'
     state: present
-    validate_certs: False
+    validate_certs: false
   register: jenkins_install_package_win
   retries: 15
   delay: 2
@@ -53,7 +53,7 @@
   win_service:
     name: jenkins
     state: started
-    enabled: True
+    enabled: true
 
 - name: Platform configuration
   include_tasks: '{{ family }}'

@@ -11,10 +11,10 @@ jenkins2_key_validate_certs: true
 jenkins2_context_path: ''
 jenkins2_cli_username: admin
 jenkins2_cli_password: admin
-jenkins2_win_update: True
+jenkins2_win_update: true
 jenkins2_home_directory: '{{ jenkins2_default_path }}'
 jenkins2_install_type: 'local'
-jenkins2_install_package: True
+jenkins2_install_package: true
 
 jenkins2_config_java_cmd: ''
 jenkins2_config_java_options: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false \
