@@ -26,10 +26,10 @@ Ansible lint:
   tags:
     - aws
 
-.Docker jenkins:
+Docker jenkins:
   stage: deployment test
   script:
-    - molecule --debug test -s default
+    - molecule test -s default
   tags:
     - aws
 
