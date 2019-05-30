@@ -462,8 +462,10 @@ jenkins2_ec2_ami_list:
     zone: "us-east-1a,us-east-1b"
     monitoring: "false"
     SpotConfiguration:
-      enabled: true
-      spotMaxBidPrice: "0.001"
+      enabled: false
+      useBidPrice: "true"
+      spotMaxBidPrice: "0.0139"
+      fallbackToOndemand: "false"
   fv_ami:
     ami: "ami-BBBBBBBB"
     associatePublicIp: "false"
@@ -498,6 +500,9 @@ jenkins2_ec2_ami_list:
     monitoring: "false"
     SpotConfiguration:
       enabled: false
+      useBidPrice: "true"
+      spotMaxBidPrice: "0.0139"
+      fallbackToOndemand: "false"
     t2Unlimited: "false"
 ```
 

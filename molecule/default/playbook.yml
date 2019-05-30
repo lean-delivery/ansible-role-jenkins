@@ -34,5 +34,5 @@
       aws_key: "aws_key_name"
       aws_subnet_id: "subnet-AAAAAAAA"
       artifact_bucket_name: "s3_artifact_test"
-      jenkins2_ec2_enable: false
+      jenkins2_ec2_enable: true
       jenkins2_jira_enabled: true
