@@ -248,7 +248,10 @@ Requirements
      default: `true`
   - `jenkins2_jira_timestamp_format` - See javadoc for SimpleDateFormat for help. If not set, DateFormat.SHORT for the current locale will be used.    
      default: `EEE, d MMM yyyy HH:mm:ss Z`
-
+	 
+# Enable Permissive Script Security Plugin
+  - `jenkins2_permissive_script_enabled` -enable permissive script security.   
+     default: `true`
 
 # Seed job configuration
 ### More info about DSL https://jenkinsci.github.io/job-dsl-plugin/ https://github.com/jenkinsci/job-dsl-plugin
