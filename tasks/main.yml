@@ -110,6 +110,9 @@
 - include_tasks: configure_gitlab.yml
   when: jenkins2_gitlab_enabled
 
+- include_tasks: configure_github.yml
+  when: jenkins2_github_enabled
+
 - include_tasks: add_new_jobs.yml
   when: jenkins2_seed_job_enable
 

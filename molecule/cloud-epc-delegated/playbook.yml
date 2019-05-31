@@ -19,6 +19,7 @@
       jenkins2_sonarqube_enabled: false
       jenkins2_custom_files_enabled: true
       jenkins2_gitlab_enabled: true
+      jenkins2_github_enabled: true
       jenkins2_seed_job_enable: true
       gitlab_external_url: "https://localhost"
       gitlab_project_group: "test"

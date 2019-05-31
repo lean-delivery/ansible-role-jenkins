@@ -202,6 +202,17 @@ Requirements
      default: `https://localhost`
   - `jenkins2_gitlab_token_cred` - gitlab token ID (from credentials: gitlabtoken in example below)   
      default: `gitlab_token`
+# Github configuration
+  - `jenkins2_github_enabled` - to enable github config   
+     default: `false`
+  - `github_external_url` - github external url   
+     default: `https://localhost`
+  - `github_manage_hooks` - manage github hooks   
+      default: `true`
+  - `github_client_cache_size` - github client cache size    
+      default: `20`
+  - `jenkins2_github_token_cred` - github token ID (from credentials: secrettext in example below)   
+     default: `github_token`
 # Jira configuration
   - `jenkins2_jira_enabled` - to enable jira config   
      default: `false`
@@ -259,7 +270,8 @@ Use variable `jenkins2_credentials` to set properties of credentials
 - gitlab_master_password
 - gitlab_master_username
 - gitlab_master_token
-
+# To set GitHub connection please set:
+- github_master_token
 ```yml
 jenkins2_credentials_enabled: true # Set false to disable credentials configuration
 jenkins2_credentials:
@@ -362,6 +374,11 @@ jenkins2_credentials:
     type: 'gitlabtoken'
     id: 'gitlab_token'
     description: 'gitlab connection with token'
+  githubtoken:
+    type: 'secrettext'
+    id: 'github_token'
+    description: 'GiHub connection with token'
+    token: "{{ github_master_token | default('ToKen12345') }}"
   aws_ec2_credentials:
     type: 'aws_creds'
     id: 'AWS_EC2_CREDS'
@@ -380,6 +397,7 @@ jenkins2_credentials:
   2. `password` - if you want to configure username/password bundle
   3. `gitlabtoken` - if you want to configure gitlab token (need gitlab plugin to be installed)
   4. `aws_creds` - if you want to configure ec2 creds (need ec2 plugin to be installed)
+  5. `secrettext` - if you want to configure the secret text kind token (used by the GITHUB plugin, token should be registered with scopes "admin:repo_hook", "repo", "repo:status")
 
 `keySource` specifies method of private key providing:
   * `0` - DirectEntryPrivateKeySource. _If this value is set you need to place your private key to variable `key` in plain text._
