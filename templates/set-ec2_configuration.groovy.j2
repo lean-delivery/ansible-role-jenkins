@@ -22,7 +22,7 @@ import jenkins.model.Jenkins
   {% endfor %}
 
   {% if value.SpotConfiguration.enabled == true %}
-    def spotConfig_{{ key }} = new SpotConfiguration("{{ value.SpotConfiguration.spotMaxBidPrice }}")
+     def spotConfig_{{ key }} = new SpotConfiguration({{ value.SpotConfiguration.useBidPrice }}, "{{ value.SpotConfiguration.spotMaxBidPrice }}", {{ value.SpotConfiguration.fallbackToOndemand }})
   {% endif -%}
 
   // https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/SlaveTemplate.java
