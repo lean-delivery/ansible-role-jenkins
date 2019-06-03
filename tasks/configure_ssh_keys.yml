@@ -31,20 +31,23 @@
       -N ""' }}
     when: not private_key_stat.stat.exists | bool
 
-  - name: "Set corect folders owners/permissions"
+  - name: Set corect folders owners/permissions
     file:
-      path: "{{ item.dst }}"
-      owner: "{{ jenkins2_user | default('jenkins') }}"
-      group: "{{ jenkins2_user | default('jenkins') }}"
-      mode: "{{ item.mode }}"
+      path: '{{ item.dst }}'
+      owner: '{{ jenkins2_user | default("jenkins") }}'
+      group: '{{ jenkins2_user | default("jenkins") }}'
+      mode: '{{ item.mode }}'
     loop:
-      - dst: "{{ jenkins2_home_directory }}/.ssh"
+      - dst: >-
+          {{ jenkins2_home_directory + '/.ssh' }}
         mode: 0700
-      - dst: "{{ jenkins2_home_directory }}/.ssh/\
-          {{ jenkins2_ssh_keys_private_keyname }}"
+      - dst: >-
+          {{ jenkins2_home_directory + '/.ssh/' +
+             jenkins2_ssh_keys_private_keyname }}
         mode: 0600
-      - dst: "{{ jenkins2_home_directory }}/.ssh/\
-          {{ jenkins2_ssh_keys_private_keyname }}.pub"
+      - dst: >-
+          {{ jenkins2_home_directory + '/.ssh/' +
+             jenkins2_ssh_keys_private_keyname + '.pub' }}
         mode: 0600
 
   - name: "Slurp the private key"
