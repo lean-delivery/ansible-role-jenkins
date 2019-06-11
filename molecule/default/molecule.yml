@@ -12,23 +12,26 @@ lint:
 platforms:
   - name: test-docker-centos7-jenkins
     image: leandelivery/docker-systemd:centos7
+    port_bindings:
+      8080:8080
+    network_mode: host
     privileged: true
     groups:
       - rhel_family
-  - name: test-docker-ubuntu1804-jenkins
-    image: leandelivery/docker-systemd:ubuntu-18.04
-    privileged: true
-    security_opts:
-      - seccomp=unconfined
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    tmpfs:
-      - /tmp
-      - /run
-    capabilities:
-      - SYS_ADMIN
-    groups:
-      - debian_family
+  # - name: test-docker-ubuntu1804-jenkins
+  #   image: leandelivery/docker-systemd:ubuntu-18.04
+  #   privileged: true
+  #   security_opts:
+  #     - seccomp=unconfined
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   tmpfs:
+  #     - /tmp
+  #     - /run
+  #   capabilities:
+  #     - SYS_ADMIN
+  #   groups:
+  #     - debian_family
 provisioner:
   name: ansible
   log: true

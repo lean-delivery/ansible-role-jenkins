@@ -37,3 +37,4 @@
       artifact_bucket_name: "s3_artifact_test"
       jenkins2_ec2_enable: true
       jenkins2_jira_enabled: true
+      jenkins2_globaltools_enable: true

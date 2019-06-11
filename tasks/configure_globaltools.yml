@@ -1,0 +1,12 @@
+---
+- include_tasks: globaltools/ant.yml
+  when: jenkins2_globaltools_ant_enable
+
+- include_tasks: globaltools/maven.yml
+  when: jenkins2_globaltools_maven_enable
+
+- include_tasks: globaltools/nodejs.yml
+  when: jenkins2_globaltools_nodejs_enable
+
+- include_tasks: globaltools/jdk.yml
+  when: jenkins2_globaltools_jdk_enable
