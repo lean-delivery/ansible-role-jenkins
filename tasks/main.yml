@@ -86,38 +86,38 @@
 - include_tasks: install_plugins.yml
   when: jenkins_was_installed is defined
 
-# - include_tasks: configure_smtp.yml
-#   when: jenkins2_smtp_enabled
+- include_tasks: configure_smtp.yml
+  when: jenkins2_smtp_enabled
 
-# - include_tasks: set_credentials.yml
-#   when: jenkins2_credentials_enabled
+- include_tasks: set_credentials.yml
+  when: jenkins2_credentials_enabled
 
-# - include_tasks: configure_pipeline_libraries.yml
-#   when: jenkins2_pipeline_libraries_enabled
+- include_tasks: configure_pipeline_libraries.yml
+  when: jenkins2_pipeline_libraries_enabled
 
-# - include_tasks: configure_bitbucket_project.yml
-#   when: jenkins2_bitbucket_project_enabled
+- include_tasks: configure_bitbucket_project.yml
+  when: jenkins2_bitbucket_project_enabled
 
-# - include_tasks: configure_sonarqube.yml
-#   when: jenkins2_sonarqube_enabled
+- include_tasks: configure_sonarqube.yml
+  when: jenkins2_sonarqube_enabled
 
-# - include_tasks: configure_jira.yml
-#   when: jenkins2_jira_enabled
+- include_tasks: configure_jira.yml
+  when: jenkins2_jira_enabled
 
-# - include_tasks: copy_custom_files.yml
-#   when: jenkins2_custom_files_enabled
+- include_tasks: copy_custom_files.yml
+  when: jenkins2_custom_files_enabled
 
-# - include_tasks: configure_gitlab.yml
-#   when: jenkins2_gitlab_enabled
+- include_tasks: configure_gitlab.yml
+  when: jenkins2_gitlab_enabled
 
-# - include_tasks: configure_github.yml
-#   when: jenkins2_github_enabled
+- include_tasks: configure_github.yml
+  when: jenkins2_github_enabled
 
-# - include_tasks: add_new_jobs.yml
-#   when: jenkins2_seed_job_enable
+- include_tasks: add_new_jobs.yml
+  when: jenkins2_seed_job_enable
 
-# - include_tasks: configure_ec2.yml
-#   when: jenkins2_ec2_enable
+- include_tasks: configure_ec2.yml
+  when: jenkins2_ec2_enable
 
 - include_tasks: configure_ssh_keys.yml
   when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and

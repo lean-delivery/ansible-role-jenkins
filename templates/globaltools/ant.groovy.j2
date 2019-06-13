@@ -8,7 +8,9 @@ def inst = Jenkins.getInstance()
 def desc = inst.getDescriptor("hudson.tasks.Ant")
 
 def versions = [
-  "ANT": "{{ jenkins2_globaltools_ant_version }}"
+{% for version in jenkins2_globaltools_ant_version %}
+   "{{ version }}": "{{ version }}",
+{% endfor %}
 ]
 def installations = [];
 
