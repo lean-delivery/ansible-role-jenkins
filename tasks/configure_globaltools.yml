@@ -19,3 +19,6 @@
 
 - include_tasks: globaltools/sonarscannermsbuild.yml
   when: jenkins2_globaltools_sonarscannermsbuild_enable
+
+- include_tasks: globaltools/docker.yml
+  when: jenkins2_globaltools_docker_enable

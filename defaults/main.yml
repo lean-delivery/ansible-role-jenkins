@@ -456,6 +456,9 @@ jenkins2_globaltools_sonarscannermsbuild_version:
 jenkins2_globaltools_gradle_enable: true
 jenkins2_globaltools_gradle_version:
   - "5.5-rc-2"
+jenkins2_globaltools_docker_enable: true
+jenkins2_globaltools_docker_version:
+  - "latest"
 
 # Configure active directory
 jenkins2_active_directory_domain_name: "domain.com"
