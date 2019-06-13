@@ -12,7 +12,7 @@ import jenkins.model.Jenkins
 
 {% set slaveTemplateList = [] %}
 
-{% for key, value in jenkins2_ec2_ami_list.iteritems() -%}
+{% for key, value in jenkins2_ec2_ami_list.items() -%}
 
   {% set TagList = [] %}
 
