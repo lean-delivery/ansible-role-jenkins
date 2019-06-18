@@ -5,7 +5,7 @@ galaxy_info:
   description: "Jenkins installation and configuration"
   company: "Epam Systems"
   license: "Apache"
-  min_ansible_version: "2.5"
+  min_ansible_version: "2.8"
   issue_tracker_url: "https://github.com/lean-delivery/ansible-role-jenkins/issues"
   platforms:
     - name: "Ubuntu"
