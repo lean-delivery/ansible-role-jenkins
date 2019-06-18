@@ -1,22 +1,22 @@
 ---
-- name: "Load a variables"
-  include_vars: "{{ item }}"
+- name: Load a variables
+  include_vars: '{{ item }}'
   with_first_found:
-    - "{{ ansible_os_family }}.yml"
+    - '{{ ansible_os_family }}.yml'
 
-- name: "Become section"
+- name: Become section
   block:
-    - name: "Enable EPEL repository"
+    - name: Enable EPEL repository
       yum:
-        name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
-        state: "present"
+        name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
+        state: present
       register: status
       until: status is succeeded
 
-    - name: "Install requirements"
+    - name: Install requirements
       package:
-        name: "{{ requirements }}"
-        state: "present"
+        name: '{{ requirements }}'
+        state: present
       register: status
       until: status is succeeded
   become: true

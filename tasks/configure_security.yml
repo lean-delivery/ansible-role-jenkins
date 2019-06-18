@@ -1,5 +1,5 @@
 ---
-- name: Set Security
+- name: Configure Security
   jenkins_script:
     url: "http://localhost:{{ jenkins2_config_http_port }}"
     script: "{{ lookup('template', 'configure-security.groovy.j2') }}"
