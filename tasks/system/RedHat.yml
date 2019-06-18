@@ -10,9 +10,11 @@
       yum:
         name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
         state: "present"
+        lock_timeout: 180
 
     - name: "Install requirements"
       package:
         name: "{{ requirements }}"
         state: "present"
+        lock_timeout: 180
   become: True
