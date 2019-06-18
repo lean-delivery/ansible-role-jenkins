@@ -127,7 +127,7 @@
   when: jenkins2_security_enable
 
 - include_tasks: configure_globaltools.yml
-  when: jenkins2_globaltools_enable
+  when: jenkins2_globaltools_enable | bool
 
 - name: Disable insecure connection
   set_fact:

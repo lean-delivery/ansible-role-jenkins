@@ -2,6 +2,7 @@ Jenkins 2 installation
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-jenkins/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-jenkins.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-jenkins)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-jenkins/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-jenkins/pipelines)
 [![Galaxy](https://img.shields.io/badge/galaxy-lean_delivery.jenkins-blue.svg)](https://galaxy.ansible.com/lean_delivery/jenkins)
 ![Ansible](https://img.shields.io/ansible/role/d/29895.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F29895%2F&query=$.min_ansible_version)
@@ -125,44 +126,44 @@ Requirements
      default: `jenkins_ssh_slaves`
 
 # Global Tool Configuration
-  - `jenkins2_globaltools_enable` - enable autoconfiguration for all global tools
+  - `jenkins2_globaltools_enable` - enable autoconfiguration for all global tools  
+     default: `false`
+  - `jenkins2_globaltools_jdk_enable` - enable autoconfiguration for JDK  
      default: `true`
-  - `jenkins2_globaltools_jdk_enable` - enable autoconfiguration for JDK
-     default: `true`
-  - `jenkins2_globaltools_jdk_version` - list of version for JDK (defined as a list)
-     default: ` - "jdk-9.0.4-oth-JPR"`
-   - `jenkins2_globaltools_jdk_cred_user` -username for oracle repository 
+  - `jenkins2_globaltools_jdk_version` - list of version for JDK (defined as a list)  
+     default: `[]`
+   - `jenkins2_globaltools_jdk_cred_user` -username for oracle repository  
      default: `"user"`
-  - `jenkins2_globaltools_jdk_cred_password` - password for oracle repository
+  - `jenkins2_globaltools_jdk_cred_password` - password for oracle repository  
      default: `"password"`
-  - `jenkins2_globaltools_maven_enable` - enable autoconfiguration for Maven
+  - `jenkins2_globaltools_maven_enable` - enable autoconfiguration for Maven  
      default: `true`
-  - `jenkins2_globaltools_maven_version` - list of version for Maven (defined as a list)
-     default: ` - "3.6.1"`
-  - `jenkins2_globaltools_ant_enable` - enable autoconfiguration for Ant
+  - `jenkins2_globaltools_maven_version` - list of version for Maven (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_ant_enable` - enable autoconfiguration for Ant  
      default: `true`
-  - `jenkins2_globaltools_ant_version` - list of version for Ant (defined as a list)
-     default: ` - "1.10.6"`
-  - `jenkins2_globaltools_nodejs_enable` - enable autoconfiguration for Node.js
+  - `jenkins2_globaltools_ant_version` - list of version for Ant (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_nodejs_enable` - enable autoconfiguration for Node.js  
      default: `true`
-  - `jenkins2_globaltools_nodejs_version` - list of version for Node.js (defined as a list)
-     default: ` - "12.4.0"`
-  - `jenkins2_globaltools_sonarscanner_enable` - enable autoconfiguration for SonarQube Scanner
+  - `jenkins2_globaltools_nodejs_version` - list of version for Node.js (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_sonarscanner_enable` - enable autoconfiguration for SonarQube Scanner  
      default: `true`
-  - `jenkins2_globaltools_sonarscanner_version` - list of version for SonarQube Scanner (defined as a list)
-     default: ` - "3.3.0.1492"`
-  - `jenkins2_globaltools_sonarscannermsbuild_enable` - enable autoconfiguration for SonarQube Scanner for MSBuild
+  - `jenkins2_globaltools_sonarscanner_version` - list of version for SonarQube Scanner (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_sonarscannermsbuild_enable` - enable autoconfiguration for SonarQube Scanner for MSBuild  
      default: `true`
-  - `jenkins2_globaltools_sonarscannermsbuild_version` - list of version for SonarQube Scanner for MSBuild (defined as a list)
-     default: ` - "4.6.2.2108"`
-  - `jenkins2_globaltools_gradle_enable` - enable autoconfiguration for Gradle
+  - `jenkins2_globaltools_sonarscannermsbuild_version` - list of version for SonarQube Scanner for MSBuild (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_gradle_enable` - enable autoconfiguration for Gradle  
      default: `true`
-  - `jenkins2_globaltools_gradle_version` - list of version for SonarQube Scanner for Gradle (defined as a list)
-     default: ` - "5.5-rc-2"`
-  - `jenkins2_globaltools_docker_enable` - enable autoconfiguration for Docker
+  - `jenkins2_globaltools_gradle_version` - list of version for SonarQube Scanner for Gradle (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_docker_enable` - enable autoconfiguration for Docker  
      default: `true`
-  - `jenkins2_globaltools_docker_version` - list of version for Docker (defined as a list)
-     default: ` - "latest"`
+  - `jenkins2_globaltools_docker_version` - list of version for Docker (defined as a list)  
+     default: `[]`
 
 # smtp settings
   - `jenkins2_smtp_enabled` - to set the smtp configuration   
