@@ -19,6 +19,12 @@
   when: ansible_selinux.status == "enabled"
 
 - name: Enable connections to HTTP port
-  seport: ports="{{ selinux_ports }}" proto=tcp setype=http_port_t state=present
+  seport:
+    ports: '{{ jenkins2_config_http_port }}'
+    proto: tcp
+    setype: http_port_t
+    state: present
   become: true
-  when: ansible_selinux.status == "enabled" and ansible_selinux.mode != "disabled"
+  when:
+    - ansible_selinux.status == 'enabled'
+    - ansible_selinux.mode != 'disabled'
