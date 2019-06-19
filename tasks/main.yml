@@ -126,6 +126,9 @@
 - include_tasks: configure_security.yml
   when: jenkins2_security_enable
 
+- include_tasks: configure_globaltools.yml
+  when: jenkins2_globaltools_enable | bool
+
 - name: Disable insecure connection
   set_fact:
     jenkins2_config_http_port: '-1'

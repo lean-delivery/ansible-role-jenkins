@@ -2,6 +2,7 @@ Jenkins 2 installation
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-jenkins/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-jenkins.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-jenkins)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-jenkins/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-jenkins/pipelines)
 [![Galaxy](https://img.shields.io/badge/galaxy-lean_delivery.jenkins-blue.svg)](https://galaxy.ansible.com/lean_delivery/jenkins)
 ![Ansible](https://img.shields.io/ansible/role/d/29895.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F29895%2F&query=$.min_ansible_version)
@@ -78,7 +79,7 @@ Requirements
      default: `false`
   - `jenkins2_config_https_port` - Jenkins port for secure connection (https).   
      default: `8443`
-  - `jenkins2_local_keystore` - If true - to search for keystore on ansible host on {{ jenkins2_local_keystore_path }}. If false - to check keystore on remote host.    
+  - `jenkins2_local_keystore` - If true - to search for keystore on ansible host on {{ jenkins2_local_keystore_path }}. If false - to check keystore on remote host. 
      default: `false`
   - `jenkins2_local_keystore_path` - Path to local keystore file (in order not to create self-signed)  
      default: `{{ role_path }}/files/{{ jenkins2_ssl_key_store_name }}`
@@ -123,6 +124,47 @@ Requirements
      default: `4096`
   - `jenkins2_ssh_keys_inv_slave_groupname` - slave group name in inventory file   
      default: `jenkins_ssh_slaves`
+
+# Global Tool Configuration
+  - `jenkins2_globaltools_enable` - enable autoconfiguration for all global tools  
+     default: `false`
+  - `jenkins2_globaltools_jdk_enable` - enable autoconfiguration for JDK  
+     default: `true`
+  - `jenkins2_globaltools_jdk_version` - list of version for JDK (defined as a list)  
+     default: `[]`
+   - `jenkins2_globaltools_jdk_cred_user` -username for oracle repository  
+     default: `"user"`
+  - `jenkins2_globaltools_jdk_cred_password` - password for oracle repository  
+     default: `"password"`
+  - `jenkins2_globaltools_maven_enable` - enable autoconfiguration for Maven  
+     default: `true`
+  - `jenkins2_globaltools_maven_version` - list of version for Maven (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_ant_enable` - enable autoconfiguration for Ant  
+     default: `true`
+  - `jenkins2_globaltools_ant_version` - list of version for Ant (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_nodejs_enable` - enable autoconfiguration for Node.js  
+     default: `true`
+  - `jenkins2_globaltools_nodejs_version` - list of version for Node.js (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_sonarscanner_enable` - enable autoconfiguration for SonarQube Scanner  
+     default: `true`
+  - `jenkins2_globaltools_sonarscanner_version` - list of version for SonarQube Scanner (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_sonarscannermsbuild_enable` - enable autoconfiguration for SonarQube Scanner for MSBuild  
+     default: `true`
+  - `jenkins2_globaltools_sonarscannermsbuild_version` - list of version for SonarQube Scanner for MSBuild (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_gradle_enable` - enable autoconfiguration for Gradle  
+     default: `true`
+  - `jenkins2_globaltools_gradle_version` - list of version for SonarQube Scanner for Gradle (defined as a list)  
+     default: `[]`
+  - `jenkins2_globaltools_docker_enable` - enable autoconfiguration for Docker  
+     default: `true`
+  - `jenkins2_globaltools_docker_version` - list of version for Docker (defined as a list)  
+     default: `[]`
+
 # smtp settings
   - `jenkins2_smtp_enabled` - to set the smtp configuration   
      default: `true`

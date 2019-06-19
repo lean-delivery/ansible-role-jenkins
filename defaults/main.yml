@@ -92,6 +92,7 @@ jenkins2_plugins_suggested:
   - ldap
   - mailer
   - matrix-auth
+  - nodejs
   - pam-auth
   - pipeline-stage-view
   - pipeline-utility-steps
@@ -429,6 +430,27 @@ jenkins2_jira_timestamp_format: "EEE, d MMM yyyy HH:mm:ss Z"
 # Security configuration
 jenkins2_security_enable: true
 jenkins2_security_realm: "basic"
+
+# Global Tool Configuration
+jenkins2_globaltools_enable: false
+jenkins2_globaltools_jdk_enable: true
+jenkins2_globaltools_jdk_version: []
+jenkins2_globaltools_jdk_cred_user: "user"
+jenkins2_globaltools_jdk_cred_password: "password"
+jenkins2_globaltools_maven_enable: true
+jenkins2_globaltools_maven_version: []
+jenkins2_globaltools_ant_enable: true
+jenkins2_globaltools_ant_version: []
+jenkins2_globaltools_nodejs_enable: true
+jenkins2_globaltools_nodejs_version: []
+jenkins2_globaltools_sonarscanner_enable: true
+jenkins2_globaltools_sonarscanner_version: []
+jenkins2_globaltools_sonarscannermsbuild_enable: true
+jenkins2_globaltools_sonarscannermsbuild_version: []
+jenkins2_globaltools_gradle_enable: true
+jenkins2_globaltools_gradle_version: []
+jenkins2_globaltools_docker_enable: true
+jenkins2_globaltools_docker_version: []
 
 # Configure active directory
 jenkins2_active_directory_domain_name: "domain.com"
