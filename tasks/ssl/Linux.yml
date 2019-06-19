@@ -46,8 +46,7 @@
 
     - name: Create keystore
       include_tasks: >-
-        {{ ansible_system }}_keystore_{{ ansible_version.full is version("2.7", "<") |
-        ternary("old","new") }}.yml
+        {{ ansible_system }}_keystore.yml
   become: true
   when:
     - not keystore_file.stat.exists
