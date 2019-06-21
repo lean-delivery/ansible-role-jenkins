@@ -12,7 +12,13 @@
 
 - name: Set variable for changed
   set_fact:
-    dsl_copied: dsl_file_copied.changed
+    dsl_copied: '{{ dsl_file_copied.changed }}'
+
+- debug:
+    msg: '{{ dsl_copied }}'
+
+- debug:
+    msg: '{{ dsl_file_copied }}'
 
 - name: Create seed job
   jenkins_job:
