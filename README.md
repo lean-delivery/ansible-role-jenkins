@@ -582,8 +582,8 @@ jenkins2_ec2_ami_list:
   jenkins2_active_directory_site: "null"
   jenkins2_active_directory_bind_name: "user@domain.com"
   jenkins2_active_directory_bind_pass: "password"
-  jenkins2_active_directory_start_tls: "true"
-  jenkins2_active_directory_remove_irrelevant_groups: "false"
+  jenkins2_active_directory_start_tls: true
+  jenkins2_active_directory_remove_irrelevant_groups: false
   ```
 
   ### Default `LDAP` plugin configuration
@@ -597,8 +597,8 @@ jenkins2_ec2_ami_list:
   jenkins2_ldap_group_membership_filter: "null"
   jenkins2_ldap_manager_dn: "CN=User,OU=Auto Users,OU=Service,OU=Managed by Enterprise Admins,DC=server,DC=com"
   jenkins2_ldap_manager_password: "Pa$$word"
-  jenkins2_ldap_inhibit_infer_root_dn: "true"
-  jenkins2_ldap_disable_mail_address_resolver: "false"
+  jenkins2_ldap_inhibit_infer_root_dn: true
+  jenkins2_ldap_disable_mail_address_resolver: false
   jenkins2_ldap_display_name_attribute_name: "displayname"
   jenkins2_ldap_mail_address_attribute_name: "mail"
   ```
@@ -608,7 +608,7 @@ jenkins2_ec2_ami_list:
 - `jenkins2_authorization_strategy`: type of authorization strategy. Available: `logged-in`, `matrix-based`   
    default: `"logged-in"`
 - `jenkins2_authorization_strategy_logged_in_allow_anonymous_read`: allow anonymous read access   
-   default: `"false"`
+   default: `false`
 
 =======
 * jenkins2_ssh_keys_slave_hosts - dict that describes slave hosts with remote ssh users, ex:

@@ -25,8 +25,8 @@ hudsonRealm.createAccount("{{ jenkins2_cli_username }}","{{ jenkins2_cli_passwor
     {{ jenkins2_ldap_group_membership_filter }},
     "{{ jenkins2_ldap_manager_dn }}",
     new hudson.util.Secret("{{ jenkins2_ldap_manager_password }}"),
-    {{ jenkins2_ldap_inhibit_infer_root_dn }},
-    {{ jenkins2_ldap_disable_mail_address_resolver }},
+    {{ jenkins2_ldap_inhibit_infer_root_dn | lower }},
+    {{ jenkins2_ldap_disable_mail_address_resolver | lower }},
     null,
     null,
     "{{ jenkins2_ldap_display_name_attribute_name }}",
@@ -56,10 +56,10 @@ hudsonRealm.createAccount("{{ jenkins2_cli_username }}","{{ jenkins2_cli_passwor
     null,
     null,
     GroupLookupStrategy.AUTO,
-    {{ jenkins2_active_directory_remove_irrelevant_groups }},
+    {{ jenkins2_active_directory_remove_irrelevant_groups | lower }},
     null,
     null,
-    {{ jenkins2_active_directory_start_tls }}
+    {{ jenkins2_active_directory_start_tls | lower }}
   )
 
   instance.setSecurityRealm(activeDirectoryRealm)
@@ -69,7 +69,7 @@ hudsonRealm.createAccount("{{ jenkins2_cli_username }}","{{ jenkins2_cli_passwor
 {% if jenkins2_authorization_strategy_configure %}
   {% if jenkins2_authorization_strategy == "logged-in" %}
     def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
-    strategy.setAllowAnonymousRead({{ jenkins2_authorization_strategy_logged_in_allow_anonymous_read }})
+    strategy.setAllowAnonymousRead({{ jenkins2_authorization_strategy_logged_in_allow_anonymous_read | lower }})
     instance.setAuthorizationStrategy(strategy)
     instance.save()
   {% endif %}
