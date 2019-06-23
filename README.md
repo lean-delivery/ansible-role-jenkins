@@ -493,13 +493,13 @@ jenkins2_ec2_cloud_parameters:
 jenkins2_ec2_ami_list:
   ci_ami:
     ami: "ami-AAAAAAAA"
-    associatePublicIp: "false"
-    connectBySSHProcess: "true"
-    connectUsingPublicIp: "false"
+    associatePublicIp: false
+    connectBySSHProcess: true
+    connectUsingPublicIp: false
     customDeviceMapping: ""
-    deleteRootOnTermination: "true"
+    deleteRootOnTermination: true
     description: "Jenkins slave for CI"
-    ebsOptimized: "false"
+    ebsOptimized: false
     iamInstanceProfile: ""
     idleTerminationMinutes: "5"
     initScript: ""
@@ -511,33 +511,33 @@ jenkins2_ec2_ami_list:
     remoteAdmin: "ec2-user"
     remoteFS: "/opt/jenkins"
     securityGroups: "sg-11111111"
-    stopOnTerminate: "false"
+    stopOnTerminate: false
     subnetId: "subnet-SSSSSSSS"
     tags:
       - {name: "Name", value: "CI Slave"}
       - {name: "Name2", value: "CI2 Slave"}
     tmpDir: ""
     type: "t2.medium"
-    useDedicatedTenancy: "false"
-    useEphemeralDevices: "true"
-    usePrivateDnsName: "true"
+    useDedicatedTenancy: false
+    useEphemeralDevices: true
+    usePrivateDnsName: true
     userData: ""
     zone: "us-east-1a,us-east-1b"
-    monitoring: "false"
+    monitoring: false
     SpotConfiguration:
       enabled: false
-      useBidPrice: "true"
+      useBidPrice: true
       spotMaxBidPrice: "0.0139"
-      fallbackToOndemand: "false"
+      fallbackToOndemand: false
   fv_ami:
     ami: "ami-BBBBBBBB"
-    associatePublicIp: "false"
-    connectBySSHProcess: "true"
-    connectUsingPublicIp: "false"
+    associatePublicIp: false
+    connectBySSHProcess: true
+    connectUsingPublicIp: false
     customDeviceMapping: ""
-    deleteRootOnTermination: "true"
+    deleteRootOnTermination: true
     description: "Jenkins slave for FV"
-    ebsOptimized: "false"
+    ebsOptimized: false
     iamInstanceProfile: ""
     idleTerminationMinutes: "5"
     initScript: ""
@@ -549,7 +549,7 @@ jenkins2_ec2_ami_list:
     remoteAdmin: "ec2-user"
     remoteFS: "/opt/jenkins"
     securityGroups: "sg-11111111"
-    stopOnTerminate: "false"
+    stopOnTerminate: false
     subnetId: "subnet-SSSSSSSS"
     tags:
       - {name: "Name", value: "FV Slave"}
@@ -560,13 +560,13 @@ jenkins2_ec2_ami_list:
     usePrivateDnsName: "true"
     userData: ""
     zone: "us-east-1a,us-east-1b"
-    monitoring: "false"
+    monitoring: false
     SpotConfiguration:
       enabled: false
-      useBidPrice: "true"
+      useBidPrice: true
       spotMaxBidPrice: "0.0139"
-      fallbackToOndemand: "false"
-    t2Unlimited: "false"
+      fallbackToOndemand: false
+    t2Unlimited: false
 ```
 
 # Security and Authorization configuration
