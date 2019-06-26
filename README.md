@@ -454,9 +454,9 @@ jenkins2_credentials:
    default: `false`
 ```yml
 jenkins2_ec2_cloud_parameters:
-  cloud_name: "AWS_cloud"
-  credentials_id: "AWS_EC2_CREDS"
-  instance_cap_str: "2"
+  cloud_name: 'AWS_cloud'
+  credentials_id: 'AWS_EC2_CREDS'
+  instance_cap_str: '2'
   private_key: |
     -----BEGIN RSA PRIVATE KEY-----
     MIIEpQIBAAKCAQEAp4aKtv4Tw760QLb5eG4M0nKeO8cPPf68aSbYwhSNqn4n3+Pq
@@ -485,86 +485,88 @@ jenkins2_ec2_cloud_parameters:
     ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
     criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
     -----END RSA PRIVATE KEY-----
-  region: "us-east-1"
-  use_instance_profile_for_credentials: "false"
-  role_arn: ""
-  role_session_name: ""
-
+  region: 'us-east-1'
+  use_instance_profile_for_credentials: false
+  role_arn: ''
+  role_session_name: ''
 jenkins2_ec2_ami_list:
   ci_ami:
     ami: "ami-AAAAAAAA"
     associatePublicIp: false
     connectBySSHProcess: true
     connectUsingPublicIp: false
-    customDeviceMapping: ""
+    customDeviceMapping: ''
     deleteRootOnTermination: true
-    description: "Jenkins slave for CI"
+    description: 'Jenkins slave for CI'
     ebsOptimized: false
-    iamInstanceProfile: ""
-    idleTerminationMinutes: "5"
-    initScript: ""
-    instanceCapStr: "5"
-    jvmopts: ""
-    labelString: "ci_slaves"
-    launchTimeoutStr: ""
-    numExecutors: "1"
-    remoteAdmin: "ec2-user"
-    remoteFS: "/opt/jenkins"
-    securityGroups: "sg-11111111"
+    iamInstanceProfile: ''
+    idleTerminationMinutes: '5'
+    initScript: ''
+    instanceCapStr: '5'
+    jvmopts: ''
+    labelString: 'ci_slaves'
+    launchTimeoutStr: ''
+    numExecutors: '1'
+    remoteAdmin: 'ec2-user'
+    remoteFS: '/opt/jenkins'
+    securityGroups: 'sg-11111111'
     stopOnTerminate: false
-    subnetId: "subnet-SSSSSSSS"
+    subnetId: 'subnet-SSSSSSSS'
     tags:
-      - {name: "Name", value: "CI Slave"}
-      - {name: "Name2", value: "CI2 Slave"}
-    tmpDir: ""
-    type: "t2.medium"
+      - {name: 'Name', value: 'CI Slave'}
+      - {name: 'Name2', value: 'CI2 Slave'}
+    tmpDir: ''
+    type: 't2.medium'
     useDedicatedTenancy: false
     useEphemeralDevices: true
     usePrivateDnsName: true
-    userData: ""
-    zone: "us-east-1a,us-east-1b"
+    userData: ''
+    zone: 'us-east-1a,us-east-1b'
     monitoring: false
     SpotConfiguration:
-      enabled: false
+      enabled: true
       useBidPrice: true
-      spotMaxBidPrice: "0.0139"
+      spotMaxBidPrice: '0.0139'
+      spotBlockReservationDuration: '0'
       fallbackToOndemand: false
+    t2Unlimited: false
   fv_ami:
-    ami: "ami-BBBBBBBB"
+    ami: 'ami-BBBBBBBB'
     associatePublicIp: false
     connectBySSHProcess: true
     connectUsingPublicIp: false
-    customDeviceMapping: ""
+    customDeviceMapping: ''
     deleteRootOnTermination: true
-    description: "Jenkins slave for FV"
+    description: 'Jenkins slave for FV'
     ebsOptimized: false
-    iamInstanceProfile: ""
-    idleTerminationMinutes: "5"
-    initScript: ""
-    instanceCapStr: "5"
-    jvmopts: ""
-    labelString: "ci_slaves"
-    launchTimeoutStr: ""
-    numExecutors: "1"
-    remoteAdmin: "ec2-user"
-    remoteFS: "/opt/jenkins"
-    securityGroups: "sg-11111111"
+    iamInstanceProfile: ''
+    idleTerminationMinutes: '5'
+    initScript: ''
+    instanceCapStr: '5'
+    jvmopts: ''
+    labelString: 'ci_slaves'
+    launchTimeoutStr: ''
+    numExecutors: '1'
+    remoteAdmin: 'ec2-user'
+    remoteFS: '/opt/jenkins'
+    securityGroups: 'sg-11111111'
     stopOnTerminate: false
-    subnetId: "subnet-SSSSSSSS"
+    subnetId: 'subnet-SSSSSSSS'
     tags:
-      - {name: "Name", value: "FV Slave"}
-    tmpDir: ""
-    type: "t2.medium"
-    useDedicatedTenancy: "false"
-    useEphemeralDevices: "true"
-    usePrivateDnsName: "true"
-    userData: ""
-    zone: "us-east-1a,us-east-1b"
+      - {name: 'Name', value: 'FV Slave'}
+    tmpDir: ''
+    type: 't2.medium'
+    useDedicatedTenancy: false
+    useEphemeralDevices: true
+    usePrivateDnsName: true
+    userData: ''
+    zone: 'us-east-1a,us-east-1b'
     monitoring: false
     SpotConfiguration:
       enabled: false
       useBidPrice: true
-      spotMaxBidPrice: "0.0139"
+      spotMaxBidPrice: '0.0139'
+      spotBlockReservationDuration: '0'
       fallbackToOndemand: false
     t2Unlimited: false
 ```

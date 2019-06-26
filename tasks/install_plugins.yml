@@ -19,7 +19,7 @@
 
 - name: Install Jenkins plugins
   jenkins_plugin:
-    url: "http://localhost:{{ jenkins2_config_http_port }}"
+    url: 'http://localhost:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
     name: '{{ item }}'
@@ -31,7 +31,6 @@
   register: my_jenkins_plugins
   retries: 10
   delay: 3
-  #TODO: replace with loop
   with_items:
     - "{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}"
   become: true

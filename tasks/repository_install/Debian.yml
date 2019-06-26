@@ -2,14 +2,14 @@
 - name: Choose stable Jenkins
   set_fact:
     key_value: https://pkg.jenkins.io/debian-stable/jenkins.io.key
-    base_url: "deb https://pkg.jenkins.io/debian-stable binary/"
-  when: jenkins2_release_line=="stable"
+    base_url: 'deb https://pkg.jenkins.io/debian-stable binary/'
+  when: jenkins2_release_line=='stable'
 
 - name: Choose recent Jenkins
   set_fact:
     key_value: https://pkg.jenkins.io/debian/jenkins.io.key
-    base_url: "deb https://pkg.jenkins.io/debian binary/"
-  when: jenkins2_release_line=="latest"
+    base_url: 'deb https://pkg.jenkins.io/debian binary/'
+  when: jenkins2_release_line=='latest'
 
 - name: Jenkins Key
   environment:

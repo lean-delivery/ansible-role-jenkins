@@ -1,15 +1,15 @@
 ---
 - name: Choose stable Jenkins
   set_fact:
-    key_value: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-    base_url: https://pkg.jenkins.io/redhat-stable
-  when: jenkins2_release_line=="stable"
+    key_value: 'https://pkg.jenkins.io/redhat-stable/jenkins.io.key'
+    base_url: 'https://pkg.jenkins.io/redhat-stable'
+  when: jenkins2_release_line=='stable'
 
 - name: Choose recent Jenkins
   set_fact:
-    key_value: https://pkg.jenkins.io/redhat/jenkins.io.key
-    base_url: https://pkg.jenkins.io/redhat
-  when: jenkins2_release_line=="latest"
+    key_value: 'https://pkg.jenkins.io/redhat/jenkins.io.key'
+    base_url: 'https://pkg.jenkins.io/redhat'
+  when: jenkins2_release_line=='latest'
 
 - name: Jenkins Key
   environment:

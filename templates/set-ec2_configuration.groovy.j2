@@ -22,7 +22,7 @@ import jenkins.model.Jenkins
   {% endfor %}
 
   {% if value.SpotConfiguration.enabled == true %}
-     def spotConfig_{{ key }} = new SpotConfiguration({{ value.SpotConfiguration.useBidPrice | lower }}, "{{ value.SpotConfiguration.spotMaxBidPrice }}", {{ value.SpotConfiguration.fallbackToOndemand | lower }})
+     def spotConfig_{{ key }} = new SpotConfiguration({{ value.SpotConfiguration.useBidPrice | lower }}, '{{ value.SpotConfiguration.spotMaxBidPrice }}', {{ value.SpotConfiguration.fallbackToOndemand | lower }}, '{{ value.SpotConfiguration.spotBlockReservationDuration }}')
   {% endif -%}
 
   // https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/SlaveTemplate.java
@@ -70,7 +70,7 @@ import jenkins.model.Jenkins
 // https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/AmazonEC2Cloud.java
 AmazonEC2Cloud amazonEC2Cloud = new AmazonEC2Cloud(
   '{{ jenkins2_ec2_cloud_parameters.cloud_name }}',
-  {{ jenkins2_ec2_cloud_parameters.use_instance_profile_for_credentials }},
+  {{ jenkins2_ec2_cloud_parameters.use_instance_profile_for_credentials | lower }},
   '{{ jenkins2_ec2_cloud_parameters.credentials_id }}',
   '{{ jenkins2_ec2_cloud_parameters.region }}',
   '''{{ jenkins2_ec2_cloud_parameters.private_key }}''',
