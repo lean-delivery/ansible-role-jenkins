@@ -41,11 +41,11 @@ hudsonRealm.createAccount("{{ jenkins2_cli_username }}","{{ jenkins2_cli_passwor
 
 {% if jenkins2_security_realm == "active-directory" %}
   def domain = new hudson.plugins.active_directory.ActiveDirectoryDomain(
-    "{{ jenkins2_active_directory_domain_name }}",
-    "{{ jenkins2_active_directory_domain_controller }}",
+    '{{ jenkins2_active_directory_domain_name }}',
+    '{{ jenkins2_active_directory_domain_controller }}',
     {{ jenkins2_active_directory_site }},
-    "{{ jenkins2_active_directory_bind_name }}",
-    "{{ jenkins2_active_directory_bind_pass }}"
+    '{{ jenkins2_active_directory_bind_name }}',
+    '{{ jenkins2_active_directory_bind_pass }}'
   )
 
   def activeDirectoryRealm = new ActiveDirectorySecurityRealm(
@@ -114,7 +114,7 @@ hudsonRealm.createAccount("{{ jenkins2_cli_username }}","{{ jenkins2_cli_passwor
     ]
 
     adminPermissions.each {
-        strategy.add(Permission.fromId(it), "{{ jenkins2_cli_username }}")
+        strategy.add(Permission.fromId(it), '{{ jenkins2_cli_username }}')
     }
 
     instance.setAuthorizationStrategy(strategy)

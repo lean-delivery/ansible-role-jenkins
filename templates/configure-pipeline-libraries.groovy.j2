@@ -20,10 +20,10 @@ def jenkins = Jenkins.getInstance()
 def descriptor = jenkins.getDescriptor("org.jenkinsci.plugins.workflow.libs.GlobalLibraries").get()
 def libraryConfigurations = [
             globalSharedLibraryConfiguration(
-                    name = "{{ jenkins2_pipeline_libraries_name }}",
-                    gitUrl = "{{ jenkins2_pipeline_libraries_url }}",
-                    gitCredentialsId = "{{ jenkins2_credentials.pipeline_libraries.id }}",
-                    defaultVersion = "{{ jenkins2_pipeline_libraries_version }}"
+                    name = '{{ jenkins2_pipeline_libraries_name }}',
+                    gitUrl = '{{ jenkins2_pipeline_libraries_url }}',
+                    gitCredentialsId = '{{ jenkins2_credentials.pipeline_libraries.id }}',
+                    defaultVersion = '{{ jenkins2_pipeline_libraries_version }}'
             )
     ]
 descriptor.setLibraries(libraryConfigurations)

@@ -9,7 +9,7 @@ def desc = inst.getDescriptor("hudson.tasks.Ant")
 
 def versions = [
 {% for version in jenkins2_globaltools_ant_version %}
-   "{{ version }}": "{{ version }}",
+   '{{ version }}': '{{ version }}',
 {% endfor %}
 ]
 def installations = [];

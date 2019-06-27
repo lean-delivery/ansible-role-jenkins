@@ -5,15 +5,15 @@ import jenkins.model.*
 def jenkins = Jenkins.getInstance()
 JiraProjectProperty.DescriptorImpl config = jenkins.getExtensionList(JiraProjectProperty.DescriptorImpl.class)[0]
 
-JiraSite jiraSite = new JiraSite(new URL("{{ jenkins2_jira_url }}"),
-                            new URL("{{ jenkins2_jira_alternative_url }}"),
-                            "{{ jenkins2_jira_credentials_id }}",
+JiraSite jiraSite = new JiraSite(new URL('{{ jenkins2_jira_url }}'),
+                            new URL('{{ jenkins2_jira_alternative_url }}'),
+                            '{{ jenkins2_jira_credentials_id }}',
                             {{ jenkins2_jira_support_wiki_notation | lower }},
                             {{ jenkins2_jira_record_scm_changes | lower }},
-							              "{{ jenkins2_jira_issue_pattern }}",
+							              '{{ jenkins2_jira_issue_pattern }}',
                             {{ jenkins2_jira_update_relevant_issues | lower }},
-                            "{{ jenkins2_jira_visible_for_group }}",
-              							"{{ jenkins2_jira_visible_for_project_role }}",
+                            '{{ jenkins2_jira_visible_for_group }}',
+              							'{{ jenkins2_jira_visible_for_project_role }}',
               							{{ jenkins2_jira_use_http_auth | lower }},
               							{{ jenkins2_jira_connection_timeout }},
               							{{ jenkins2_jira_read_timeout }},

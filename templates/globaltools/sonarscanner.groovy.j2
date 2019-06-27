@@ -10,7 +10,7 @@ def desc = inst.getDescriptor("hudson.plugins.sonar.SonarRunnerInstallation")
 
 def versions = [
 {% for version in jenkins2_globaltools_sonarscanner_version %}
-   "{{ version }}": "{{ version }}",
+   '{{ version }}': '{{ version }}',
 {% endfor %}
 ]
 def installations = [];

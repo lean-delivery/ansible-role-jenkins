@@ -2,6 +2,6 @@ import jenkins.model.*
 import jenkins.*
 import hudson.*
 import hudson.model.*
-job = Jenkins.instance.getItemByFullName("{{ jenkins2_seed_job_name }}")
+job = Jenkins.instance.getItemByFullName('{{ jenkins2_seed_job_name }}')
 job.scheduleBuild()
 sleep(10000)

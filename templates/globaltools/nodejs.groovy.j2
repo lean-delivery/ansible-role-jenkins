@@ -9,7 +9,7 @@ def desc = inst.getDescriptor("jenkins.plugins.nodejs.tools.NodeJSInstallation")
 
 def versions = [
 {% for version in jenkins2_globaltools_nodejs_version %}
-   "{{ version }}": "{{ version }}",
+   '{{ version }}': '{{ version }}',
 {% endfor %}
 ]
 def installations = [];

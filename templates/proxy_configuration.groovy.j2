@@ -1,8 +1,8 @@
-def host = "{{ jenkins2_proxy_host }}"
+def host = '{{ jenkins2_proxy_host }}'
 def port = {{ jenkins2_proxy_port }}
-def username = "{{ jenkins2_proxy_username }}"
-def password = "{{ jenkins2_proxy_password }}"
-def noProxyHosts = "{{ jenkins2_proxy_no_proxy_hosts }}"
+def username = '{{ jenkins2_proxy_username }}'
+def password = '{{ jenkins2_proxy_password }}'
+def noProxyHosts = '{{ jenkins2_proxy_no_proxy_hosts }}'
 
 if (host != "") {
     def proxy = new hudson.ProxyConfiguration(host, port, username, password, noProxyHosts)

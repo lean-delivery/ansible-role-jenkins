@@ -10,7 +10,7 @@ def desc = inst.getDescriptor("hudson.plugins.gradle.GradleInstallation")
 
 def versions = [
 {% for version in jenkins2_globaltools_gradle_version %}
-   "{{ version }}": "{{ version }}",
+   '{{ version }}': '{{ version }}',
 {% endfor %}
 ]
 def installations = [];

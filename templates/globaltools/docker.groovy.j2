@@ -10,7 +10,7 @@ def desc = inst.getDescriptor("org.jenkinsci.plugins.docker.commons.tools.Docker
 
 def versions = [
 {% for version in jenkins2_globaltools_docker_version %}
-   "{{ version }}": "{{ version }}",
+   '{{ version }}': '{{ version }}',
 {% endfor %}
 ]
 def installations = [];
