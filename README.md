@@ -57,7 +57,7 @@ Requirements
   - `jenkins2_config_java_cmd` - Java executable to run Jenkins   
      default: `''`
   - `jenkins2_config_java_options` - Options to pass to java when running Jenkins.   
-     default: `"-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_"`
+     default: `-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_`
   - `jenkins2_config_http_port` - Port Jenkins is listening on.   
      default: `8080`
   - `jenkins2_config_listen_address` - IP address Jenkins listens on for HTTP requests. Default is all interfaces (0.0.0.0).   
@@ -133,9 +133,9 @@ Requirements
   - `jenkins2_globaltools_jdk_version` - list of version for JDK (defined as a list)  
      default: `[]`
    - `jenkins2_globaltools_jdk_cred_user` -username for oracle repository  
-     default: `"user"`
+     default: `'user'`
   - `jenkins2_globaltools_jdk_cred_password` - password for oracle repository  
-     default: `"password"`
+     default: `'password'`
   - `jenkins2_globaltools_maven_enable` - enable autoconfiguration for Maven  
      default: `true`
   - `jenkins2_globaltools_maven_version` - list of version for Maven (defined as a list)  
@@ -232,11 +232,11 @@ Requirements
   - `jenkins2_custom_files` - map with files parameters   
       default:
     `log_parser:
-      src: "{{ role_path }}/files/pipeline_error_in_init_console"
-      dest: "{{ jenkins2_home_directory }}"
-      owner: "{{ jenkins2_user }}"
-      group: "{{ jenkins2_user }}"
-      mode: "0755"`
+      src: '{{ role_path }}/files/pipeline_error_in_init_console'
+      dest: '{{ jenkins2_home_directory }}'
+      owner: '{{ jenkins2_user }}'
+      group: '{{ jenkins2_user }}'
+      mode: '0755'`
 # Gitlab configuration
   - `jenkins2_gitlab_enabled` - to enable gitlab config   
      default: `false`
@@ -304,7 +304,7 @@ Requirements
 - `jenkins2_seed_job_ignore_existing` - to ignore existing jobs and do not rewrite them   
    default: `true`
 - `jenkins2_seed_job_name` - Jenkins seed job name   
-   default: `"seed_job"`
+   default: `'seed_job'`
 
 
 Use variable `jenkins2_credentials` to set properties of credentials
@@ -395,8 +395,8 @@ jenkins2_credentials:
     type: 'password'
     id: 'GIT_CREDENTIALS'
     description: 'gitlab credentials username with password'
-    username: "{{ gitlab_master_username | default('admin') }}"
-    password: "{{ gitlab_master_password | default('password') }}"
+    username: '{{ gitlab_master_username | default("admin") }}'
+    password: '{{ gitlab_master_password | default("password") }}'
   jenkinshttpconnectionuser:
     type: 'password'
     id: 'Jenkins_http_connection'
@@ -407,29 +407,30 @@ jenkins2_credentials:
     type: 'password'
     id: 'GIT_CREDENTIALS_TOKEN'
     description: 'to use with GL10.2+ but could be used with earlier versions'
-    username: "{{ gitlab_master_username | default('admin') }}"
-    password: "{{ gitlab_master_token | default('ToKen12345') }}"
+    username: '{{ gitlab_master_username | default("admin") }}'
+    password: '{{ gitlab_master_token | default("ToKen12345") }}'
   aws_credentials:
     type: 'password'
     id: 'AWS_CREDENTIALS'
     description: 'for operations in AWS'
-    username: "{{ aws_access_key | default('AWSaccessKey') }}"
-    password: "{{ aws_secret_key | default('AWSsecretKey') }}"
+    username: '{{ aws_access_key | default("AWSaccessKey") }}'
+    password: '{{ aws_secret_key | default("AWSsecretKey") }}'
   gitlabtoken:
     type: 'gitlabtoken'
     id: 'gitlab_token'
     description: 'gitlab connection with token'
+    token: '{{ gitlab_master_token | default("ToKen12345") }}'
   githubtoken:
     type: 'secrettext'
     id: 'github_token'
     description: 'GiHub connection with token'
-    token: "{{ github_master_token | default('ToKen12345') }}"
+    token: '{{ github_master_token | default("ToKen12345") }}'
   aws_ec2_credentials:
     type: 'aws_creds'
     id: 'AWS_EC2_CREDS'
     description: 'for ec2 plugin to create ec2 for slave instances'
-    access_key: "{{ aws_access_key | default('AWSaccessKey') }}"
-    sec_key: "{{ aws_secret_key | default('AWSsecretKey') }}"
+    access_key: '{{ aws_access_key | default("AWSaccessKey") }}'
+    sec_key: '{{ aws_secret_key | default("AWSsecretKey") }}'
   bitbucket_project:
     type: 'password'
     id: 'bitbucket_project'
@@ -491,7 +492,7 @@ jenkins2_ec2_cloud_parameters:
   role_session_name: ''
 jenkins2_ec2_ami_list:
   ci_ami:
-    ami: "ami-AAAAAAAA"
+    ami: 'ami-AAAAAAAA'
     associatePublicIp: false
     connectBySSHProcess: true
     connectUsingPublicIp: false
@@ -575,34 +576,34 @@ jenkins2_ec2_ami_list:
 - `jenkins2_security_enable`: enable Jenkins security.   
    default: `true`
 - `jenkins2_security_realm`: Select type of Jenkins security. Avaible: `basic`, `ldap`, `active-directory`
-   default: `"basic"`
+   default: `'basic'`
 
   ### Default `active-directory` plugin configuration
   ```yaml
-  jenkins2_active_directory_domain_name: "domain.com"
-  jenkins2_active_directory_domain_controller: "server.domain.com:3268"
-  jenkins2_active_directory_site: "null"
-  jenkins2_active_directory_bind_name: "user@domain.com"
-  jenkins2_active_directory_bind_pass: "password"
+  jenkins2_active_directory_domain_name: 'domain.com'
+  jenkins2_active_directory_domain_controller: 'server.domain.com:3268'
+  jenkins2_active_directory_site: 'null'
+  jenkins2_active_directory_bind_name: 'user@domain.com'
+  jenkins2_active_directory_bind_pass: 'password'
   jenkins2_active_directory_start_tls: true
   jenkins2_active_directory_remove_irrelevant_groups: false
   ```
 
   ### Default `LDAP` plugin configuration
   ```yaml
-  jenkins2_ldap_server: "ldap.server.com:3268"
-  jenkins2_ldap_root_dn: "dc=server,dc=com"
-  jenkins2_ldap_user_search_base: ""
-  jenkins2_ldap_user_search: "mail={0}"
-  jenkins2_ldap_group_search_base: ""
-  jenkins2_ldap_group_search_filter: ""
-  jenkins2_ldap_group_membership_filter: "null"
-  jenkins2_ldap_manager_dn: "CN=User,OU=Auto Users,OU=Service,OU=Managed by Enterprise Admins,DC=server,DC=com"
-  jenkins2_ldap_manager_password: "Pa$$word"
+  jenkins2_ldap_server: 'ldap.server.com:3268'
+  jenkins2_ldap_root_dn: 'dc=server,dc=com'
+  jenkins2_ldap_user_search_base: ''
+  jenkins2_ldap_user_search: 'mail={0}'
+  jenkins2_ldap_group_search_base: ''
+  jenkins2_ldap_group_search_filter: ''
+  jenkins2_ldap_group_membership_filter: 'null'
+  jenkins2_ldap_manager_dn: 'CN=User,OU=Auto Users,OU=Service,OU=Managed by Enterprise Admins,DC=server,DC=com'
+  jenkins2_ldap_manager_password: 'Pa$$word'
   jenkins2_ldap_inhibit_infer_root_dn: true
   jenkins2_ldap_disable_mail_address_resolver: false
-  jenkins2_ldap_display_name_attribute_name: "displayname"
-  jenkins2_ldap_mail_address_attribute_name: "mail"
+  jenkins2_ldap_display_name_attribute_name: 'displayname'
+  jenkins2_ldap_mail_address_attribute_name: 'mail'
   ```
 
 - `jenkins2_authorization_strategy_configure`: enable authorization strategy configuration   
