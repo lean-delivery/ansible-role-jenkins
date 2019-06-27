@@ -14,27 +14,27 @@
       java_tarball_install: false
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: true
-      jenkins2_pipeline_libraries_url: "https://example.com/example.git"
+      jenkins2_pipeline_libraries_url: 'https://example.com/example.git'
       jenkins2_bitbucket_project_enabled: true
       jenkins2_sonarqube_enabled: false
       jenkins2_custom_files_enabled: true
       jenkins2_gitlab_enabled: true
       jenkins2_github_enabled: true
       jenkins2_seed_job_enable: true
-      gitlab_external_url: "https://localhost"
-      gitlab_project_group: "test"
-      gitlab_project_name: "test"
-      ci_test_jenkins_slave_label: "ci_slaves"
-      feature_verification_jenkins_slave_label: "fv_slaves"
-      ami_for_ci: "ami-AAAAAAAA"
-      ami_for_fv: "ami-BBBBBBBB"
-      ami_for_env: "ami-CCCCCCCC"
-      ami_for_solr: "ami-9887c6e7"
+      gitlab_external_url: 'https://localhost'
+      gitlab_project_group: 'test'
+      gitlab_project_name: 'test'
+      ci_test_jenkins_slave_label: 'ci_slaves'
+      feature_verification_jenkins_slave_label: 'fv_slaves'
+      ami_for_ci: 'ami-AAAAAAAA'
+      ami_for_fv: 'ami-BBBBBBBB'
+      ami_for_env: 'ami-CCCCCCCC'
+      ami_for_solr: 'ami-9887c6e7'
       lb_security_groups: '"sg-AAAAAAAA","sg-CCCCCCCC"'
       ec2_security_groups: '"sg-BBBBBBBB","sg-DDDDDDDD"'
-      aws_key: "aws_key_name"
-      aws_subnet_id: "subnet-AAAAAAAA"
-      artifact_bucket_name: "s3_artifact_test"
+      aws_key: 'aws_key_name'
+      aws_subnet_id: 'subnet-AAAAAAAA'
+      artifact_bucket_name: 's3_artifact_test'
       jenkins2_ec2_enable: true
       jenkins2_jira_enabled: true
       jenkins2_globaltools_enable: true
