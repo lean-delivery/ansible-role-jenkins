@@ -195,8 +195,8 @@ jenkins2_credentials:
     type: 'password'
     id: 'GIT_CREDENTIALS'
     description: 'gitlab credentials username with password'
-    username: "{{ gitlab_master_username | default('admin') }}"
-    password: "{{ gitlab_master_password | default('password') }}"
+    username: '{{ gitlab_master_username | default("admin") }}'
+    password: '{{ gitlab_master_password | default("password") }}'
   jenkinshttpconnectionuser:
     type: 'password'
     id: 'Jenkins_http_connection'
@@ -274,8 +274,8 @@ jenkins2_custom_files:
 
 # Setup gitlab connection
 jenkins2_gitlab_enabled: false
-gitlab_external_url: "https://localhost"
-jenkins2_gitlab_token_cred: "gitlab_token"
+gitlab_external_url: 'https://localhost'
+jenkins2_gitlab_token_cred: 'gitlab_token'
 
 # Setup github connection
 jenkins2_github_enabled: false
@@ -333,7 +333,7 @@ jenkins2_ec2_cloud_parameters:
   role_session_name: ''
 jenkins2_ec2_ami_list:
   ci_ami:
-    ami: "ami-AAAAAAAA"
+    ami: 'ami-AAAAAAAA'
     associatePublicIp: false
     connectBySSHProcess: true
     connectUsingPublicIp: false
@@ -433,7 +433,7 @@ jenkins2_jira_timestamp_format: 'EEE, d MMM yyyy HH:mm:ss Z'
 
 # Security configuration
 jenkins2_security_enable: true
-jenkins2_security_realm: "basic"
+jenkins2_security_realm: 'basic'
 
 # Global Tool Configuration
 jenkins2_globaltools_enable: false
