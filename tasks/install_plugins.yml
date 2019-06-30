@@ -1,8 +1,8 @@
 ---
 - name: Proxy Configuration
   jenkins_script:
-    url: "http://localhost:{{ jenkins2_config_http_port }}"
-    script: "{{ lookup('template', 'proxy_configuration.groovy.j2') }}"
+    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+    script: '{{ lookup("template", "proxy_configuration.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: false
@@ -10,8 +10,8 @@
 
 - name: Update Center Refresh
   jenkins_script:
-    url: "http://localhost:{{ jenkins2_config_http_port }}"
-    script: "{{ lookup('template', 'update_center_refresh.groovy.j2') }}"
+    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+    script: '{{ lookup("template", "update_center_refresh.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: false

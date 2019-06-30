@@ -16,7 +16,7 @@
   register: status
   until: status is succeeded
   become: true
-  when: ansible_selinux.status == "enabled"
+  when: ansible_selinux.status == 'enabled'
 
 - name: Enable connections to HTTP port
   seport:
