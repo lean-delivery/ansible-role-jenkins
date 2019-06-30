@@ -32,7 +32,7 @@
   retries: 10
   delay: 3
   with_items:
-    - "{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}"
+    - '{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}'
   become: true
   notify:
     - Restart Jenkins
