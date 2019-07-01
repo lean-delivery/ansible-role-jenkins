@@ -1,0 +1,52 @@
+---
+- name: Check if keystore exists
+  stat:
+    path: '{{ jenkins2_local_keystore_path }}'
+  delegate_to: '{{ jenkins2_local_keystore | ternary("localhost", inventory_hostname) }}'
+  register: keystore_file
+  when: jenkins2_local_keystore
+
+- name: Copy keystore file
+  copy:
+    src: '{{ jenkins2_local_keystore_path }}'
+    dest: '{{ jenkins2_ssl_key_store }}'
+    owner: '{{ jenkins2_user | default("jenkins") }}'
+    group: '{{ jenkins2_user | default("jenkins") }}'
+    mode: 0644
+    remote_src: '{{ not jenkins2_local_keystore }}'
+  become: true
+  when: jenkins2_local_keystore
+
+- name: Check if jenkins keystore exists
+  stat:
+    path: '{{ jenkins2_ssl_key_store }}'
+  register: keystore_file
+  become: true
+
+- name: Block for become and when
+  block:
+    - name: Create private certificate
+      openssl_privatekey:
+        path: '{{ jenkins2_home_directory }}/{{ jenkins2_local_pkey_file_name }}'
+        size: '{{ jenkins2_ssl_key_size | int }}'
+
+    - name: Create CSR
+      openssl_csr:
+        path: '/tmp/{{ jenkins2_local_cert_file_name }}.csr'
+        privatekey_path: '{{ jenkins2_home_directory }}/{{ jenkins2_local_pkey_file_name }}'
+        common_name: '{{ jenkins2_ca_domain }}'
+
+    - name: Create certificates for keystore
+      openssl_certificate:
+        csr_path: '/tmp/{{ jenkins2_local_cert_file_name }}.csr'
+        path: '{{ jenkins2_home_directory }}/{{ jenkins2_local_cert_file_name }}'
+        privatekey_path: '{{ jenkins2_home_directory }}/{{ jenkins2_local_pkey_file_name }}'
+        provider: '{{ jenkins2_ssl_certificate_provider }}'
+        force: true
+
+    - name: Create keystore
+      include_tasks: >-
+        {{ ansible_system }}_keystore.yml
+  become: true
+  when:
+    - not keystore_file.stat.exists

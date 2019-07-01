@@ -1,0 +1,124 @@
+import jenkins.model.*
+import hudson.security.*
+import jenkins.model.IdStrategy
+import hudson.security.LDAPSecurityRealm
+import hudson.plugins.active_directory.*
+
+def instance = Jenkins.getInstance()
+
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+hudsonRealm.createAccount("{{ jenkins2_cli_username }}","{{ jenkins2_cli_password }}")
+
+{% if jenkins2_security_realm == "basic" %}
+  instance.setSecurityRealm(hudsonRealm)
+  instance.save()
+{% endif %}
+
+{% if jenkins2_security_realm == "ldap"%}
+  ldapRealm = new LDAPSecurityRealm(
+    "{{ jenkins2_ldap_server }}",
+    "{{ jenkins2_ldap_root_dn }}",
+    "{{ jenkins2_ldap_user_search_base }}",
+    "{{ jenkins2_ldap_user_search }}",
+    "{{ jenkins2_ldap_group_search_base }}",
+    "{{ jenkins2_ldap_group_search_filter }}",
+    {{ jenkins2_ldap_group_membership_filter }},
+    "{{ jenkins2_ldap_manager_dn }}",
+    new hudson.util.Secret("{{ jenkins2_ldap_manager_password }}"),
+    {{ jenkins2_ldap_inhibit_infer_root_dn | lower }},
+    {{ jenkins2_ldap_disable_mail_address_resolver | lower }},
+    null,
+    null,
+    "{{ jenkins2_ldap_display_name_attribute_name }}",
+    "{{ jenkins2_ldap_mail_address_attribute_name }}",
+    IdStrategy.CASE_INSENSITIVE,
+    IdStrategy.CASE_INSENSITIVE,
+  )
+
+  instance.setSecurityRealm(ldapRealm)
+  instance.save()
+{% endif %}
+
+{% if jenkins2_security_realm == "active-directory" %}
+  def domain = new hudson.plugins.active_directory.ActiveDirectoryDomain(
+    '{{ jenkins2_active_directory_domain_name }}',
+    '{{ jenkins2_active_directory_domain_controller }}',
+    {{ jenkins2_active_directory_site }},
+    '{{ jenkins2_active_directory_bind_name }}',
+    '{{ jenkins2_active_directory_bind_pass }}'
+  )
+
+  def activeDirectoryRealm = new ActiveDirectorySecurityRealm(
+    null,
+    [domain],
+    null,
+    null,
+    null,
+    null,
+    GroupLookupStrategy.AUTO,
+    {{ jenkins2_active_directory_remove_irrelevant_groups | lower }},
+    null,
+    null,
+    {{ jenkins2_active_directory_start_tls | lower }}
+  )
+
+  instance.setSecurityRealm(activeDirectoryRealm)
+  instance.save()
+{% endif %}
+
+{% if jenkins2_authorization_strategy_configure %}
+  {% if jenkins2_authorization_strategy == "logged-in" %}
+    def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+    strategy.setAllowAnonymousRead({{ jenkins2_authorization_strategy_logged_in_allow_anonymous_read | lower }})
+    instance.setAuthorizationStrategy(strategy)
+    instance.save()
+  {% endif %}
+
+  {% if jenkins2_authorization_strategy == "matrix-based" %}
+    def strategy = new GlobalMatrixAuthorizationStrategy()
+
+    adminPermissions = [
+      "com.cloudbees.plugins.credentials.CredentialsProvider.Create",
+      "com.cloudbees.plugins.credentials.CredentialsProvider.Delete",
+      "com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains",
+      "com.cloudbees.plugins.credentials.CredentialsProvider.Update",
+      "com.cloudbees.plugins.credentials.CredentialsProvider.View",
+      "hudson.model.Computer.Build",
+      "hudson.model.Computer.Configure",
+      "hudson.model.Computer.Connect",
+      "hudson.model.Computer.Create",
+      "hudson.model.Computer.Delete",
+      "hudson.model.Computer.Disconnect",
+      "hudson.model.Hudson.Administer",
+      "hudson.model.Hudson.ConfigureUpdateCenter",
+      "hudson.model.Hudson.Read",
+      "hudson.model.Hudson.RunScripts",
+      "hudson.model.Hudson.UploadPlugins",
+      "hudson.model.Item.Build",
+      "hudson.model.Item.Cancel",
+      "hudson.model.Item.Configure",
+      "hudson.model.Item.Create",
+      "hudson.model.Item.Delete",
+      "hudson.model.Item.Discover",
+      "hudson.model.Item.Move",
+      "hudson.model.Item.Read",
+      "hudson.model.Item.Workspace",
+      "hudson.model.Run.Delete",
+      "hudson.model.Run.Update",
+      "hudson.model.Run.Replay",
+      "hudson.model.View.Configure",
+      "hudson.model.View.Create",
+      "hudson.model.View.Delete",
+      "hudson.model.View.Read",
+      "hudson.scm.SCM.Tag",
+    ]
+
+    adminPermissions.each {
+        strategy.add(Permission.fromId(it), '{{ jenkins2_cli_username }}')
+    }
+
+    instance.setAuthorizationStrategy(strategy)
+    instance.save()
+  {% endif %}
+
+{% endif %}

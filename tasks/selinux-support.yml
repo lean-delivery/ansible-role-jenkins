@@ -1,21 +1,30 @@
 ---
-- name: "Install ansible selinux support library"
+- name: Install ansible selinux support library
   package:
     name: libselinux-python
     state: present
-  become: True
+  register: status
+  until: status is succeeded
+  become: true
 
-- name: "Install ansible selinux configure libraries"
+- name: Install ansible selinux configure libraries
   package:
-    name: "{{ item }}"
+    name:
+      - policycoreutils-python
+      - libsemanage-python
     state: present
-  with_items:
-    - policycoreutils-python
-    - libsemanage-python
-  become: True
-  when: ansible_selinux.status == "enabled"
+  register: status
+  until: status is succeeded
+  become: true
+  when: ansible_selinux.status == 'enabled'
 
-- name: "Enable connections to HTTP port"
-  seport: ports="{{ selinux_ports }}" proto=tcp setype=http_port_t state=present
-  become: True
-  when: ansible_selinux.status == "enabled" and ansible_selinux.mode != "disabled"
+- name: Enable connections to HTTP port
+  seport:
+    ports: '{{ jenkins2_config_http_port }}'
+    proto: tcp
+    setype: http_port_t
+    state: present
+  become: true
+  when:
+    - ansible_selinux.status == 'enabled'
+    - ansible_selinux.mode != 'disabled'

@@ -19,7 +19,7 @@
     <script>node(){
     cleanWs()
     sh &quot;cp -r {{ jenkins2_home_directory }}/{{ jenkins2_seed_job_template }} .&quot;
-    jobDsl ignoreExisting: {{ jenkins2_seed_job_ignore_existing }}, targets: &apos;./{{ jenkins2_seed_job_template }}&apos;
+    jobDsl ignoreExisting: {{ jenkins2_seed_job_ignore_existing | lower }}, targets: &apos;./{{ jenkins2_seed_job_template }}&apos;
 }</script>
     <sandbox>true</sandbox>
   </definition>

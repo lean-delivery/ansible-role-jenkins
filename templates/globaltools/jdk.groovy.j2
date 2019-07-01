@@ -1,0 +1,29 @@
+import jenkins.model.*
+import hudson.model.*
+import hudson.tasks.*
+import hudson.tools.*
+
+def inst = Jenkins.getInstance()
+
+def desc = inst.getDescriptor("hudson.model.JDK")
+
+def versions = [
+{% for version in jenkins2_globaltools_jdk_version %}
+   '{{ version }}': '{{ version }}',
+{% endfor %}
+]
+def installations = [];
+
+def JDKpass = jenkins.model.Jenkins.instance.getDescriptor(hudson.tools.JDKInstaller)
+JDKpass.doPostCredential('{{ jenkins2_globaltools_jdk_cred_user }}', '{{ jenkins2_globaltools_jdk_cred_password }}')
+
+for (v in versions) {
+  def installer = new JDKInstaller(v.value, true)
+  def installerProps = new InstallSourceProperty([installer])
+  def installation = new JDK(v.key, "", [installerProps])
+  installations.push(installation)
+}
+
+desc.setInstallations(installations.toArray(new JDK[0]))
+
+desc.save()

@@ -1,0 +1,26 @@
+import jenkins.model.*
+import hudson.model.*
+import hudson.tasks.*
+import hudson.tools.*
+
+def inst = Jenkins.getInstance()
+
+def desc = inst.getDescriptor("hudson.tasks.Maven")
+
+def versions = [
+{% for version in jenkins2_globaltools_maven_version %}
+   '{{ version }}': '{{ version }}',
+{% endfor %}
+]
+def installations = [];
+
+for (v in versions) {
+  def installer = new Maven.MavenInstaller(v.value)
+  def installerProps = new InstallSourceProperty([installer])
+  def installation = new Maven.MavenInstallation(v.key, "", [installerProps])
+  installations.push(installation)
+}
+
+desc.setInstallations(installations.toArray(new Maven.MavenInstallation[0]))
+
+desc.save()

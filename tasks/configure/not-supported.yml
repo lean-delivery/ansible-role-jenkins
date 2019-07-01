@@ -1,5 +1,6 @@
 ---
-- name: "Warn on unsupported platform"
+- name: Warn on unsupported platform
   debug:
-    msg: "This role does not support '{{ ansible_os_family }}' platform.\
-          Please contact team@lean-delivery.com"
+    msg: |
+      This role does not support '{{ ansible_os_family }}' platform.
+      Please contact team@lean-delivery.com

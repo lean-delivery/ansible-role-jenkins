@@ -1,0 +1,24 @@
+---
+- include_tasks: globaltools/jdk.yml
+  when: jenkins2_globaltools_jdk_enable | bool
+
+- include_tasks: globaltools/maven.yml
+  when: jenkins2_globaltools_maven_enable | bool
+
+- include_tasks: globaltools/gradle.yml
+  when: jenkins2_globaltools_gradle_enable | bool
+
+- include_tasks: globaltools/ant.yml
+  when: jenkins2_globaltools_ant_enable | bool
+
+- include_tasks: globaltools/nodejs.yml
+  when: jenkins2_globaltools_nodejs_enable | bool
+
+- include_tasks: globaltools/sonarscanner.yml
+  when: jenkins2_globaltools_sonarscanner_enable | bool
+
+- include_tasks: globaltools/sonarscannermsbuild.yml
+  when: jenkins2_globaltools_sonarscannermsbuild_enable | bool
+
+- include_tasks: globaltools/docker.yml
+  when: jenkins2_globaltools_docker_enable | bool

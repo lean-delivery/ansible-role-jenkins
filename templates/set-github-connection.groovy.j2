@@ -1,0 +1,15 @@
+
+import jenkins.model.Jenkins
+import org.jenkinsci.plugins.github.config.GitHubPluginConfig
+import org.jenkinsci.plugins.github.config.GitHubServerConfig
+
+def githubConfig = new GitHubServerConfig('{{ jenkins2_github_token_cred }}')
+githubConfig.setName("GitHub")
+githubConfig.setApiUrl('{{ github_external_url }}')
+githubConfig.setManageHooks({{ github_manage_hooks | lower }})
+githubConfig.setClientCacheSize({{ github_client_cache_size }})
+def github = Jenkins.instance.getExtensionList(GitHubPluginConfig.class)[0]
+github.setConfigs([
+  githubConfig,
+])
+github.save()

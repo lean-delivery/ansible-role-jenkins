@@ -1,0 +1,27 @@
+import jenkins.model.*
+import hudson.model.*
+import hudson.tasks.*
+import hudson.tools.*
+import hudson.plugins.sonar.*
+
+def inst = Jenkins.getInstance()
+
+def desc = inst.getDescriptor("hudson.plugins.sonar.MsBuildSQRunnerInstallation")
+
+def versions = [
+{% for version in jenkins2_globaltools_sonarscannermsbuild_version %}
+   '{{ version }}': '{{ version }}',
+{% endfor %}
+]
+def installations = [];
+
+for (v in versions) {
+  def installer = new MsBuildSonarQubeRunnerInstaller(v.value)
+  def installerProps = new InstallSourceProperty([installer])
+  def installation = new MsBuildSQRunnerInstallation(v.key, "", [installerProps])
+  installations.push(installation)
+}
+
+desc.setInstallations(installations.toArray(new MsBuildSQRunnerInstallation[0]))
+
+desc.save()

@@ -6,7 +6,7 @@ NAME={{ jenkins2_user }}
 # arguments to pass to java
 
 # Allow graphs etc. to work even when an X server is present
-JAVA_ARGS="{{ jenkins2_config_java_cmd }}"
+JAVA_ARGS='{{ jenkins2_config_java_cmd }}{{ (jenkins2_permissive_script_enabled | bool) | ternary(" -Dpermissive-script-security.enabled=no_security","") }}'
 
 #JAVA_ARGS="-Xmx256m"
 
@@ -36,7 +36,7 @@ JENKINS_LOG=/var/log/$NAME/$NAME.log
 
 # Whether to enable web access logging or not.
 # Set to "yes" to enable logging to /var/log/$NAME/access_log
-JENKINS_ENABLE_ACCESS_LOG="{{ jenkins2_config_enable_access_log }}"
+JENKINS_ENABLE_ACCESS_LOG='{{ jenkins2_config_enable_access_log }}'
 
 # OS LIMITS SETUP
 #   comment this out to observe /etc/security/limits.conf
@@ -75,8 +75,12 @@ PREFIX=/
 # --argumentsRealm.roles.$ADMIN_USER=admin
 # --webroot=~/.jenkins/war
 # --prefix=$PREFIX
+{% if jenkins2_https_enabled -%}
+JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort={{ jenkins2_config_http_port }} --httpsPort={{ jenkins2_config_https_port }} --httpsKeyStore={{ jenkins2_ssl_key_store }} --httpsKeyStorePassword={{ jenkins2_ssl_key_store_password }}"
+{% else -%}
 {% if jenkins2_config_listen_address != '' -%}
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX --httpListenAddress={{ jenkins2_config_listen_address }}"
 {% else -%}
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX "
+{% endif -%}
 {% endif -%}

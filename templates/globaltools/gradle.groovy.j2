@@ -1,0 +1,27 @@
+import jenkins.model.*
+import hudson.model.*
+import hudson.tasks.*
+import hudson.tools.*
+import hudson.plugins.gradle.*
+
+def inst = Jenkins.getInstance()
+
+def desc = inst.getDescriptor("hudson.plugins.gradle.GradleInstallation")
+
+def versions = [
+{% for version in jenkins2_globaltools_gradle_version %}
+   '{{ version }}': '{{ version }}',
+{% endfor %}
+]
+def installations = [];
+
+for (v in versions) {
+  def installer = new GradleInstaller(v.value)
+  def installerProps = new InstallSourceProperty([installer])
+  def installation = new GradleInstallation(v.key, "", [installerProps])
+  installations.push(installation)
+}
+
+desc.setInstallations(installations.toArray(new GradleInstallation[0]))
+
+desc.save()

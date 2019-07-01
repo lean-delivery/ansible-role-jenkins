@@ -1,0 +1,14 @@
+---
+- name: Configure Security
+  jenkins_script:
+    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+    script: '{{ lookup("template", "configure-security.groovy.j2") }}'
+    user: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
+    validate_certs: false
+    timeout: 120
+  notify:
+    - Restart Jenkins
+
+- name: Force all notified handlers to run
+  meta: flush_handlers

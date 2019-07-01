@@ -12,7 +12,7 @@ import jenkins.model.Jenkins
 
 {% set slaveTemplateList = [] %}
 
-{% for key, value in jenkins2_ec2_ami_list.iteritems() -%}
+{% for key, value in jenkins2_ec2_ami_list.items() -%}
 
   {% set TagList = [] %}
 
@@ -21,19 +21,19 @@ import jenkins.model.Jenkins
     {{ TagList.append( "tag_" + key + "_" + dict_item['name']) }}
   {% endfor %}
 
-  {% if value.SpotConfiguration.enabled == True %}
-    def spotConfig_{{ key }} = new SpotConfiguration("{{ value.SpotConfiguration.spotMaxBidPrice }}")
+  {% if value.SpotConfiguration.enabled == true %}
+     def spotConfig_{{ key }} = new SpotConfiguration({{ value.SpotConfiguration.useBidPrice | lower }}, '{{ value.SpotConfiguration.spotMaxBidPrice }}', {{ value.SpotConfiguration.fallbackToOndemand | lower }}, '{{ value.SpotConfiguration.spotBlockReservationDuration }}')
   {% endif -%}
 
   // https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/SlaveTemplate.java
   SlaveTemplate slaveTemplate_{{ key }} = new SlaveTemplate(
     '{{ value.ami }}',
     '{{ value.zone }}',
-    {{ (value.SpotConfiguration.enabled == True) | ternary("spotConfig_" + key, 'null') }},
+    {{ (value.SpotConfiguration.enabled == true) | ternary("spotConfig_" + key, 'null') }},
     '{{ value.securityGroups }}',
     '{{ value.remoteFS }}',
     InstanceType.fromValue('{{ value.type }}'),
-    {{ value.ebsOptimized }},
+    {{ value.ebsOptimized | lower }},
     '{{ value.labelString }}',
     Node.Mode.NORMAL,
     '{{ value.description }}',
@@ -44,23 +44,23 @@ import jenkins.model.Jenkins
     '{{ value.remoteAdmin }}',
     new UnixData(null, null, null, null),
     '{{ value.jvmopts }}',
-    {{ value.stopOnTerminate }},
+    {{ value.stopOnTerminate | lower }},
     '{{ value.subnetId }}',
     [{{ TagList | join(",") }}],
     '{{ value.idleTerminationMinutes }}',
-    {{ value.usePrivateDnsName }},
+    {{ value.usePrivateDnsName | lower }},
     '{{ value.instanceCapStr }}',
     '{{ value.iamInstanceProfile }}',
-    {{ value.deleteRootOnTermination }},
-    {{ value.useEphemeralDevices }},
-    {{ value.useDedicatedTenancy }},
+    {{ value.deleteRootOnTermination | lower }},
+    {{ value.useEphemeralDevices | lower }},
+    {{ value.useDedicatedTenancy | lower }},
     '{{ value.launchTimeoutStr }}',
-    {{ value.associatePublicIp }},
+    {{ value.associatePublicIp | lower }},
     '{{ value.customDeviceMapping }}',
-    {{ value.connectBySSHProcess }},
-    {{ value.connectUsingPublicIp }},
-    {{ value.monitoring }},
-    {{ value.t2Unlimited }}
+    {{ value.connectBySSHProcess | lower }},
+    {{ value.connectUsingPublicIp | lower }},
+    {{ value.monitoring | lower }},
+    {{ value.t2Unlimited | lower }}
   )
 
 {{ slaveTemplateList.append( "slaveTemplate_" + key) }}
@@ -70,7 +70,7 @@ import jenkins.model.Jenkins
 // https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/AmazonEC2Cloud.java
 AmazonEC2Cloud amazonEC2Cloud = new AmazonEC2Cloud(
   '{{ jenkins2_ec2_cloud_parameters.cloud_name }}',
-  {{ jenkins2_ec2_cloud_parameters.use_instance_profile_for_credentials }},
+  {{ jenkins2_ec2_cloud_parameters.use_instance_profile_for_credentials | lower }},
   '{{ jenkins2_ec2_cloud_parameters.credentials_id }}',
   '{{ jenkins2_ec2_cloud_parameters.region }}',
   '''{{ jenkins2_ec2_cloud_parameters.private_key }}''',
