@@ -9,7 +9,7 @@ Jenkins 2 installation
 ## Summary
 
 This role:
-  - installs jenkins2 on Ununtu, Centos7, RHEL7
+  - installs jenkins2 on Ubuntu, Centos7, RHEL7
   - make minimal configuration (e.g. smtp config, plugins install)
 
 Role tasks
@@ -183,6 +183,11 @@ Requirements
      default: `2000`
   - `jenkins2_plugins_list` - list of plugins (will be merged with suggested list)   
      default: `[]`
+  - `jenkins2_plugins_version` - Enable to specifie version numbers. All plugin dependencies must be provided in jenkins2_plugins_dict.   
+     default: `false`
+  - `jenkins2_plugins_dict` - dict of plugins used instead of lists if version enabled. Quote the version to prevent the value to be interpreted as float. Example: `ssh-slaves: '1.30.0'`
+     default: `{}`
+jenkins2_plugins_version: false
 # credentials configuration
   - `jenkins2_credentials_enabled` - to add credentials   
      default: `true`
