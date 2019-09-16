@@ -78,6 +78,7 @@ jenkins2_smtp_port: '587'
 jenkins2_smtp_host: 'smtp.office365.com'
 # Plugin installation
 jenkins2_plugins_timeout: 2000
+jenkins2_plugins_version: false
 jenkins2_plugins_suggested:
   - ant
   - antisamy-markup-formatter
@@ -116,6 +117,7 @@ jenkins2_plugins_suggested:
   - active-directory
   - permissive-script-security
 jenkins2_plugins_list: []
+jenkins2_plugins_dict: {}
 
 # Set Credentials
 jenkins2_credentials_enabled: true

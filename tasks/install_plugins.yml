@@ -22,17 +22,20 @@
     url: 'http://localhost:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
-    name: '{{ item }}'
+    name: '{{ item.key | default(item) }}'
+    version: '{{ item.value | default(omit) }}'
     owner: '{{ jenkins2_user }}'
     validate_certs: false
     jenkins_home: '{{ jenkins2_home_directory }}'
     state: present
     timeout: '{{ jenkins2_plugins_timeout }}'
   register: my_jenkins_plugins
+  until: my_jenkins_plugins is succeeded
   retries: 10
   delay: 3
   with_items:
-    - '{{ (jenkins2_plugins_suggested | union(jenkins2_plugins_list)) | unique }}'
+    - '{{ (jenkins2_plugins_dict | dict2items) if jenkins2_plugins_version else
+          (jenkins2_plugins_suggested | union(jenkins2_plugins_list) | unique) }}'
   become: true
   notify:
     - Restart Jenkins
