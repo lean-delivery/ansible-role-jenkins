@@ -7,4 +7,3 @@ def instance = Jenkins.getInstance()
 def Crumbinst = Jenkins.instance
 instance.setInstallState(InstallState.INITIAL_SETUP_COMPLETED)
 Crumbinst.setCrumbIssuer(new DefaultCrumbIssuer(false))
-Crumbinst.save()
