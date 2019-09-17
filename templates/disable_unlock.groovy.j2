@@ -1,9 +1,10 @@
-import hudson.security.csrf.DefaultCrumbIssuer
 import jenkins.model.*
 import hudson.util.*
 import jenkins.install.*
+import hudson.security.csrf.DefaultCrumbIssuer
 
 def instance = Jenkins.getInstance()
+def Crumbinst = Jenkins.instance
 instance.setInstallState(InstallState.INITIAL_SETUP_COMPLETED)
-instance.setCrumbIssuer(new DefaultCrumbIssuer(false))
-instance.save()
+Crumbinst.setCrumbIssuer(new DefaultCrumbIssuer(false))
+Crumbinst.save()
