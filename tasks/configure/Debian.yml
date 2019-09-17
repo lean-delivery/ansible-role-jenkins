@@ -20,14 +20,14 @@
     state: directory
   become: true
 
-- name: Add script for unlock disabling
-  template:
-    src: 'disable_unlock.groovy.j2'
-    dest: '{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy'
-    owner: '{{ jenkins2_user }}'
-    group: '{{ jenkins2_user }}'
-    mode: 0744
-  become: true
+# - name: Add script for unlock disabling
+#   template:
+#     src: 'disable_unlock.groovy.j2'
+#     dest: '{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy'
+#     owner: '{{ jenkins2_user }}'
+#     group: '{{ jenkins2_user }}'
+#     mode: 0744
+#   become: true
 
 - name: Create directory for user
   file:
