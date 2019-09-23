@@ -18,7 +18,7 @@
 - name: Wait for Jenkins
   uri:
     url: >-
-      http://{{ ansible_default_ipv4.address }}:{{ jenkins2_config_http_port }}
+      http://{{ inventory_hostname }}:{{ jenkins2_config_http_port }}
       {{ jenkins2_context_path | default("") }}/login
     status_code: 200
   register: login_page
@@ -36,7 +36,7 @@
 - name: Wait for Jenkins with HTTPS
   uri:
     url: >-
-      https://{{ ansible_default_ipv4.address }}:{{ jenkins2_config_https_port }}
+      https://{{ inventory_hostname }}:{{ jenkins2_config_https_port }}
       {{ jenkins2_context_path | default("") }}/login
     status_code: 200
     validate_certs: false
