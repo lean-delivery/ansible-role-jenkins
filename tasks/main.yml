@@ -71,7 +71,7 @@
     name: '{{ jenkins2_package_version }}'
     state: present
   register: jenkins_was_installed
-  until: jenkins_was_installed is success
+  until: jenkins_was_installed is succeeded
   become: true
 
 - name: Jenkins confuguration
@@ -81,7 +81,9 @@
     - 'configure/not-supported.yml'
   loop_control:
     loop_var: platform
-  when: jenkins_was_installed is defined and jenkins_was_installed is changed
+  when:
+    - jenkins_was_installed is defined
+    - jenkins_was_installed.changed | bool
 
 - include_tasks: install_plugins.yml
   when: jenkins_was_installed is defined | bool
