@@ -9,6 +9,8 @@
         url: http://0.0.0.0:8080
         return_content: true
         validate_certs: false
+        user: admin
+        password: admin
       register: uri_result
 
     # - name: Check content
