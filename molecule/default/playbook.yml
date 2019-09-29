@@ -1,18 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  pre_tasks:
-    - name: debug ansible_host
-      debug:
-        var: ansible_host
-
-    - name: debug ansible_hostname
-      debug:
-        var: ansible_hostname
-
-    - name: debug inventory_hostname
-      debug:
-        var: inventory_hostname
   roles:
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: true

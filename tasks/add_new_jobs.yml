@@ -25,6 +25,7 @@
 
 - name: Run Seed Job
   jenkins_script:
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}:{{ jenkins2_config_http_port }}'
     script: '{{ lookup("template", "run_seed_job.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
