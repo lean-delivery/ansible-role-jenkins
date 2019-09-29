@@ -18,7 +18,7 @@
 - name: Wait for Jenkins
   uri:
     url: >-
-      {{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}:{{ jenkins2_config_http_port }}
+      {{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}
       {{ jenkins2_context_path | default("") }}/login
     status_code: 200
   register: login_page

@@ -1,7 +1,7 @@
 ---
 - name: Global Tool Configuration - Gradle
   jenkins_script:
-    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}:{{ jenkins2_config_http_port }}'
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}'
     script: '{{ lookup("template", "globaltools/gradle.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
