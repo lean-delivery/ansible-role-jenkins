@@ -18,7 +18,7 @@ jenkins2_config_java_options: >-
 
 #{{ solr_proto }}://{{ solr_host }}:{{ solr_port }}
 jenkins2_config_http_port: 8080
-jenkins2_config_listen_address: ''
+jenkins2_config_listen_address: '{{ ansible_host }}'
 jenkins2_config_debug_level: 5
 jenkins2_config_enable_access_log: 'no'
 jenkins2_config_handler_max: 100
@@ -41,7 +41,7 @@ jenkins2_local_keystore_path: '{{ role_path }}/files/{{ jenkins2_ssl_key_store_n
 jenkins2_ssl_configure: true
 jenkins2_ssl_key_store_name: jenkins2-ssl.keystore.jks
 jenkins2_ssl_key_size: 4096
-jenkins2_ssl_key_store_password: 123456
+jenkins2_ssl_key_store_password: '123456'
 jenkins2_ssl_key_store: '{{ jenkins2_home_directory }}/{{ jenkins2_ssl_key_store_name }}'
 # https://docs.ansible.com/ansible/latest/openssl_certificate_module.html
 jenkins2_ssl_certificate_provider: selfsigned
