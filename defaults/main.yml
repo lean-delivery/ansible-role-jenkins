@@ -16,6 +16,7 @@ jenkins2_config_java_options: >-
   -Djava.awt.headless=true -Djenkins.install.runSetupWizard=false
   -Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_
 
+#{{ solr_proto }}://{{ solr_host }}:{{ solr_port }}
 jenkins2_config_http_port: 8080
 jenkins2_config_listen_address: ''
 jenkins2_config_debug_level: 5

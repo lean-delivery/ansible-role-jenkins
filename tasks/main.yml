@@ -132,6 +132,7 @@
 - name: Disable insecure connection
   set_fact:
     jenkins2_config_http_port: '-1'
+    jenkins2_config_proto: https
   when: jenkins2_http_disabled | bool
 
 - name: Apply Jenkins configuration file and check HTTPS

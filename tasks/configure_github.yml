@@ -1,7 +1,7 @@
 ---
 - name: Configure Github
   jenkins_script:
-    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}{{ jenkins2_config_http_port }}'
     script: '{{ lookup("template", "set-github-connection.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
