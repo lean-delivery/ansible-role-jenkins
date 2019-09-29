@@ -2,4 +2,4 @@
 # vars file for jenkins
 jenkins2_config_proto: http
 jenkins2_host_address: >-
-  {{ (jenkins2_config_listen_address | length) | ternary('0.0.0.0','jenkins2_config_listen_address') }}
+  {{ (jenkins2_config_listen_address | length) | ternary('localhost',jenkins2_config_listen_address) }}
