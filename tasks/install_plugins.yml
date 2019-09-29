@@ -1,7 +1,7 @@
 ---
 - name: Proxy Configuration
   jenkins_script:
-    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}{{ jenkins2_config_http_port }}'
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}:{{ jenkins2_config_http_port }}'
     script: '{{ lookup("template", "proxy_configuration.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
@@ -10,7 +10,7 @@
 
 - name: Update Center Refresh
   jenkins_script:
-    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}{{ jenkins2_config_http_port }}'
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}:{{ jenkins2_config_http_port }}'
     script: '{{ lookup("template", "update_center_refresh.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
@@ -19,7 +19,7 @@
 
 - name: Install Jenkins plugins
   jenkins_plugin:
-    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}{{ jenkins2_config_http_port }}'
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_config_listen_address }}:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
     name: '{{ item.key | default(item) }}'
