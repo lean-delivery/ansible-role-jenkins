@@ -18,7 +18,7 @@ jenkins2_config_java_options: >-
 
 #{{ solr_proto }}://{{ solr_host }}:{{ solr_port }}
 jenkins2_config_http_port: 8080
-jenkins2_config_listen_address: '{{ ansible_host }}'
+jenkins2_config_listen_address: ''
 jenkins2_config_debug_level: 5
 jenkins2_config_enable_access_log: 'no'
 jenkins2_config_handler_max: 100
