@@ -6,7 +6,7 @@
 
 - name: Install requirements
   package:
-    name: '{{ requirements }}'
+    name: '{{ jenkins_requirements }}'
     state: present
   register: status
   until: status is succeeded

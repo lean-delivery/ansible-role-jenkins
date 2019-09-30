@@ -74,6 +74,18 @@
   until: jenkins_was_installed is succeeded
   become: true
 
+- name: Apply Jenkins configuration file
+  template:
+    src: '{{ ansible_os_family }}_configuration.j2'
+    dest: '{{ jenkins_config_service_path }}'
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  become: true
+  notify:
+    - Restart Jenkins
+
 - name: Jenkins confuguration
   include_tasks: '{{ platform }}'
   with_first_found:
