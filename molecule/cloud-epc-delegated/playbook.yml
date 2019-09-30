@@ -1,17 +1,7 @@
 ---
-- name: Force gathering facts
-  hosts: all
-  gather_facts: true
-  roles: []
-
 - name: Converge
   hosts: all
   roles:
-    - role: lean_delivery.java
-      java_major_version: 8
-      java_package: 'jdk'
-      transport: repositories
-      java_tarball_install: false
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: true
       jenkins2_pipeline_libraries_url: 'https://example.com/example.git'

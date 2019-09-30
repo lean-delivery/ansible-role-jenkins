@@ -71,8 +71,20 @@
     name: '{{ jenkins2_package_version }}'
     state: present
   register: jenkins_was_installed
-  until: jenkins_was_installed is success
+  until: jenkins_was_installed is succeeded
   become: true
+
+- name: Apply Jenkins configuration file
+  template:
+    src: '{{ ansible_os_family }}_configuration.j2'
+    dest: '{{ jenkins_config_service_path }}'
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  become: true
+  notify:
+    - Restart Jenkins
 
 - name: Jenkins confuguration
   include_tasks: '{{ platform }}'
@@ -81,7 +93,9 @@
     - 'configure/not-supported.yml'
   loop_control:
     loop_var: platform
-  when: jenkins_was_installed is defined and jenkins_was_installed is changed
+  when:
+    - jenkins_was_installed is defined
+    - jenkins_was_installed.changed | bool
 
 - include_tasks: install_plugins.yml
   when: jenkins_was_installed is defined | bool
@@ -132,6 +146,7 @@
 - name: Disable insecure connection
   set_fact:
     jenkins2_config_http_port: '-1'
+    jenkins2_config_proto: https
   when: jenkins2_http_disabled | bool
 
 - name: Apply Jenkins configuration file and check HTTPS

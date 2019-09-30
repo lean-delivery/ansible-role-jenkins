@@ -42,7 +42,7 @@ AWS jenkins:
   tags:
     - aws
 
-.EPC jenkins:
+EPC jenkins:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test

@@ -30,7 +30,9 @@ Requirements
      - 7
    - RHEL
      - 7
-   - Ubuntu
+   - Amazon Linux 2
+   - Ubuntu 18
+   - Debian 9
 
 ## Role Variables
 --------------
