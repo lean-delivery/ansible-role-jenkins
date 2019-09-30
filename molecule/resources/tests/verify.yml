@@ -11,10 +11,10 @@
         validate_certs: false
       register: uri_result
 
-    # - name: Check content
-    #   assert:
-    #     that:
-    #       - "'Loading...' in uri_result.content"
+    - name: Check content
+      assert:
+        that:
+          - "'Welcome to Jenkins!' in uri_result.content"
 
     - name: debug uri_result
       debug:
