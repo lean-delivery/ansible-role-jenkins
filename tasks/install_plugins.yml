@@ -4,11 +4,18 @@
     url: "{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}\
           /crumbIssuer/api/json"
     return_content: true
+    user: '{{ jenkins2_cli_username }}'
+    password: '{{ jenkins2_cli_password }}'
+    validate_certs: false
   register: crumb_request
 
 - name: Debug crumb_request
   debug:
     var: crumb_request
+
+- name: Debug crumb
+  debug:
+    var: crumb_request.json.crumb
 
 - name: Proxy Configuration
   jenkins_script:
