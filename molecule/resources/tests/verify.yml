@@ -16,6 +16,6 @@
         that:
           - "'Welcome to Jenkins!' in uri_result.content"
 
-    - name: debug uri_result
+    - name: Show Jenkins version
       debug:
-        var: uri_result
+        var: uri_result.x_jenkins
