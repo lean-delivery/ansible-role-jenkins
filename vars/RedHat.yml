@@ -1,5 +1,6 @@
 ---
-requirements:
+jenkins_config_service_path: /etc/sysconfig/jenkins
+jenkins_requirements:
   - gcc
   - python-devel
   - openssl-devel

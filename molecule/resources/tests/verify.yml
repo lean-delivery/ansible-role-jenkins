@@ -1,0 +1,21 @@
+---
+
+- name: Verify
+  hosts: all
+  tasks:
+
+    - name: Check url
+      uri:
+        url: 'http://{{ ansible_host }}:8080/login'
+        return_content: true
+        validate_certs: false
+      register: uri_result
+
+    - name: Check content
+      assert:
+        that:
+          - "'Welcome to Jenkins!' in uri_result.content"
+
+    - name: Show Jenkins version
+      debug:
+        var: uri_result.x_jenkins

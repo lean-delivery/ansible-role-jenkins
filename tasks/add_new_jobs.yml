@@ -20,11 +20,12 @@
     name: '{{ jenkins2_seed_job_name }}'
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
-    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}'
   when: dsl_copied | bool
 
 - name: Run Seed Job
   jenkins_script:
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}'
     script: '{{ lookup("template", "run_seed_job.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
@@ -37,6 +38,6 @@
     name: '{{ jenkins2_seed_job_name }}'
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
-    url: 'http://localhost:{{ jenkins2_config_http_port }}'
+    url: '{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}'
     enabled: false
   when: dsl_copied | bool
