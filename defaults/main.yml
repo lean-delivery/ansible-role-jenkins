@@ -489,3 +489,6 @@ jenkins2_authorization_strategy_logged_in_allow_anonymous_read: false
 
 # Permissive script plugin
 jenkins2_permissive_script_enabled: true
+
+pip_executable: '{{ jenkins_default_pip_executable }}'
+python_executable: '{{ jenkins_default_python_executable }}'

@@ -4,7 +4,7 @@ sudo: required
 
 language: python
 python:
-  - "3.7.1"
+  - "3.7"
 
 services:
   - docker
@@ -13,8 +13,9 @@ before_install:
   - git clone https://github.com/lean-delivery/ansible-lint-rules.git ~/ansible-lint-rules
 
 install:
-  - pip install --upgrade ansible==2.8.* docker molecule==2.22
-  - pip install git+https://github.com/ansible/ansible-lint.git
+  - pip3 install --upgrade ansible==2.8.* docker
+  - pip3 install molecule==2.22
+  - pip3 install git+https://github.com/ansible/ansible-lint.git
   - git clone https://github.com/lean-delivery/ansible-molecule-drivers.git molecule/resources/provisioning
   - ansible --version
   - ansible-lint --version

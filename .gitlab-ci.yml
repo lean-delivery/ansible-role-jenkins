@@ -1,5 +1,9 @@
 ---
 # Run all tests
+default:
+  image:
+    name: leandelivery/docker-ansible-ci:ansible-2.8
+
 stages:
   - lint
   - deployment test
@@ -42,7 +46,14 @@ AWS jenkins:
   tags:
     - aws
 
-EPC jenkins:
+AZURE jenkins:
+  stage: deployment test
+  script:
+    - molecule test -s cloud-azure-direct
+  tags:
+    - azure
+
+.EPC jenkins:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test

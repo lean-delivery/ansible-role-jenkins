@@ -17,9 +17,10 @@
       - python-jenkins
       - lxml
       - awscli
-      - pip
+      # - '{{ pip_executable | default("pip") }}'
     state: present
     extra_args: --upgrade
+    executable: '{{ pip_executable | default("pip") }}'
   register: installed_packages
   until: installed_packages is success
   become: true

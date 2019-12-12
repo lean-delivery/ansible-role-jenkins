@@ -24,6 +24,7 @@ platforms:
     ssh_user: centos
     groups:
       - rhel_family
+      - pip2
 
   - name: test-aws-Amazon2-jenkins
     image: ami-0b898040803850657
@@ -39,6 +40,7 @@ platforms:
     ssh_user: ec2-user
     groups:
       - rhel_family
+      - pip2
 
   - name: test-aws-ubuntu16-jenkins
     image: ami-09677e0a6b14905b0
@@ -54,6 +56,7 @@ platforms:
     ssh_user: ubuntu
     groups:
       - debian_family
+      - pip3
 
   - name: test-aws-ubuntu18-jenkins
     image: ami-012fd5eb46f56731f
@@ -69,6 +72,7 @@ platforms:
     ssh_user: ubuntu
     groups:
       - debian_family
+      - pip3
 
   - name: test-aws-Debian9-jenkins
     image: ami-003f19e0e687de1cd
@@ -84,13 +88,23 @@ platforms:
     ssh_user: admin
     groups:
       - debian_family
+      - pip3
 
 provisioner:
   name: ansible
-  log: false
+  log: true
   config_options:
     defaults:
       callback_whitelist: profile_tasks,timer
+  inventory:
+    group_vars:
+      pip2:
+        pip_executable: pip
+        python_executable: python
+      pip3:
+        pip_executable: pip3
+        python_executable: python3
+        ansible_python_interpreter: /usr/bin/python3
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/prepare.yml

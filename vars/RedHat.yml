@@ -1,4 +1,7 @@
 ---
+jenkins_default_pip_executable: pip
+jenkins_default_python_executable: python
+
 jenkins_config_service_path: /etc/sysconfig/jenkins
 jenkins_requirements:
   - gcc
@@ -6,10 +9,10 @@ jenkins_requirements:
   - openssl-devel
   - openssh-clients
   - git
-  - python2-pip
   - net-tools
   - wget
   - lsof
   - python
   - unzip
   - openssl
+  - '{{ python_executable | default("python") }}-pip'

@@ -15,6 +15,7 @@ platforms:
     privileged: true
     groups:
       - rhel_family
+      - pip2
   - name: test-docker-ubuntu1804-jenkins
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: true
@@ -29,14 +30,27 @@ platforms:
       - SYS_ADMIN
     groups:
       - debian_family
+      - pip3
 provisioner:
   name: ansible
   log: true
+  lint:
+    name: ansible-lint
+  config_options:
+    defaults:
+      callback_whitelist: profile_tasks,timer
+  inventory:
+    group_vars:
+      pip2:
+        pip_executable: pip
+        python_executable: python
+      pip3:
+        pip_executable: pip3
+        python_executable: python3
+        ansible_python_interpreter: /usr/bin/python3
   playbooks:
     prepare: ../resources/prepare.yml
     verify: ../resources/tests/verify.yml
-  lint:
-    name: ansible-lint
 scenario:
   name: default
 verifier:
