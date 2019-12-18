@@ -16,6 +16,7 @@
       - python-gitlab
       - python-jenkins
       - awscli
+      - lxml
     state: present
     extra_args: --upgrade
     executable: '{{ pip_executable | default("pip") }}'
