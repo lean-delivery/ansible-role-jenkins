@@ -15,9 +15,7 @@
       - pyOpenSSL
       - python-gitlab
       - python-jenkins
-      - lxml
       - awscli
-      # - '{{ pip_executable | default("pip") }}'
     state: present
     extra_args: --upgrade
     executable: '{{ pip_executable | default("pip") }}'

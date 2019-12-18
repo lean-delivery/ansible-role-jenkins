@@ -1,0 +1,17 @@
+#!groovy
+import jenkins.model.Jenkins
+
+def script = """node(){
+    cleanWs()
+    sh "cp -r {{ jenkins2_home_directory }}/{{ jenkins2_seed_job_template }} ."
+    jobDsl ignoreExisting: {{ jenkins2_seed_job_ignore_existing | lower }}, targets: './{{ jenkins2_seed_job_template }}'
+}
+"""
+
+Jenkins jenkins = Jenkins.getInstance()
+def flowDefinition = new org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition(script, true)
+def job = new org.jenkinsci.plugins.workflow.job.WorkflowJob(jenkins,'{{ jenkins2_seed_job_name }}')
+job.definition = flowDefinition
+job.setDescription("Seed Job")
+jenkins.save()
+jenkins.reload()

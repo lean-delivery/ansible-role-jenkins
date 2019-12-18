@@ -15,9 +15,8 @@
     dsl_copied: '{{ dsl_file_copied.changed }}'
 
 - name: Create seed job
-  jenkins_job:
-    config: '{{ lookup("template", "seedJob.xml.j2") }}'
-    name: '{{ jenkins2_seed_job_name }}'
+  jenkins_script:
+    script: '{{ lookup("template", "seedJob.groovy.j2") }}'
     password: '{{ jenkins2_cli_password }}'
     user: '{{ jenkins2_cli_username }}'
     url: '{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}'
