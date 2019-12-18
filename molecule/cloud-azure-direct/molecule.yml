@@ -21,6 +21,7 @@ platforms:
     az_network_security_group: epm-ldi-northeurope-sg
     groups:
       - rhel_family
+      - pip
 
   - name: test-azure-ubuntu16-jenkins
     platform: ubuntu16
@@ -33,6 +34,7 @@ platforms:
     az_network_security_group: epm-ldi-northeurope-sg
     groups:
       - debian_family
+      - pip3
 
   - name: test-azure-ubuntu18-jenkins
     platform: ubuntu18
@@ -45,6 +47,7 @@ platforms:
     az_network_security_group: epm-ldi-northeurope-sg
     groups:
       - debian_family
+      - pip3
 
   - name: test-azure-Debian9-jenkins
     platform: debian9
@@ -57,6 +60,7 @@ platforms:
     az_network_security_group: epm-ldi-northeurope-sg
     groups:
       - debian_family
+      - pip3
 
 provisioner:
   name: ansible
@@ -64,6 +68,15 @@ provisioner:
   config_options:
     defaults:
       callback_whitelist: profile_tasks,timer
+  inventory:
+    group_vars:
+      pip2:
+        pip_executable: pip
+        python_executable: python
+      pip3:
+        pip_executable: pip3
+        python_executable: python3
+        ansible_python_interpreter: /usr/bin/python3
   playbooks:
     create: ../resources/provisioning/AZURE/create.yml
     prepare: ../resources/provisioning/AZURE/prepare.yml
