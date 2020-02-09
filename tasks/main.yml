@@ -20,6 +20,7 @@
       - pip
     state: present
     extra_args: --upgrade
+    executable: 'pip{{ ansible_facts.python.version.major }}'
   register: installed_packages
   until: installed_packages is success
   become: true

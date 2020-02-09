@@ -2,14 +2,13 @@
 jenkins_config_service_path: /etc/sysconfig/jenkins
 jenkins_requirements:
   - gcc
-  - python-devel
+  - python{{ ansible_facts.python.version.major }}-devel
   - openssl-devel
   - openssh-clients
   - git
-  - python2-pip
+  - python{{ ansible_facts.python.version.major }}-pip
   - net-tools
   - wget
   - lsof
-  - python
   - unzip
   - openssl

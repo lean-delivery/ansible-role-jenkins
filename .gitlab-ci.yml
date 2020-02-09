@@ -24,9 +24,9 @@ Lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
-Docker jenkins:
+.Docker jenkins:
   stage: deployment test
   script:
     - molecule test -s default
@@ -41,12 +41,3 @@ AWS jenkins:
     - molecule test -s cloud-aws-direct
   tags:
     - aws
-
-EPC jenkins:
-  variables:
-    EPC_REGION: EPAM-BY2
-  stage: deployment test
-  script:
-    - molecule test -s cloud-epc-delegated
-  tags:
-    - delegated
