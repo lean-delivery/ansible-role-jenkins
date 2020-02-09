@@ -1,42 +1,60 @@
 ---
 # tasks file for ansible-role-jenkins
-- name: Choose platform based task
-  include_tasks: '{{ platform }}'
+- name: Include variables
+  include_vars: '{{ os_distribution_type }}'
   with_first_found:
-    - 'system/{{ ansible_os_family }}.yml'
-    - 'system/not-supported.yml'
+    - files:
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+      errors: ignore
   loop_control:
-    loop_var: platform
+    loop_var: os_distribution_type
 
-- name: Install pip packages
-  pip:
-    name:
-      - jira
-      - pyOpenSSL
-      - python-gitlab
-      - python-jenkins
-      - lxml
-      - awscli
-      - pip
-    state: present
-    extra_args: --upgrade
-    executable: 'pip{{ ansible_facts.python.version.major }}'
-  register: installed_packages
-  until: installed_packages is success
-  become: true
 
-- name: Create group
-  group:
-    name: '{{ jenkins2_user | default("jenkins") }}'
-    state: present
-  become: true
+- name: Prepare
+  block:
+    - name: Add epel repository
+      yum:
+        name: '{{ jenkins_epel_url }}'
+        state: present
+      register: install_repo
+      until: install_repo is succeeded
+      when: ansible_os_family == 'RedHat'
 
-- name: Create user
-  user:
-    name: '{{ jenkins2_user | default("jenkins") }}'
-    group: '{{ jenkins2_user | default("jenkins") }}'
-    shell: /bin/bash
-    home: '{{ jenkins2_home_directory }}'
+    - name: Install requirements
+      package:
+        name: '{{ jenkins_requirements }}'
+        state: present
+      register: status
+      until: status is succeeded
+
+    - name: Install pip packages
+      pip:
+        name:
+          - jira
+          - pyOpenSSL
+          - python-gitlab
+          - python-jenkins
+          - lxml
+          - awscli
+          - pip
+        state: present
+        extra_args: --upgrade
+        executable: 'pip{{ ansible_facts.python.version.major }}'
+      register: installed_packages
+      until: installed_packages is success
+
+    - name: Create group
+      group:
+        name: '{{ jenkins2_user | default("jenkins") }}'
+        state: present
+
+    - name: Create user
+      user:
+        name: '{{ jenkins2_user | default("jenkins") }}'
+        group: '{{ jenkins2_user | default("jenkins") }}'
+        shell: /bin/bash
+        home: '{{ jenkins2_home_directory }}'
   become: true
 
 - name: SSL preparation

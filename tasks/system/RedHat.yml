@@ -1,9 +1,4 @@
 ---
-- name: Load a variables
-  include_vars: '{{ item }}'
-  with_first_found:
-    - '{{ ansible_os_family }}.yml'
-
 - name: Become section
   block:
     - name: Enable EPEL repository
