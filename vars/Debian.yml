@@ -2,6 +2,8 @@
 jenkins_config_service_path: /etc/default/jenkins
 jenkins_python_dev_package: >-
   {{ (ansible_facts.python.version.major|int ==3 ) | ternary('python3-dev', 'python-dev') }}
+jenkins_python_pip_package: >-
+  {{ (ansible_facts.python.version.major|int ==3 ) | ternary('python3-pip', 'python-pip') }}
 jenkins_requirements:
   - gcc
   - openssl
@@ -12,6 +14,6 @@ jenkins_requirements:
   - net-tools
   - wget
   - lsof
-  - 'python{{ ansible_facts.python.version.major }}-pip'
+  - '{{ jenkins_python_pip_package }}'
   - unzip
   - openssl
