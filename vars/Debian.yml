@@ -1,9 +1,11 @@
 ---
 jenkins_config_service_path: /etc/default/jenkins
+jenkins_python_dev_package: >-
+  {{ (ansible_facts.python.version.major|int ==3 ) | ternary(python3-dev, python-dev) }}
 jenkins_requirements:
   - gcc
   - openssl
-  - 'python{{ ansible_facts.python.version.major }}-dev'
+  - '{{ jenkins_python_dev_package }}'
   - libssl-dev
   - openssh-client
   - git

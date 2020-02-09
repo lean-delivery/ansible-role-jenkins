@@ -1,8 +1,6 @@
 ---
-- name: Install requirements
-  package:
-    name: '{{ jenkins_requirements }}'
+- name: add universe repository for bionic
+  apt_repository: 
+    repo: deb http://archive.ubuntu.com/ubuntu bionic universe
     state: present
-  register: status
-  until: status is succeeded
   become: true

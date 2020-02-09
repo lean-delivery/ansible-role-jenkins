@@ -1,17 +1,8 @@
 ---
-- name: Become section
-  block:
-    - name: Enable EPEL repository
-      yum:
-        name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
-        state: present
-      register: status
-      until: status is succeeded
-
-    - name: Install requirements
-      package:
-        name: '{{ jenkins_requirements }}'
-        state: present
-      register: status
-      until: status is succeeded
+- name: Enable EPEL repository
+  yum:
+    name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
+    state: present
+  register: status
+  until: status is succeeded
   become: true

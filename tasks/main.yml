@@ -11,16 +11,17 @@
     loop_var: os_distribution_type
 
 
+- name: Choose platform based task
+  include_tasks: '{{ platform }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_os_family }}.yml'
+      errors: ignore
+  loop_control:
+    loop_var: platform
+
 - name: Prepare
   block:
-    - name: Add epel repository
-      yum:
-        name: '{{ jenkins_epel_url }}'
-        state: present
-      register: install_repo
-      until: install_repo is succeeded
-      when: ansible_os_family == 'RedHat'
-
     - name: Install requirements
       package:
         name: '{{ jenkins_requirements }}'
