@@ -1,7 +1,7 @@
 ---
 - name: Enable EPEL repository
   yum:
-    name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm'
+    name: '{{ jenkins_epel_url }}'
     state: present
   register: status
   until: status is succeeded

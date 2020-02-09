@@ -15,7 +15,7 @@
   include_tasks: '{{ platform }}'
   with_first_found:
     - files:
-        - '{{ ansible_os_family }}.yml'
+        - 'system/{{ ansible_os_family }}.yml'
       errors: ignore
   loop_control:
     loop_var: platform
