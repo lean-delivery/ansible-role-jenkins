@@ -34,7 +34,6 @@
         name:
           - jira
           - pyOpenSSL
-          - python-gitlab
           - python-jenkins
           - lxml
           - awscli
