@@ -39,8 +39,7 @@
   become: true
   async: 3600
   poll: 0
-  notify:
-    - Restart Jenkins
+  changed_when: false
 
 - name: debug my_jenkins_plugins
   debug:
@@ -50,11 +49,13 @@
   async_status:
     jid: '{{ item.ansible_job_id }}'
   loop: '{{ my_jenkins_plugins.results }}'
-  become: true
   register: plugin_install
   until: plugin_install.finished
-  delay: 1
-  retries: 30
+  delay: 2
+  retries: 5
+  become: true
+  notify:
+    - Restart Jenkins
 
 - name: Force all notified handlers to run
   meta: flush_handlers
