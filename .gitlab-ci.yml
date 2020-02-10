@@ -39,6 +39,6 @@ AWS jenkins:
     AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule test -s clowd-aws-direct
+    - molecule test -s cloud-aws-direct
   tags:
     - aws
