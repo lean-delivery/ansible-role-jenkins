@@ -29,15 +29,15 @@
       register: status
       until: status is succeeded
 
-    - name: Upgrade pip
-      pip:
-        name:
-          - pip
-        state: present
-        extra_args: --upgrade
-        executable: 'pip{{ ansible_facts.python.version.major }}'
-      register: installed_packages
-      until: installed_packages is success
+    # - name: Upgrade pip
+    #   pip:
+    #     name:
+    #       - pip
+    #     state: present
+    #     extra_args: --upgrade
+    #     executable: 'pip{{ ansible_facts.python.version.major }}'
+    #   register: installed_packages
+    #   until: installed_packages is success
 
     - name: Install pip packages
       pip:

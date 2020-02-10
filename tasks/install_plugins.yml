@@ -42,6 +42,10 @@
   notify:
     - Restart Jenkins
 
+- name: debug my_jenkins_plugins
+  debug:
+    var: my_jenkins_plugins
+
 - name: Wait for plugins installation complete
   async_status:
     jid: '{{ item.ansible_job_id }}'
