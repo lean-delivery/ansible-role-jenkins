@@ -1,6 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  strategy: mitogen_linear
   roles:
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: true

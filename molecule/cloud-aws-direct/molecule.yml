@@ -105,6 +105,8 @@ provisioner:
   log: false
   config_options:
     defaults:
+      forks: 30
+      strategy_plugins: /usr/lib/python3.8/site-packages/ansible_mitogen/plugins/strategy
       callback_whitelist: profile_tasks,timer
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
