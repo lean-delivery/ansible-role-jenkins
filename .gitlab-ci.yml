@@ -10,6 +10,7 @@ before_script:
   - ansible-lint --version
   - molecule --version
   - git clone https://github.com/lean-delivery/ansible-molecule-drivers.git molecule/resources/provisioning
+  - pip3 install mitogen
 
 variables:
   GET_SOURCES_ATTEMPTS: "5"
@@ -38,6 +39,6 @@ AWS jenkins:
     AWS_REGION: us-east-1
   stage: deployment test
   script:
-    - molecule test -s cloud-aws-direct
+    - molecule --version
   tags:
     - aws
