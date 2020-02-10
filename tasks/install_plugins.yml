@@ -50,9 +50,10 @@
   async_status:
     jid: '{{ item.ansible_job_id }}'
   loop: '{{ my_jenkins_plugins.results }}'
+  become: true
   register: plugin_install
   until: plugin_install.finished
-  delay: 3
+  delay: 1
   retries: 30
 
 - name: Force all notified handlers to run
