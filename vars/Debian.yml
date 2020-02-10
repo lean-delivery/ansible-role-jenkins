@@ -17,3 +17,12 @@ jenkins_requirements:
   - '{{ jenkins_python_pip_package }}'
   - unzip
   - openssl
+
+jenkins_deb_repo_key: >-
+  {{ (jenkins2_release_line=='stable')
+    | ternary('https://pkg.jenkins.io/debian-stable/jenkins.io.key',
+              'https://pkg.jenkins.io/debian/jenkins.io.key') }}
+jenkins_deb_repo_url: >-
+  {{ (jenkins2_release_line=='stable')
+    | ternary('deb https://pkg.jenkins.io/debian-stable binary/',
+              'deb https://pkg.jenkins.io/debian binary/') }}
