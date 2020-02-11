@@ -30,29 +30,12 @@
     state: present
     timeout: '{{ jenkins2_plugins_timeout }}'
   register: my_jenkins_plugins
-  # until: my_jenkins_plugins is succeeded
-  # retries: 10
-  # delay: 3
+  until: my_jenkins_plugins is succeeded
+  retries: 10
+  delay: 3
   loop: >-
         {{ (jenkins2_plugins_dict | dict2items) if jenkins2_plugins_version else
           (jenkins2_plugins_suggested | union(jenkins2_plugins_list) | unique) }}
-  become: true
-  async: 3600
-  poll: 0
-  changed_when: false
-
-- name: debug my_jenkins_plugins
-  debug:
-    var: my_jenkins_plugins
-
-- name: Wait for plugins installation complete
-  async_status:
-    jid: '{{ item.ansible_job_id }}'
-  loop: '{{ my_jenkins_plugins.results }}'
-  register: plugin_install
-  until: plugin_install.finished
-  delay: 2
-  retries: 50
   become: true
   notify:
     - Restart Jenkins
