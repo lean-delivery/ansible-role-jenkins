@@ -16,7 +16,6 @@ jenkins_requirements:
   - lsof
   - '{{ jenkins_python_pip_package }}'
   - unzip
-  - openssl
 
 jenkins_deb_repo_key: >-
   {{ (jenkins2_release_line=='stable')
