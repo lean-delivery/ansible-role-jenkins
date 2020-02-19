@@ -49,7 +49,7 @@
           - lxml
           - awscli
         state: present
-        extra_args: --upgrade
+        extra_args: --upgrade --ignore-installed requests
         executable: 'pip{{ ansible_facts.python.version.major }}'
       register: installed_packages
       until: installed_packages is success
