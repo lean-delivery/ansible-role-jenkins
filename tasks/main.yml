@@ -43,6 +43,7 @@
       pip:
         name:
           - jira
+          - oauthlib
           - pyOpenSSL
           - python-jenkins
           - lxml
