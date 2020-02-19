@@ -29,7 +29,7 @@
     jenkins_home: '{{ jenkins2_home_directory }}'
     state: present
     timeout: '{{ jenkins2_plugins_timeout }}'
-    with_dependencies: true
+    with_dependencies: '{{ jenkins2_plugins_install_dependencies }}'
   register: my_jenkins_plugins
   until: my_jenkins_plugins is succeeded
   retries: 10

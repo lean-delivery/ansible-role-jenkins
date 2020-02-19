@@ -42,12 +42,9 @@
     - name: Install pip packages
       pip:
         name:
-          # - jira
-          # - PyYAML
-          # - pyOpenSSL
+          - pyOpenSSL
           - python-jenkins
           - lxml
-          # - awscli
         state: present
         executable: 'pip{{ ansible_facts.python.version.major }}'
       register: installed_packages

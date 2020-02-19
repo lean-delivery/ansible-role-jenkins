@@ -79,6 +79,7 @@ jenkins2_smtp_host: 'smtp.office365.com'
 # Plugin installation
 jenkins2_plugins_timeout: 2000
 jenkins2_plugins_version: false
+jenkins2_plugins_install_dependencies: true
 jenkins2_plugins_suggested:
   - ant
   - antisamy-markup-formatter
