@@ -74,6 +74,7 @@ EXAMPLES = '''
     password: admin
     url: http://localhost:8080
     user: admin
+
 # Create a jenkins job using the token
 - jenkins_job:
     config: "{{ lookup('template', 'templates/test.xml.j2') }}"
@@ -81,6 +82,7 @@ EXAMPLES = '''
     token: asdfasfasfasdfasdfadfasfasdfasdfc
     url: http://localhost:8080
     user: admin
+
 # Delete a jenkins job using basic authentication
 - jenkins_job:
     name: test
@@ -88,6 +90,7 @@ EXAMPLES = '''
     state: absent
     url: http://localhost:8080
     user: admin
+
 # Delete a jenkins job using the token
 - jenkins_job:
     name: test
@@ -95,6 +98,7 @@ EXAMPLES = '''
     state: absent
     url: http://localhost:8080
     user: admin
+
 # Disable a jenkins job using basic authentication
 - jenkins_job:
     name: test
@@ -102,6 +106,7 @@ EXAMPLES = '''
     enabled: False
     url: http://localhost:8080
     user: admin
+
 # Disable a jenkins job using the token
 - jenkins_job:
     name: test
@@ -203,7 +208,7 @@ class JenkinsJob:
             if "color" not in response:
                 return self.EXCL_STATE
             else:
-                return response['color'].encode('utf-8')
+                return to_native(response['color'])
 
         except Exception as e:
             self.module.fail_json(msg='Unable to fetch job information, %s' % to_native(e), exception=traceback.format_exc())
