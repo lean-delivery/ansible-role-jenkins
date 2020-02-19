@@ -42,14 +42,13 @@
     - name: Install pip packages
       pip:
         name:
-          - jira
-          - PyYAML
-          - pyOpenSSL
+          # - jira
+          # - PyYAML
+          # - pyOpenSSL
           - python-jenkins
           - lxml
-          - awscli
+          # - awscli
         state: present
-        # extra_args: --ignore-installed PyYAML
         executable: 'pip{{ ansible_facts.python.version.major }}'
       register: installed_packages
       until: installed_packages is success
