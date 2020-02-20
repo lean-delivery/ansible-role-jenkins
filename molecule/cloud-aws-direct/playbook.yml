@@ -11,7 +11,7 @@
       jenkins2_custom_files_enabled: true
       jenkins2_gitlab_enabled: true
       jenkins2_github_enabled: true
-      jenkins2_seed_job_enable: true
+      jenkins2_seed_job_enable: false
       gitlab_external_url: 'https://localhost'
       gitlab_project_group: 'test'
       gitlab_project_name: 'test'

@@ -10,6 +10,8 @@
     https_proxy: '{{ jenkins2_proxy_url }}'
     HTTPS_PROXY: '{{ jenkins2_proxy_url }}'
   register: status
+  retries: 10
+  delay: 3
   until: status is succeeded
   become: true
 
@@ -18,4 +20,8 @@
     repo: '{{ jenkins_deb_repo_url }}'
     update_cache: true
     state: present
+  register: status
+  retries: 10
+  delay: 3
+  until: status is succeeded
   become: true

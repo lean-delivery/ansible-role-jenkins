@@ -6,7 +6,7 @@
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: false
-    timeout: 120
+    timeout: 240
 
 - name: Update Center Refresh
   jenkins_script:
@@ -15,7 +15,7 @@
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: false
-    timeout: 120
+    timeout: 240
 
 - name: Install Jenkins plugins
   jenkins_plugin:

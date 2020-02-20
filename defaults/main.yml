@@ -84,6 +84,7 @@ jenkins2_plugins_suggested:
   - ant
   - antisamy-markup-formatter
   - blueocean
+  - configuration-as-code
   - build-timeout
   - cloudbees-folder
   - credentials-binding
@@ -91,31 +92,24 @@ jenkins2_plugins_suggested:
   - file-operations
   - git
   - gradle
-  - greenballs
-  - jira
   - ldap
   - mailer
   - matrix-auth
-  - nodejs
   - pam-auth
   - pipeline-stage-view
   - pipeline-utility-steps
   - role-strategy
   - ssh-agent
   - ssh-slaves
-  - subversion
   - timestamper
   - workflow-aggregator
   - ws-cleanup
   - job-dsl
   - sonar
   - checkstyle
-  - gitlab-plugin
   - log-parser
   - pmd
-  - ec2
   - warnings-ng
-  - active-directory
   - permissive-script-security
 jenkins2_plugins_list: []
 jenkins2_plugins_dict: {}
