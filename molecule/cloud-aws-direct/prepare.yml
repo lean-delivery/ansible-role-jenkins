@@ -1,9 +1,0 @@
----
-- name: Prepare pre-requisites
-  hosts: all
-  roles:
-    - role: lean_delivery.java
-      java_major_version: 8
-      java_package: jdk
-      transport: repositories
-      java_tarball_install: false

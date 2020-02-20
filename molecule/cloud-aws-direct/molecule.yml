@@ -117,7 +117,7 @@ provisioner:
         ansible_python_interpreter: /usr/bin/python3
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
-    prepare: prepare.yml
+    prepare: ../resources/prepare.yml
     destroy: ../resources/provisioning/AWS/destroy.yml
     verify: ../resources/tests/verify.yml
   lint:
