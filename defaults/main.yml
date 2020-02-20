@@ -89,6 +89,7 @@ jenkins2_plugins_suggested:
   - build-timeout
   - cloudbees-folder
   - credentials-binding
+  - ec2
   - email-ext
   - file-operations
   - git
