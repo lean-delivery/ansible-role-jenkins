@@ -1,7 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  # strategy: mitogen_linear
   roles:
     - role: ansible-role-jenkins
       jenkins2_pipeline_libraries_enabled: true
@@ -10,9 +9,12 @@
       jenkins2_updates_url: http://ftp-nyc.osuosl.org/pub/jenkins/updates/
       jenkins2_sonarqube_enabled: false
       jenkins2_custom_files_enabled: true
-      jenkins2_gitlab_enabled: false
+      jenkins2_gitlab_enabled: true
       jenkins2_github_enabled: true
-      jenkins2_seed_job_enable: false
+      jenkins2_seed_job_enable: true
+      gitlab_external_url: 'https://localhost'
+      gitlab_project_group: 'test'
+      gitlab_project_name: 'test'
       ci_test_jenkins_slave_label: 'ci_slaves'
       feature_verification_jenkins_slave_label: 'fv_slaves'
       ami_for_ci: 'ami-AAAAAAAA'
