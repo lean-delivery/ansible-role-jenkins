@@ -77,44 +77,40 @@ jenkins2_smtp_password: 'password'
 jenkins2_smtp_port: '587'
 jenkins2_smtp_host: 'smtp.office365.com'
 # Plugin installation
+jenkins2_updates_url: https://updates.jenkins.io
 jenkins2_plugins_timeout: 2000
 jenkins2_plugins_version: false
+jenkins2_plugins_install_dependencies: true
 jenkins2_plugins_suggested:
   - ant
   - antisamy-markup-formatter
   - blueocean
+  - configuration-as-code
   - build-timeout
   - cloudbees-folder
   - credentials-binding
+  - ec2
   - email-ext
   - file-operations
   - git
+  - gitlab-plugin
   - gradle
-  - greenballs
-  - jira
   - ldap
   - mailer
   - matrix-auth
-  - nodejs
-  - pam-auth
   - pipeline-stage-view
   - pipeline-utility-steps
-  - role-strategy
   - ssh-agent
   - ssh-slaves
-  - subversion
   - timestamper
   - workflow-aggregator
   - ws-cleanup
   - job-dsl
   - sonar
   - checkstyle
-  - gitlab-plugin
   - log-parser
   - pmd
-  - ec2
   - warnings-ng
-  - active-directory
   - permissive-script-security
 jenkins2_plugins_list: []
 jenkins2_plugins_dict: {}

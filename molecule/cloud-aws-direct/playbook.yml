@@ -6,11 +6,12 @@
       jenkins2_pipeline_libraries_enabled: true
       jenkins2_pipeline_libraries_url: 'https://example.com/example.git'
       jenkins2_bitbucket_project_enabled: true
+      jenkins2_updates_url: http://ftp-nyc.osuosl.org/pub/jenkins/updates/
       jenkins2_sonarqube_enabled: false
       jenkins2_custom_files_enabled: true
       jenkins2_gitlab_enabled: true
       jenkins2_github_enabled: true
-      jenkins2_seed_job_enable: true
+      jenkins2_seed_job_enable: false
       gitlab_external_url: 'https://localhost'
       gitlab_project_group: 'test'
       gitlab_project_name: 'test'
@@ -28,14 +29,13 @@
       jenkins2_ec2_enable: true
       jenkins2_jira_enabled: true
       jenkins2_globaltools_enable: true
+      jenkins2_globaltools_nodejs_enable: false
       jenkins2_globaltools_jdk_version:
         - jdk-9.0.4-oth-JPR
       jenkins2_globaltools_maven_version:
         - 3.6.1
       jenkins2_globaltools_ant_version:
         - 1.10.6
-      jenkins2_globaltools_nodejs_version:
-        - 12.4.0
       jenkins2_globaltools_sonarscanner_version:
         - 3.3.0.1492
       jenkins2_globaltools_sonarscannermsbuild_version:

@@ -1,16 +1,27 @@
 ---
 jenkins_config_service_path: /etc/default/jenkins
+jenkins_python_dev_package: >-
+  {{ (ansible_facts.python.version.major|int ==3 ) | ternary('python3-dev', 'python-dev') }}
+jenkins_python_pip_package: >-
+  {{ (ansible_facts.python.version.major|int ==3 ) | ternary('python3-pip', 'python-pip') }}
 jenkins_requirements:
   - gcc
   - openssl
-  - python-dev
+  - '{{ jenkins_python_dev_package }}'
   - libssl-dev
   - openssh-client
   - git
   - net-tools
   - wget
   - lsof
-  - python
-  - python-pip
+  - '{{ jenkins_python_pip_package }}'
   - unzip
-  - openssl
+
+jenkins_deb_repo_key: >-
+  {{ (jenkins2_release_line=='stable')
+    | ternary('https://pkg.jenkins.io/debian-stable/jenkins.io.key',
+              'https://pkg.jenkins.io/debian/jenkins.io.key') }}
+jenkins_deb_repo_url: >-
+  {{ (jenkins2_release_line=='stable')
+    | ternary('deb https://pkg.jenkins.io/debian-stable binary/',
+              'deb https://pkg.jenkins.io/debian binary/') }}

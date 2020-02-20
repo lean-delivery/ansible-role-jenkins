@@ -6,7 +6,7 @@
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: false
-    timeout: 120
+    timeout: 240
 
 - name: Update Center Refresh
   jenkins_script:
@@ -15,13 +15,14 @@
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: false
-    timeout: 120
+    timeout: 240
 
 - name: Install Jenkins plugins
   jenkins_plugin:
     url: '{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}'
     url_username: '{{ jenkins2_cli_username }}'
     url_password: '{{ jenkins2_cli_password }}'
+    updates_url: '{{ jenkins2_updates_url }}'
     name: '{{ item.key | default(item) }}'
     version: '{{ item.value | default(omit) }}'
     owner: '{{ jenkins2_user }}'
@@ -29,6 +30,7 @@
     jenkins_home: '{{ jenkins2_home_directory }}'
     state: present
     timeout: '{{ jenkins2_plugins_timeout }}'
+    with_dependencies: '{{ jenkins2_plugins_install_dependencies }}'
   register: my_jenkins_plugins
   until: my_jenkins_plugins is succeeded
   retries: 10
