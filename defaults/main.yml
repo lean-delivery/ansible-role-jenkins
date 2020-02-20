@@ -83,7 +83,6 @@ jenkins2_plugins_install_dependencies: true
 jenkins2_plugins_suggested:
   - ant
   - antisamy-markup-formatter
-  - blueocean
   - configuration-as-code
   - build-timeout
   - cloudbees-folder
@@ -95,10 +94,8 @@ jenkins2_plugins_suggested:
   - ldap
   - mailer
   - matrix-auth
-  - pam-auth
   - pipeline-stage-view
   - pipeline-utility-steps
-  - role-strategy
   - ssh-agent
   - ssh-slaves
   - timestamper
