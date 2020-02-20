@@ -182,6 +182,8 @@ Requirements
   - `jenkins2_smtp_host` - smtp server host name   
      default: `smtp.office365.com`
 # jenkins plugins configuration
+  - `jenkins2_updates_url` - URL of the Update Centre. Used as the base URL to download the plugins and the update-center.json JSON file.   
+     default: `https://updates.jenkins.io`
   - `jenkins2_plugins_timeout` - plugin installation timeout   
      default: `2000`   
   - `jenkins2_plugins_list` - list of plugins (will be merged with suggested list)   

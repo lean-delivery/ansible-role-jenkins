@@ -109,7 +109,7 @@ provisioner:
     defaults:
       forks: 30
       callback_whitelist: profile_tasks,timer
-    connection:
+    ssh_connection:
       pipelining: true
   inventory:
     group_vars:
