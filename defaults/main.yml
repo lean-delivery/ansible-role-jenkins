@@ -439,20 +439,28 @@ jenkins2_globaltools_jdk_enable: true
 jenkins2_globaltools_jdk_version: []
 jenkins2_globaltools_jdk_cred_user: 'user'
 jenkins2_globaltools_jdk_cred_password: 'password'
+jenkins2_globaltools_jdk_template: 'globaltools/jdk.groovy'
 jenkins2_globaltools_maven_enable: true
 jenkins2_globaltools_maven_version: []
+jenkins2_globaltools_maven_template: 'globaltools/maven.groovy'
 jenkins2_globaltools_ant_enable: true
 jenkins2_globaltools_ant_version: []
+jenkins2_globaltools_ant_template: 'globaltools/ant.groovy'
 jenkins2_globaltools_nodejs_enable: true
 jenkins2_globaltools_nodejs_version: []
+jenkins2_globaltools_nodejs_template: 'globaltools/nodejs.groovy'
 jenkins2_globaltools_sonarscanner_enable: true
 jenkins2_globaltools_sonarscanner_version: []
+jenkins2_globaltools_sonarscanner_template: 'globaltools/sonarscanner.groovy'
 jenkins2_globaltools_sonarscannermsbuild_enable: true
 jenkins2_globaltools_sonarscannermsbuild_version: []
+jenkins2_globaltools_sonarscannermsbuild_template: 'globaltools/sonarscannermsbuild.groovy'
 jenkins2_globaltools_gradle_enable: true
 jenkins2_globaltools_gradle_version: []
+jenkins2_globaltools_gradle_template: 'globaltools/gradle.groovy'
 jenkins2_globaltools_docker_enable: true
 jenkins2_globaltools_docker_version: []
+jenkins2_globaltools_docker_template: 'globaltools/docker.groovy'
 
 # Configure active directory
 jenkins2_active_directory_domain_name: 'domain.com'

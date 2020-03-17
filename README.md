@@ -139,34 +139,50 @@ Requirements
      default: `'user'`
   - `jenkins2_globaltools_jdk_cred_password` - password for oracle repository  
      default: `'password'`
+  - `jenkins2_globaltools_jdk_template` - JDK configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\jdk.groovy`
   - `jenkins2_globaltools_maven_enable` - enable autoconfiguration for Maven  
      default: `true`
   - `jenkins2_globaltools_maven_version` - list of version for Maven (defined as a list)  
      default: `[]`
+  - `jenkins2_globaltools_maven_template` - Maven configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\maven.groovy`
   - `jenkins2_globaltools_ant_enable` - enable autoconfiguration for Ant  
      default: `true`
   - `jenkins2_globaltools_ant_version` - list of version for Ant (defined as a list)  
      default: `[]`
+  - `jenkins2_globaltools_ant_template` - Ant configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\ant.groovy`
   - `jenkins2_globaltools_nodejs_enable` - enable autoconfiguration for Node.js  
      default: `true`
   - `jenkins2_globaltools_nodejs_version` - list of version for Node.js (defined as a list)  
      default: `[]`
+  - `jenkins2_globaltools_nodejs_template` - Node.js configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\nodejs.groovy`
   - `jenkins2_globaltools_sonarscanner_enable` - enable autoconfiguration for SonarQube Scanner  
      default: `true`
   - `jenkins2_globaltools_sonarscanner_version` - list of version for SonarQube Scanner (defined as a list)  
      default: `[]`
+  - `jenkins2_globaltools_sonarscanner_template` - SonarQube Scaner configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\sonarscanner.groovy`
   - `jenkins2_globaltools_sonarscannermsbuild_enable` - enable autoconfiguration for SonarQube Scanner for MSBuild  
      default: `true`
   - `jenkins2_globaltools_sonarscannermsbuild_version` - list of version for SonarQube Scanner for MSBuild (defined as a list)  
      default: `[]`
+  - `jenkins2_globaltools_sonarscannermsbuild_template` - SonarQube Scaner for MSBuild configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\sonarscannermsbuild.groovy`
   - `jenkins2_globaltools_gradle_enable` - enable autoconfiguration for Gradle  
      default: `true`
   - `jenkins2_globaltools_gradle_version` - list of version for SonarQube Scanner for Gradle (defined as a list)  
      default: `[]`
+  - `jenkins2_globaltools_gradle_template` - Gradle configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\gradle.groovy`
   - `jenkins2_globaltools_docker_enable` - enable autoconfiguration for Docker  
      default: `true`
   - `jenkins2_globaltools_docker_version` - list of version for Docker (defined as a list)  
      default: `[]`
+  - `jenkins2_globaltools_docker_template` - Docker configuration template file name without .j2. ***Do not forget to setup all needed variables for template***
+     default: `globaltools\docker.groovy`
 
 # smtp settings
   - `jenkins2_smtp_enabled` - to set the smtp configuration   
