@@ -50,6 +50,7 @@ platforms:
     spot_price: 0.04
     security_group_name:
       - default
+    volume_size: 20
     wait_timeout: 1800
     ssh_user: ec2-user
     groups:
