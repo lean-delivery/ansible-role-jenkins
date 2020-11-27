@@ -10,10 +10,10 @@
 
 - name: Create JCasC configuration
   template:
-    src: jcasc/jenkins.yml
+    src: jcasc/jenkins.yml.j2
     owner: '{{ jenkins2_user }}'
     group: '{{ jenkins2_user }}'
-    dest: '{{ jenkins2_home_directory }}/{{ jenkins2_jcasc_directory }}'
+    dest: '{{ jenkins2_home_directory }}/{{ jenkins2_jcasc_directory }}/jenkins.yml'
     mode: 0440
   register: jcasc_result
   become: true
