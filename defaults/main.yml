@@ -847,57 +847,57 @@ jenkins2_jcasc_config:
       allPipelines: false
       elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
       systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
-  tool:
-    ant:
-      installations:
-      - name: "1.10.6"
-        properties:
-        - installSource:
-            installers:
-            - antFromApache:
-                id: "1.10.6"
-    dockerTool:
-      installations:
-      - name: "latest"
-        properties:
-        - installSource:
-            installers:
-            - fromDocker:
-                version: "latest"
-    git:
-      installations:
-      - home: "git"
-        name: "Default"
-    gradle:
-      installations:
-      - name: "5.5-rc-2"
-        properties:
-        - installSource:
-            installers:
-            - gradleInstaller:
-                id: "5.5-rc-2"
-    jdk:
-      installations:
-      - name: "jdk-9.0.4-oth-JPR"
-        properties:
-        - installSource:
-            installers:
-            - jdkInstaller:
-                acceptLicense: true
-                id: "jdk-9.0.4-oth-JPR"
-    maven:
-      installations:
-      - name: "3.6.1"
-        properties:
-        - installSource:
-            installers:
-            - maven:
-                id: "3.6.1"
-    sonarRunnerInstallation:
-      installations:
-      - name: "3.3.0.1492"
-        properties:
-        - installSource:
-            installers:
-            - sonarRunnerInstaller:
-                id: "3.3.0.1492"
+  # tool:
+  #   ant:
+  #     installations:
+  #     - name: "1.10.6"
+  #       properties:
+  #       - installSource:
+  #           installers:
+  #           - antFromApache:
+  #               id: "1.10.6"
+  #   dockerTool:
+  #     installations:
+  #     - name: "latest"
+  #       properties:
+  #       - installSource:
+  #           installers:
+  #           - fromDocker:
+  #               version: "latest"
+  #   git:
+  #     installations:
+  #     - home: "git"
+  #       name: "Default"
+  #   gradle:
+  #     installations:
+  #     - name: "5.5-rc-2"
+  #       properties:
+  #       - installSource:
+  #           installers:
+  #           - gradleInstaller:
+  #               id: "5.5-rc-2"
+  #   jdk:
+  #     installations:
+  #     - name: "jdk-9.0.4-oth-JPR"
+  #       properties:
+  #       - installSource:
+  #           installers:
+  #           - jdkInstaller:
+  #               acceptLicense: true
+  #               id: "jdk-9.0.4-oth-JPR"
+  #   maven:
+  #     installations:
+  #     - name: "3.6.1"
+  #       properties:
+  #       - installSource:
+  #           installers:
+  #           - maven:
+  #               id: "3.6.1"
+  #   sonarRunnerInstallation:
+  #     installations:
+  #     - name: "3.3.0.1492"
+  #       properties:
+  #       - installSource:
+  #           installers:
+  #           - sonarRunnerInstaller:
+  #               id: "3.3.0.1492"
