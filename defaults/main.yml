@@ -15,6 +15,7 @@ jenkins2_config_java_cmd: ''
 jenkins2_config_java_options: >-
   -Djava.awt.headless=true -Djenkins.install.runSetupWizard=false
   -Dmail.smtp.starttls.enable='true' -Dhudson.slaves.WorkspaceList=_
+  -Dhudson.security.csrf.DefaultCrumbIssuer.EXCLUDE_SESSION_ID='true'
 
 jenkins2_config_http_port: 8080
 jenkins2_config_listen_address: ''
@@ -69,13 +70,6 @@ jenkins2_ssh_keys_slave_ips: '{%- set ips = [] %}{%- for host in jenkins2_ssh_ke
     {{- ips -}}'
 jenkins2_ssh_keys_slave_group_exist: '{{ ((jenkins2_ssh_keys_slave_group)[0]|default(""))  != ""}}'
 
-# SMTP properties
-jenkins2_smtp_enabled: true
-jenkins2_smtp_sysad_email: 'usermail@test.com'
-jenkins2_smtp_user: 'usermail@test.com'
-jenkins2_smtp_password: 'password'
-jenkins2_smtp_port: '587'
-jenkins2_smtp_host: 'smtp.office365.com'
 # Plugin installation
 jenkins2_updates_url: https://updates.jenkins.io
 jenkins2_plugins_timeout: 2000
@@ -107,13 +101,26 @@ jenkins2_plugins_suggested:
   - ws-cleanup
   - job-dsl
   - sonar
-  - checkstyle
+  # checkstyle: [Deprecated]
+  # - checkstyle
   - log-parser
-  - pmd
+  # pmd: [Deprecated]
+  # - pmd
   - warnings-ng
   - permissive-script-security
 jenkins2_plugins_list: []
 jenkins2_plugins_dict: {}
+
+# Configure Jenkins use groovy scripts
+jenkins2_configure_by_groovy: false
+
+# SMTP properties
+jenkins2_smtp_enabled: false
+jenkins2_smtp_sysad_email: 'usermail@test.com'
+jenkins2_smtp_user: 'usermail@test.com'
+jenkins2_smtp_password: 'password'
+jenkins2_smtp_port: '587'
+jenkins2_smtp_host: 'smtp.office365.com'
 
 # Set Credentials
 jenkins2_credentials_enabled: true
@@ -286,7 +293,7 @@ jenkins2_github_token_cred: github_token
 # Add or replace dsl template
 jenkins2_seed_job_enable: false
 # DSL template file name. Do not forget to setup all needed variables for template
-jenkins2_seed_job_template: dsl_hybris_create_job.groovy
+jenkins2_seed_job_template: 'jenkins_create_jobs/dsl_hybris_create_job.groovy'
 # to ignore existing jobs and do not rewrite them
 jenkins2_seed_job_ignore_existing: true
 jenkins2_seed_job_name: 'seed_job'
@@ -493,3 +500,404 @@ jenkins2_authorization_strategy_logged_in_allow_anonymous_read: false
 
 # Permissive script plugin
 jenkins2_permissive_script_enabled: true
+
+# Configure Jenkins use JCasC
+jenkins2_configure_by_casc: true
+jenkins2_jcasc_directory: 'jcasc'
+
+jenkins2_jcasc_config:
+  credentials:
+    system:
+      domainCredentials:
+      - credentials:
+        - usernamePassword:
+            description: "credentials for jenkins slave "
+            id: "ci_slave"
+            password: '{{ jenkins2_credentials.slave.password }}'
+            scope: GLOBAL
+            username: "user"
+        - usernamePassword:
+            description: "FFFFUUUUUUUUUUU1"
+            id: "ci_slave1"
+            password: '{{ jenkins2_credentials.slave.password }}'
+            scope: GLOBAL
+            username: "user"
+        - usernamePassword:
+            description: "username and password for jira"
+            id: "jirauser"
+            password: '{{ jenkins2_credentials.jira.password }}'
+            scope: GLOBAL
+            username: "jiraUser"
+        - usernamePassword:
+            description: "username and password for pipeline libraries"
+            id: "pipeline_libraries"
+            password: '{{ jenkins2_credentials.pipeline_libraries.password }}'
+            scope: GLOBAL
+            username: "pipelineLibrariesUser"
+        - basicSSHUserPrivateKey:
+            description: "credentials for hybris user to connect remotely"
+            id: "sshagent"
+            privateKeySource:
+              directEntry:
+                privateKey: '{{ jenkins2_credentials.sshconnection.key | indent(16) }}'
+            scope: GLOBAL
+            username: "hybris"
+        - usernamePassword:
+            description: "sys user for CI db"
+            id: "ciDBsysUser"
+            password: '{{ jenkins2_credentials.cidbsysuser.password }}'
+            scope: GLOBAL
+            username: "root"
+        - usernamePassword:
+            description: "fqa1 DB user"
+            id: "fqa1DBuser"
+            password: '{{ jenkins2_credentials.fqa1dbuser.password }}'
+            scope: GLOBAL
+            username: "fqa1user"
+        - usernamePassword:
+            description: "DB user for datacut"
+            id: "tempDBuser"
+            password: '{{ jenkins2_credentials.dbtempuser.password }}'
+            scope: GLOBAL
+            username: "DB_TEMP"
+        - usernamePassword:
+            description: "gitlab credentials username with password"
+            id: "GIT_CREDENTIALS"
+            password: '{{ jenkins2_credentials.gitlab_creds.password }}'
+            scope: GLOBAL
+            username: "admin"
+        - usernamePassword:
+            description: "for connection via jenkins cli; used for pipeline syntax check"
+            id: "Jenkins_http_connection"
+            password: '{{ jenkins2_credentials.jenkinshttpconnectionuser.password }}'
+            scope: GLOBAL
+            username: "admin"
+        - usernamePassword:
+            description: "to use with GL10.2+ but could be used with earlier versions"
+            id: "GIT_CREDENTIALS_TOKEN"
+            password: '{{ jenkins2_credentials.gitlabusertoken.password }}'
+            scope: GLOBAL
+            username: "admin"
+        - usernamePassword:
+            description: "for operations in AWS"
+            id: "AWS_CREDENTIALS"
+            password: '{{ jenkins2_credentials.aws_credentials.password }}'
+            scope: GLOBAL
+            username: "AWSaccessKey"
+        - gitLabApiTokenImpl:
+            apiToken: '{{ jenkins2_credentials.gitlabtoken.token }}'
+            description: "gitlab connection with token"
+            id: "gitlab_token"
+            scope: GLOBAL
+        - string:
+            description: "GiHub connection with token"
+            id: "github_token"
+            scope: GLOBAL
+            secret: '{{ jenkins2_credentials.githubtoken.token }}'
+        - aws:
+            accessKey: "AWSaccessKey"
+            description: "for ec2 plugin to create ec2 for slave instances"
+            id: "AWS_EC2_CREDS"
+            scope: GLOBAL
+            secretKey: '{{ jenkins2_credentials.aws_ec2_credentials.sec_key }}'
+        - usernamePassword:
+            description: "username and password for bitbucket project"
+            id: "bitbucket_project"
+            password: '{{ jenkins2_credentials.bitbucket_project.password }}'
+            scope: GLOBAL
+            username: "bitbucketProjectUser"
+  jenkins:
+    agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+    authorizationStrategy:
+      loggedInUsersCanDoAnything:
+        allowAnonymousRead: false
+    clouds:
+    - amazonEC2:
+        cloudName: "AWS_cloud"
+        credentialsId: "AWS_EC2_CREDS"
+        instanceCapStr: "2"
+        region: "us-east-1"
+        sshKeysCredentialsId: "sshconnection"
+        templates:
+        - ami: "ami-AAAAAAAA"
+          amiType:
+            unixData:
+              rootCommandPrefix: "sudo"
+              sshPort: "22"
+          associatePublicIp: false
+          connectBySSHProcess: true
+          connectionStrategy: PRIVATE_DNS
+          deleteRootOnTermination: true
+          description: "Jenkins slave for CI"
+          ebsOptimized: false
+          hostKeyVerificationStrategy: CHECK_NEW_SOFT
+          idleTerminationMinutes: "5"
+          instanceCapStr: "5"
+          labelString: "ci_slaves"
+          maxTotalUses: -1
+          minimumNumberOfInstances: 0
+          minimumNumberOfSpareInstances: 0
+          mode: NORMAL
+          monitoring: false
+          numExecutors: 1
+          remoteAdmin: "ec2-user"
+          remoteFS: "/opt/jenkins"
+          securityGroups: "sg-11111111"
+          spotConfig:
+            spotMaxBidPrice: "0.0139"
+            useBidPrice: true
+          stopOnTerminate: false
+          subnetId: "subnet-SSSSSSSS"
+          t2Unlimited: false
+          tags:
+          - name: "Name"
+            value: "CI Slave"
+          - name: "Name2"
+            value: "CI2 Slave"
+          type: T2Medium
+          useDedicatedTenancy: false
+          useEphemeralDevices: true
+          zone: "us-east-1a,us-east-1b"
+        - ami: "ami-BBBBBBBB"
+          amiType:
+            unixData:
+              rootCommandPrefix: "sudo"
+              sshPort: "22"
+          associatePublicIp: false
+          connectBySSHProcess: true
+          connectionStrategy: PRIVATE_DNS
+          deleteRootOnTermination: true
+          description: "Jenkins slave for FV"
+          ebsOptimized: false
+          hostKeyVerificationStrategy: CHECK_NEW_SOFT
+          idleTerminationMinutes: "5"
+          instanceCapStr: "5"
+          labelString: "ci_slaves"
+          maxTotalUses: -1
+          minimumNumberOfInstances: 0
+          minimumNumberOfSpareInstances: 0
+          mode: NORMAL
+          monitoring: false
+          numExecutors: 1
+          remoteAdmin: "ec2-user"
+          remoteFS: "/opt/jenkins"
+          securityGroups: "sg-11111111"
+          stopOnTerminate: false
+          subnetId: "subnet-SSSSSSSS"
+          t2Unlimited: false
+          tags:
+          - name: "Name"
+            value: "FV Slave"
+          type: T2Medium
+          useDedicatedTenancy: false
+          useEphemeralDevices: true
+          zone: "us-east-1a,us-east-1b"
+        useInstanceProfileForCredentials: false
+    crumbIssuer:
+      standard:
+        excludeClientIPFromCrumb: false
+    disableRememberMe: false
+    labelAtoms:
+    - name: "ci_slaves"
+    - name: "master"
+    markupFormatter: "plainText"
+    mode: NORMAL
+    myViewsTabBar: "standard"
+    numExecutors: 2
+    primaryView:
+      all:
+        name: "all"
+    projectNamingStrategy: "standard"
+    quietPeriod: 5
+    remotingSecurity:
+      enabled: false
+    scmCheckoutRetryCount: 0
+    securityRealm:
+      local:
+        allowsSignup: false
+        enableCaptcha: false
+        users:
+        - id: "{{ jenkins2_cli_username }}"
+          password: "{{ jenkins2_cli_password }}"
+    slaveAgentPort: 0
+    updateCenter:
+      sites:
+      - id: "default"
+        url: "https://updates.jenkins.io/update-center.json"
+    views:
+    - all:
+        name: "all"
+    viewsTabBar: "standard"
+  unclassified:
+    bitbucketEndpointConfiguration:
+      endpoints:
+      - bitbucketCloudEndpoint:
+          enableCache: false
+          manageHooks: false
+          repositoriesCacheDuration: 0
+          teamCacheDuration: 0
+    buildDiscarders:
+      configuredBuildDiscarders:
+      - "jobBuildDiscarder"
+    buildStepOperation:
+      enabled: false
+    email-ext:
+      adminRequiredForTemplateTesting: false
+      allowUnregisteredEnabled: false
+      charset: "UTF-8"
+      debugMode: false
+      defaultBody: |-
+        $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+        Check console output at $BUILD_URL to view the results.
+      defaultContentType: "text/plain"
+      defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+      defaultTriggerIds:
+      - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+      mailAccount:
+        smtpHost: "smtp.office365.com"
+        smtpPassword: "some_smtp_passwd"
+        smtpPort: "587"
+        smtpUsername: "usermail@test.com"
+      maxAttachmentSize: -1
+      maxAttachmentSizeMb: -1
+      precedenceBulk: false
+      watchingEnabled: false
+    fingerprints:
+      fingerprintCleanupDisabled: false
+      storage: "file"
+    gitHubConfiguration:
+      apiRateLimitChecker: ThrottleForNormalize
+    gitLabConnectionConfig:
+      connections:
+      - clientBuilderId: "autodetect"
+        connectionTimeout: 10
+        ignoreCertificateErrors: false
+        readTimeout: 10
+      - apiTokenId: "gitlab_token"
+        clientBuilderId: "autodetect"
+        connectionTimeout: 10
+        ignoreCertificateErrors: true
+        name: "Gitlab"
+        readTimeout: 10
+        url: "https://localhost"
+    gitSCM:
+      allowSecondFetch: false
+      createAccountBasedOnEmail: false
+      disableGitToolChooser: false
+      hideCredentials: false
+      showEntireCommitSummaryInChanges: false
+      useExistingAccountWithSameEmail: false
+    globalLibraries:
+      libraries:
+      - defaultVersion: "master"
+        includeInChangesets: false
+        name: "Pipeline_Libraries"
+        retriever:
+          modernSCM:
+            scm:
+              git:
+                credentialsId: "pipeline_libraries"
+                id: "7910d1a6-183c-487f-b3d8-cea97fc8dc47"
+                remote: "https://example.com/example.git"
+                traits:
+                - "gitBranchDiscovery"
+    jiraGlobalConfiguration:
+      sites:
+      - alternativeUrl: "https://jira.example.com/"
+        appendChangeTimestamp: true
+        credentialsId: "jirauser"
+        dateTimePattern: "EEE, d MMM yyyy HH:mm:ss Z"
+        supportsWikiStyleComment: true
+        updateJiraIssueForAllStatus: true
+        url: "https://jira.example.com/"
+        useHTTPAuth: true
+        userPattern: "PATTERN.*"
+      - alternativeUrl: "https://jira.example.com/"
+        appendChangeTimestamp: true
+        credentialsId: "jirauser"
+        dateTimePattern: "EEE, d MMM yyyy HH:mm:ss Z"
+        supportsWikiStyleComment: true
+        updateJiraIssueForAllStatus: true
+        url: "https://jira.example.com/"
+        useHTTPAuth: true
+        userPattern: "PATTERN.*"
+    junitTestResultStorage:
+      storage: "file"
+    location:
+      adminAddress: "usermail@test.com"
+    logParser:
+      legacyFormatting: false
+    mailer:
+      authentication:
+        password: "some_smtp_passwd"
+        username: "usermail@test.com"
+      charset: "UTF-8"
+      smtpHost: "smtp.office365.com"
+      smtpPort: "587"
+      useSsl: false
+      useTls: false
+    pollSCM:
+      pollingThreadCount: 10
+    sonarGlobalConfiguration:
+      buildWrapperEnabled: false
+    timestamper:
+      allPipelines: false
+      elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+      systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+  tool:
+    ant:
+      installations:
+      - name: "1.10.6"
+        properties:
+        - installSource:
+            installers:
+            - antFromApache:
+                id: "1.10.6"
+    dockerTool:
+      installations:
+      - name: "latest"
+        properties:
+        - installSource:
+            installers:
+            - fromDocker:
+                version: "latest"
+    git:
+      installations:
+      - home: "git"
+        name: "Default"
+    gradle:
+      installations:
+      - name: "5.5-rc-2"
+        properties:
+        - installSource:
+            installers:
+            - gradleInstaller:
+                id: "5.5-rc-2"
+    jdk:
+      installations:
+      - name: "jdk-9.0.4-oth-JPR"
+        properties:
+        - installSource:
+            installers:
+            - jdkInstaller:
+                acceptLicense: true
+                id: "jdk-9.0.4-oth-JPR"
+    maven:
+      installations:
+      - name: "3.6.1"
+        properties:
+        - installSource:
+            installers:
+            - maven:
+                id: "3.6.1"
+    sonarRunnerInstallation:
+      installations:
+      - name: "3.3.0.1492"
+        properties:
+        - installSource:
+            installers:
+            - sonarRunnerInstaller:
+                id: "3.3.0.1492"

@@ -10,7 +10,7 @@
 
 - name: Add script for unlock disabling
   template:
-    src: 'disable_unlock.groovy.j2'
+    src: 'jenkins_system_config/disable_unlock.groovy.j2'
     dest: '{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy'
     owner: '{{ jenkins2_user }}'
     group: '{{ jenkins2_user }}'
@@ -52,7 +52,7 @@
 
 - name: Add script for password set
   template:
-    src: 'reset_user_password.groovy.j2'
+    src: 'jenkins_system_config/reset_user_password.groovy.j2'
     dest: '{{ jenkins2_home_directory }}/init.groovy.d/basic-security.groovy'
     owner: '{{ jenkins2_user }}'
     group: '{{ jenkins2_user }}'

@@ -17,8 +17,12 @@ Role tasks
 ------------
   - Install Jenkins
   - Install plugins
-  - Configure SMTP settings
-  - Add credentials
+  - Configure plugins via JCasC
+     - Configure SMTP settings via JCasC
+     - Add credentials via JCasC
+  - Configure plugins via groovy scripts
+       - Configure SMTP settings via groovy scripts
+       - Add credentials via groovy scripts
   - Generate ssh keys and copy them to slave servers
 
 Requirements
@@ -127,6 +131,35 @@ Requirements
      default: `4096`
   - `jenkins2_ssh_keys_inv_slave_groupname` - slave group name in inventory file   
      default: `jenkins_ssh_slaves`
+
+# Jenkins configuration way
+   - `jenkins2_configure_by_casc` - Set configuration by JCasC ***jenkins2_configure_by_groovy should be = false***
+      default: `true`
+   - `jenkins2_jcasc_directory` - Realitive path where JCasC would be search for yaml files
+      default: `jcasc`
+   - `jenkins2_jcasc_config` - Configuration for JCasC that could be copied from the existing config as is and paste into this variable ***Sometimes configuration that was copied from Jenkins UI isn't applicable to load, it should be tested first***
+
+   ***If jenkins2_configure_by_casc was chosen follow configuration shouldn't used:***
+
+      - Global Tool Configuration
+      - smtp settings
+      - jenkins plugins configuration
+      - credentials configuration
+      - bitbucket project configuration
+      - sonarqube configuration
+      - custom files copy
+      - Gitlab configuration
+      - Github configuration
+      - Jira configuration
+      - EC2 plugin configuration
+      - Security and Authorization configuration
+      - Default `active-directory` plugin configuration
+      - Default `LDAP` plugin configuration
+
+   ***Use JCasC configuration only! Please see examples of playbooks bellow***
+
+   - `jenkins2_configure_by_groovy` - Set configuration by groovy, could be used if configuration by groovy is more convenient ***jenkins2_configure_by_casc should be = false***
+      default : `false`
 
 # Global Tool Configuration
   - `jenkins2_globaltools_enable` - enable autoconfiguration for all global tools  

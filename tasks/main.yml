@@ -101,7 +101,7 @@
 
 - name: Apply Jenkins configuration file
   template:
-    src: '{{ ansible_os_family }}_configuration.j2'
+    src: 'jenkins_system_config/{{ ansible_os_family }}_configuration.j2'
     dest: '{{ jenkins_config_service_path }}'
     owner: root
     group: root
@@ -125,48 +125,54 @@
 - include_tasks: install_plugins.yml
   when: jenkins_was_installed is defined | bool
 
-- include_tasks: configure_smtp.yml
-  when: jenkins2_smtp_enabled | bool
+- include_tasks: configure_jcasc/jenkins_casc.yml
+  when:
+    - jenkins2_configure_by_casc | bool
+    - not jenkins2_configure_by_groovy | bool
 
-- include_tasks: set_credentials.yml
-  when: jenkins2_credentials_enabled | bool
+- name: Configure plugins use groovy
+  block:
+  - include_tasks: configure_plugins_groovy/configure_smtp.yml
+    when: jenkins2_smtp_enabled | bool
 
-- include_tasks: configure_pipeline_libraries.yml
-  when: jenkins2_pipeline_libraries_enabled | bool
+  - include_tasks: configure_plugins_groovy/set_credentials.yml
+    when: jenkins2_credentials_enabled | bool
 
-- include_tasks: configure_bitbucket_project.yml
-  when: jenkins2_bitbucket_project_enabled | bool
+  - include_tasks: configure_plugins_groovy/configure_pipeline_libraries.yml
+    when: jenkins2_pipeline_libraries_enabled | bool
 
-- include_tasks: configure_sonarqube.yml
-  when: jenkins2_sonarqube_enabled | bool
+  - include_tasks: configure_plugins_groovy/configure_bitbucket_project.yml
+    when: jenkins2_bitbucket_project_enabled | bool
 
-- include_tasks: configure_jira.yml
-  when: jenkins2_jira_enabled | bool
+  - include_tasks: configure_plugins_groovy/configure_sonarqube.yml
+    when: jenkins2_sonarqube_enabled | bool
 
-- include_tasks: copy_custom_files.yml
-  when: jenkins2_custom_files_enabled | bool
+  - include_tasks: configure_plugins_groovy/configure_jira.yml
+    when: jenkins2_jira_enabled | bool
 
-- include_tasks: configure_gitlab.yml
-  when: jenkins2_gitlab_enabled | bool
+  - include_tasks: configure_plugins_groovy/copy_custom_files.yml
+    when: jenkins2_custom_files_enabled | bool
 
-- include_tasks: configure_github.yml
-  when: jenkins2_github_enabled | bool
+  - include_tasks: configure_plugins_groovy/configure_gitlab.yml
+    when: jenkins2_gitlab_enabled | bool
+
+  - include_tasks: configure_plugins_groovy/configure_github.yml
+    when: jenkins2_github_enabled | bool
+
+  - include_tasks: configure_plugins_groovy/configure_ec2.yml
+    when: jenkins2_ec2_enable | bool
+
+  - include_tasks: configure_plugins_groovy/configure_security.yml
+    when: jenkins2_security_enable | bool
+
+  - include_tasks: configure_globaltools.yml
+    when: jenkins2_globaltools_enable | bool
+  when:
+    - jenkins2_configure_by_groovy | bool
+    - not jenkins2_configure_by_casc | bool
 
 - include_tasks: add_new_jobs.yml
   when: jenkins2_seed_job_enable | bool
-
-- include_tasks: configure_ec2.yml
-  when: jenkins2_ec2_enable | bool
-
-- include_tasks: configure_ssh_keys.yml
-  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
-    jenkins_was_installed is defined and jenkins_was_installed is changed
-
-- include_tasks: configure_security.yml
-  when: jenkins2_security_enable | bool
-
-- include_tasks: configure_globaltools.yml
-  when: jenkins2_globaltools_enable | bool
 
 - name: Disable insecure connection
   set_fact:
@@ -174,9 +180,13 @@
     jenkins2_config_proto: https
   when: jenkins2_http_disabled | bool
 
+- include_tasks: configure_ssh_keys.yml
+  when: jenkins2_ssh_keys_slave_group_exist and jenkins2_ssh_keys_generate and
+    jenkins_was_installed is defined and jenkins_was_installed is changed
+
 - name: Apply Jenkins configuration file and check HTTPS
   template:
-    src: '{{ ansible_os_family }}_configuration.j2'
+    src: 'jenkins_system_config/{{ ansible_os_family }}_configuration.j2'
     dest: /etc/{{ (ansible_os_family == "Debian") | ternary('default','sysconfig') }}/jenkins
     owner: root
     group: root

@@ -1,0 +1,51 @@
+import io.jenkins.plugins.casc.*
+import jenkins.model.*
+import groovy.json.JsonOutput
+
+CasCGlobalConfig config = GlobalConfiguration.all().get(CasCGlobalConfig.class);
+
+Boolean changed = false
+Boolean failed = false
+String msg = "Success"
+Boolean need_to_reload = {{ jcasc_result.changed | lower }}
+
+String newConfigPath = "{{ jenkins2_home_directory }}/{{ jenkins2_jcasc_directory }}"
+
+if(config != null) {
+  String currentConfigPath = config.getConfigurationPath()
+  if (currentConfigPath != newConfigPath) {
+    changed = true
+    config.setConfigurationPath(newConfigPath)
+    config.save()
+    need_to_reload = false
+  }
+}
+
+// reload configuration when new config path is detected
+if (changed) {
+  try {
+    ConfigurationAsCode.get().configure()
+  } catch (Exception ex) {
+    failed = true
+    msg = ex.toString()
+  }
+}
+
+if (need_to_reload) {
+  try {
+    ConfigurationAsCode.get().configure()
+    changed = true
+    msg = "Config successfully applied"
+  } catch (Exception ex) {
+    failed = true
+    msg = ex.toString()
+  }
+}
+
+def json = JsonOutput.toJson([
+  changed: changed,
+  failed: failed,
+  msg: msg
+])
+
+return json.toString()
