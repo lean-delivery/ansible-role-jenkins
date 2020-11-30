@@ -1,4 +1,17 @@
 ---
+- name: Import EPEL GPG key.
+  rpm_key:
+    key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+    state: present
+  register: result
+  until: result is succeeded
+  retries: 5
+  delay: 5
+  when:
+    - ansible_facts['os_family'] == 'RedHat'
+    - ansible_facts['distribution_major_version'] == '8'
+  become: true
+
 - name: Enable EPEL repository
   yum:
     name: '{{ jenkins_epel_url }}'
