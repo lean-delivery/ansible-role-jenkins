@@ -30,7 +30,7 @@ Lint:
   tags:
     - lint
 
-Docker jenkins:
+.Docker jenkins:
   stage: deployment test
   script:
     - molecule test -s default
