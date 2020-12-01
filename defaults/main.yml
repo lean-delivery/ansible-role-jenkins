@@ -293,7 +293,7 @@ jenkins2_github_token_cred: github_token
 # Add or replace dsl template
 jenkins2_seed_job_enable: false
 # DSL template file name. Do not forget to setup all needed variables for template
-jenkins2_seed_job_template: 'jenkins_create_jobs/dsl_hybris_create_job.groovy'
+jenkins2_seed_job_template: 'dsl_hybris_create_job.groovy'
 # to ignore existing jobs and do not rewrite them
 jenkins2_seed_job_ignore_existing: true
 jenkins2_seed_job_name: 'seed_job'
