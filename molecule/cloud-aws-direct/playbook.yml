@@ -17,15 +17,9 @@
                     directEntry:
                       privateKey: "-----BEGIN RSA PRIVATE KEY-----
 
-        MIIEogIBAAKCAQEAn0wfetr65/gxuVloiS0B1GckoKZMwsGdOw48SqtqlWBSG5gN
-        EzR6R9sZI/Wy2KnuDbIUtcQYVHPoZvuL/1qBh6jJmBsOYNJR3gAz6QSWHA7k9s/f
-        vnu0tQJX9+Krf7mB4+fcwTebKbbekSt6zeXKG08fJMqo/sKd9AMhlQeHuidV9aQ7
-        wPeBk9UB0d1CAD/UGAjNmeaS+Y4rmB6hFTanE/MZb1AEite5YetcfDWhA5YZ2Cw8
-        P3ZJLNAUTF9f+eP2uXmQ1dpwiUj59ZHNrsuCPu0uoii574LdlllqRf/j57Wm4PPf
-        MYFp54EPnqwL10XqKbYPXxeRFI8xLQVIzhT+gwIDAQABAoIBADViYm5espVIxQkz
-        oGfQUH
-        qZbjIgMxzNi/ri6W0CxZWd6wPDh21pNXcrM07XAQrQONUmLVZbx9/nPw+mWRG6Q0
-        QyM43dzd8BB0wtqa9RKMIe3Loe+jxxC0P9v4VGEw0qNuCKIQHOc=
+        Here could be placed your private key,
+        but we strongly recommend keeping private keys in vault service,
+        like Ansible-vault or Hashicorp-vault, e.t.c
 
         -----END RSA PRIVATE KEY-----"
                   scope: GLOBAL
@@ -55,15 +49,9 @@
                     directEntry:
                       privateKey: "-----BEGIN RSA PRIVATE KEY-----
 
-        MIIEogIBAAKCAQEAn0wfetr65/gxuVloiS0B1GckoKZMwsGdOw48SqtqlWBSG5gN
-        EzR6R9sZI/Wy2KnuDbIUtcQYVHPoZvuL/1qBh6jJmBsOYNJR3gAz6QSWHA7k9s/f
-        vnu0tQJX9+Krf7mB4+fcwTebKbbekSt6zeXKG08fJMqo/sKd9AMhlQeHuidV9aQ7
-        wPeBk9UB0d1CAD/UGAjNmeaS+Y4rmB6hFTanE/MZb1AEite5YetcfDWhA5YZ2Cw8
-        P3ZJLNAUTF9f+eP2uXmQ1dpwiUj59ZHNrsuCPu0uoii574LdlllqRf/j57Wm4PPf
-        MYFp54EPnqwL10XqKbYPXxeRFI8xLQVIzhT+gwIDAQABAoIBADViYm5espVIxQkz
-        oGfQUH
-        qZbjIgMxzNi/ri6W0CxZWd6wPDh21pNXcrM07XAQrQONUmLVZbx9/nPw+mWRG6Q0
-        QyM43dzd8BB0wtqa9RKMIe3Loe+jxxC0P9v4VGEw0qNuCKIQHOc=
+        Here could be placed your private key,
+        but we strongly recommend keeping private keys in vault service,
+        like Ansible-vault or Hashicorp-vault, e.t.c
 
         -----END RSA PRIVATE KEY-----"
                   scope: GLOBAL

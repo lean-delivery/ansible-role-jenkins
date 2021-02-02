@@ -148,31 +148,9 @@ jenkins2_credentials:
     keySource: 0
     key: >
       -----BEGIN RSA PRIVATE KEY-----
-      MIIEpQIBAAKCAQEAp4aKtv4Tw760QLb5eG4M0nKeO8cPPf68aSbYwhSNqn4n3+Pq
-      WGfP25rVmZqW6UATPdAaw4k5OahCgYCdgmEgiilj5ZJeb3pgQ1Hi4AP0+TNHBDgU
-      ltY4x+oLbJmg4Kw5kjojeBoz9nNJxpBCI5FaTE9kPaAuqNaeLgK1EAC/CTwHbR4x
-      6R79loSkqgltV8ex/QXf3y3D2ICS45FCoyOR+VkMZz4a2qjadc/Vvh3TtSWka+sW
-      NzGJkv20TQXSNWGt6vWDMxWHI5CimfKYRQJbnkqYhULCdXVhZd86rmldR9OPDwhC
-      MXDN6bsymGhYllNqk5FI7rRbJwn9Hp1Fkh4i9wIDAQABAoIBAGAUbuxCzm0eq9zN
-      1Eh4vYvZRt077ob82WxpZjnxdcqJri7fVaE8cN8fb1A4dEL0h9SUzTTGN/bUhMgn
-      Tq7fK71xvaSGDPlcs2cIyNj4DAD8osdNrqlP1aL6nXC8r6MLw70U8RDJ3nGDb5Wd
-      WQFzNNm9Ut1xSDF3XaM/1D6IXwhY4llrhjjNvXlgyaAWCQ7byJbuoNd5NFGiGGII
-      XA/3Cqb9TfssRqZ0ougBTDYSQmqev74Jc9OkRONuRnjPBX4tAj1hGl8KzBmx70bl
-      mAexMQxODYUtUnAe/h+QL5aGmt6dlShwHR9Dfpn3GtSB6rtSUHm3lhg/4pDhLD3U
-      rhVo8ckCgYEA3Ibsh5FYgYZGhEWb0/n1Hoa2kiav6E2WDRHwu6LAw4Y8c2dHZ5ov
-      rl0aS9DqKUJqQI8LBVhZCaKbLXFZKTQBbWe6FsT5VidG9UIrYGXLT09db1Oww1PG
-      s4FW6rJy1Y6VtBJxQdRz1gAse8TXED6uGzAih7q0jLkxdk/s03LbUXMCgYEAwnkS
-      ONnna4obkzJ1iGNCOvT2kP2rVcx9AP/R8kN8ZAJdbHXZ57KE8h45e/R4/YOppTNt
-      KSTOZwbjCOy0f1eLK9bJFZ4qm+YsNOoQFpQW9QFEqwjO76CEpdMpo+/aGxGAI+rT
-      RFcEhAkz6AKlXADzLhw8/S5DvvoR1tXEKfCgd20CgYEAr1+FPpJxxh+YeJw6viqr
-      qikLi9LEVYNN7vrzbOSTU2qvLD9X46YUgR99SAnODh3JDaoz435M4IK10T+w3jmD
-      YRP6Qx1GBCOcJHMIt9J8CohdD6mIiu1WuW4ERwS+meKYXunDs8xWijr9JTh2p26R
-      WwG+lB4Ac2DbWvFYrxdKHs0CgYEAicmCcaliYD1wIDDmOYYqTN93O2+fz6CdCPI4
-      bHAIWEucqdYuWA2SSIHFtN+YQfbhYd04AKjFXRXyEkaz9G2we5Uo0BpKkj7ZH3yf
-      fX/bbChD4PLSu9F9aohcvnyYigkyQ0CEA62r02k5z67gPnml0wvK4o+/DDbeINtA
-      q36EE1kCgYEAnWDOCnLJKJElmJzhUhunzef6XjFHyBZ353D3VLCdoz8Aww24dMV/
-      ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
-      criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
+      Here could be placed your private key,
+      but we strongly recommend keeping private keys in vault service,
+      like Ansible-vault or Hashicorp-vault, e.t.c
       -----END RSA PRIVATE KEY-----
     id: 'sshagent'
     username: 'hybris'
@@ -306,31 +284,9 @@ jenkins2_ec2_cloud_parameters:
   instance_cap_str: '2'
   private_key: |
     -----BEGIN RSA PRIVATE KEY-----
-    MIIEpQIBAAKCAQEAp4aKtv4Tw760QLb5eG4M0nKeO8cPPf68aSbYwhSNqn4n3+Pq
-    WGfP25rVmZqW6UATPdAaw4k5OahCgYCdgmEgiilj5ZJeb3pgQ1Hi4AP0+TNHBDgU
-    ltY4x+oLbJmg4Kw5kjojeBoz9nNJxpBCI5FaTE9kPaAuqNaeLgK1EAC/CTwHbR4x
-    6R79loSkqgltV8ex/QXf3y3D2ICS45FCoyOR+VkMZz4a2qjadc/Vvh3TtSWka+sW
-    NzGJkv20TQXSNWGt6vWDMxWHI5CimfKYRQJbnkqYhULCdXVhZd86rmldR9OPDwhC
-    MXDN6bsymGhYllNqk5FI7rRbJwn9Hp1Fkh4i9wIDAQABAoIBAGAUbuxCzm0eq9zN
-    1Eh4vYvZRt077ob82WxpZjnxdcqJri7fVaE8cN8fb1A4dEL0h9SUzTTGN/bUhMgn
-    Tq7fK71xvaSGDPlcs2cIyNj4DAD8osdNrqlP1aL6nXC8r6MLw70U8RDJ3nGDb5Wd
-    WQFzNNm9Ut1xSDF3XaM/1D6IXwhY4llrhjjNvXlgyaAWCQ7byJbuoNd5NFGiGGII
-    XA/3Cqb9TfssRqZ0ougBTDYSQmqev74Jc9OkRONuRnjPBX4tAj1hGl8KzBmx70bl
-    mAexMQxODYUtUnAe/h+QL5aGmt6dlShwHR9Dfpn3GtSB6rtSUHm3lhg/4pDhLD3U
-    rhVo8ckCgYEA3Ibsh5FYgYZGhEWb0/n1Hoa2kiav6E2WDRHwu6LAw4Y8c2dHZ5ov
-    rl0aS9DqKUJqQI8LBVhZCaKbLXFZKTQBbWe6FsT5VidG9UIrYGXLT09db1Oww1PG
-    s4FW6rJy1Y6VtBJxQdRz1gAse8TXED6uGzAih7q0jLkxdk/s03LbUXMCgYEAwnkS
-    ONnna4obkzJ1iGNCOvT2kP2rVcx9AP/R8kN8ZAJdbHXZ57KE8h45e/R4/YOppTNt
-    KSTOZwbjCOy0f1eLK9bJFZ4qm+YsNOoQFpQW9QFEqwjO76CEpdMpo+/aGxGAI+rT
-    RFcEhAkz6AKlXADzLhw8/S5DvvoR1tXEKfCgd20CgYEAr1+FPpJxxh+YeJw6viqr
-    qikLi9LEVYNN7vrzbOSTU2qvLD9X46YUgR99SAnODh3JDaoz435M4IK10T+w3jmD
-    YRP6Qx1GBCOcJHMIt9J8CohdD6mIiu1WuW4ERwS+meKYXunDs8xWijr9JTh2p26R
-    WwG+lB4Ac2DbWvFYrxdKHs0CgYEAicmCcaliYD1wIDDmOYYqTN93O2+fz6CdCPI4
-    bHAIWEucqdYuWA2SSIHFtN+YQfbhYd04AKjFXRXyEkaz9G2we5Uo0BpKkj7ZH3yf
-    fX/bbChD4PLSu9F9aohcvnyYigkyQ0CEA62r02k5z67gPnml0wvK4o+/DDbeINtA
-    q36EE1kCgYEAnWDOCnLJKJElmJzhUhunzef6XjFHyBZ353D3VLCdoz8Aww24dMV/
-    ZBoiF+26kJHPMQozRHWW1nUCaU2q2x2QgARcLvT/xTN6ipWrhjnoPU082iFdtFjV
-    criSr1+d5Xyr4Ht0Cn5jb57Kt1yJSxgBo1EHGYMXR6abcTUMOyXgAkI=
+    Here could be placed your private key,
+    but we strongly recommend keeping private keys in vault service,
+    like Ansible-vault or Hashicorp-vault, e.t.c
     -----END RSA PRIVATE KEY-----
   region: 'us-east-1'
   use_instance_profile_for_credentials: false
@@ -784,6 +740,7 @@ jenkins2_jcasc_config:
         readTimeout: 10
         url: "https://localhost"
     gitSCM:
+      addGitTagAction: false
       allowSecondFetch: false
       createAccountBasedOnEmail: false
       disableGitToolChooser: false
@@ -800,30 +757,10 @@ jenkins2_jcasc_config:
             scm:
               git:
                 credentialsId: "pipeline_libraries"
-                id: "7910d1a6-183c-487f-b3d8-cea97fc8dc47"
+                id: "pipeline_libraries"
                 remote: "https://example.com/example.git"
                 traits:
                 - "gitBranchDiscovery"
-    jiraGlobalConfiguration:
-      sites:
-      - alternativeUrl: "https://jira.example.com/"
-        appendChangeTimestamp: true
-        credentialsId: "jirauser"
-        dateTimePattern: "EEE, d MMM yyyy HH:mm:ss Z"
-        supportsWikiStyleComment: true
-        updateJiraIssueForAllStatus: true
-        url: "https://jira.example.com/"
-        useHTTPAuth: true
-        userPattern: "PATTERN.*"
-      - alternativeUrl: "https://jira.example.com/"
-        appendChangeTimestamp: true
-        credentialsId: "jirauser"
-        dateTimePattern: "EEE, d MMM yyyy HH:mm:ss Z"
-        supportsWikiStyleComment: true
-        updateJiraIssueForAllStatus: true
-        url: "https://jira.example.com/"
-        useHTTPAuth: true
-        userPattern: "PATTERN.*"
     junitTestResultStorage:
       storage: "file"
     location:
@@ -847,57 +784,8 @@ jenkins2_jcasc_config:
       allPipelines: false
       elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
       systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
-  # tool:
-  #   ant:
-  #     installations:
-  #     - name: "1.10.6"
-  #       properties:
-  #       - installSource:
-  #           installers:
-  #           - antFromApache:
-  #               id: "1.10.6"
-  #   dockerTool:
-  #     installations:
-  #     - name: "latest"
-  #       properties:
-  #       - installSource:
-  #           installers:
-  #           - fromDocker:
-  #               version: "latest"
-  #   git:
-  #     installations:
-  #     - home: "git"
-  #       name: "Default"
-  #   gradle:
-  #     installations:
-  #     - name: "5.5-rc-2"
-  #       properties:
-  #       - installSource:
-  #           installers:
-  #           - gradleInstaller:
-  #               id: "5.5-rc-2"
-  #   jdk:
-  #     installations:
-  #     - name: "jdk-9.0.4-oth-JPR"
-  #       properties:
-  #       - installSource:
-  #           installers:
-  #           - jdkInstaller:
-  #               acceptLicense: true
-  #               id: "jdk-9.0.4-oth-JPR"
-  #   maven:
-  #     installations:
-  #     - name: "3.6.1"
-  #       properties:
-  #       - installSource:
-  #           installers:
-  #           - maven:
-  #               id: "3.6.1"
-  #   sonarRunnerInstallation:
-  #     installations:
-  #     - name: "3.3.0.1492"
-  #       properties:
-  #       - installSource:
-  #           installers:
-  #           - sonarRunnerInstaller:
-  #               id: "3.3.0.1492"
+  tool:
+    git:
+      installations:
+      - home: "git"
+        name: "Default"

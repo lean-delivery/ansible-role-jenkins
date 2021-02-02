@@ -1,21 +1,22 @@
 ---
-- name: Create JCasC directory
-  file:
-    path: '{{ jenkins2_home_directory }}/{{ jenkins2_jcasc_directory }}'
-    state: directory
-    owner: '{{ jenkins2_user }}'
-    group: '{{ jenkins2_user }}'
-    mode: 0770
-  become: true
+- name: JCasC configs
+  block:
+    - name: Create JCasC directory
+      file:
+        path: '{{ jenkins2_home_directory }}/{{ jenkins2_jcasc_directory }}'
+        state: directory
+        owner: '{{ jenkins2_user }}'
+        group: '{{ jenkins2_user }}'
+        mode: 0770
 
-- name: Create JCasC configuration
-  template:
-    src: jcasc/jenkins.yml.j2
-    owner: '{{ jenkins2_user }}'
-    group: '{{ jenkins2_user }}'
-    dest: '{{ jenkins2_home_directory }}/{{ jenkins2_jcasc_directory }}/jenkins.yml'
-    mode: 0440
-  register: jcasc_result
+    - name: Create JCasC configuration
+      template:
+        src: jcasc/jenkins.yml.j2
+        owner: '{{ jenkins2_user }}'
+        group: '{{ jenkins2_user }}'
+        dest: '{{ jenkins2_home_directory }}/{{ jenkins2_jcasc_directory }}/jenkins.yml'
+        mode: 0440
+      register: jcasc_result
   become: true
 
 - name: Apply JCasC configuration
@@ -24,7 +25,7 @@
     script: '{{ lookup("template", "jenkins_configure_plugins/configure-jcasc.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
-    timeout: 240
+    timeout: '240'
     validate_certs: false
   register: casc_configure_result
   failed_when:
