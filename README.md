@@ -32,9 +32,9 @@ Requirements
  - **Java 8** [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-java.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-java)
  - **Supported OS**:
    - CentOS
-     - 7
+     - 8
    - RHEL
-     - 7
+     - 8
    - Amazon Linux 2
    - Ubuntu 18
    - Debian 9
