@@ -1,8 +1,8 @@
 ---
-- name: Set Credentials
+- name: Configure EC2
   jenkins_script:
     url: '{{ jenkins2_config_proto }}://{{ jenkins2_host_address }}:{{ jenkins2_config_http_port }}'
-    script: '{{ lookup("template", "set-credentials.groovy.j2") }}'
+    script: '{{ lookup("template", "jenkins_configure_plugins/set-ec2_configuration.groovy.j2") }}'
     user: '{{ jenkins2_cli_username }}'
     password: '{{ jenkins2_cli_password }}'
     validate_certs: false
