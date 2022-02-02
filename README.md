@@ -1,7 +1,6 @@
 Jenkins 2 installation
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-jenkins/master/LICENSE)
-[![Build Status](https://travis-ci.org/lean-delivery/ansible-role-jenkins.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-jenkins)
 [![Build Status](https://gitlab.com/lean-delivery/ansible-role-jenkins/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-jenkins/pipelines)
 [![Galaxy](https://img.shields.io/badge/galaxy-lean_delivery.jenkins-blue.svg)](https://galaxy.ansible.com/lean_delivery/jenkins)
 ![Ansible](https://img.shields.io/ansible/role/d/29895.svg)
@@ -29,7 +28,7 @@ Requirements
 ------------
 
  - Minimal Version of the ansible for installation: 2.7
- - **Java 8** [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-java.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-java)
+ - **Java 8**
  - **Supported OS**:
    - CentOS
      - 8
