@@ -1,1 +1,6 @@
 ---
+- name: Jenkins Repository
+  community.general.zypper_repository:
+    name: jenkins
+    repo: "{{ jenkins_zypper_repo_url }}"
+    state: present

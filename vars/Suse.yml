@@ -1,3 +1,6 @@
 ---
 jenkins_requirements: []
+
 jenkins_config_service_path: /etc/sysconfig/jenkins
+
+jenkins_zypper_repo_url: https://pkg.jenkins.io/opensuse-stable/?ssl_verify=no
