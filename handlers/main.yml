@@ -26,9 +26,10 @@
   delay: 5
 
 - name: Restart Jenkins with HTTPS
-  service:
-    name: jenkins
+  systemd:
     state: restarted
+    daemon_reload: yes
+    name: jenkins
   notify: Wait for Jenkins with HTTPS
   become: true
 
