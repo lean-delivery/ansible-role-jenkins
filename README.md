@@ -668,6 +668,9 @@ Example Playbook
       - {host: 'slave2.example.com', users: ['root', 'jenkins']}
   roles:
     - role: lean_delivery.java
+      java_distribution: openjdk
+      java_major_version: 11
+      transport: repositories
     - role: lean_delivery.jenkins
 ```
 
