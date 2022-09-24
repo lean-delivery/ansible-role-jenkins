@@ -4,7 +4,7 @@
   file:
     path: '{{ jenkins2_home_directory }}/.ssh'
     state: directory
-    mode: 0700
+    mode: "0700"
   become: true
 
 - name: Ensure that openssh *private* key doesn't exist
@@ -99,7 +99,7 @@
     mode: '{{ item.mode }}'
   become: true
   with_items:
-    - {dst: '{{ jenkins2_home_directory }}/.ssh', mode: 0700}
-    - {dst: '{{ jenkins2_home_directory }}/.ssh/{{ jenkins2_ssh_keys_private_keyname }}', mode: 0600}
-    - {dst: '{{ jenkins2_home_directory }}/.ssh/{{ jenkins2_ssh_keys_private_keyname }}.pub', mode: 0600}
-    - {dst: '{{ jenkins2_home_directory }}/.ssh/known_hosts', mode: 0644}
+    - {dst: '{{ jenkins2_home_directory }}/.ssh', mode: "0700"}
+    - {dst: '{{ jenkins2_home_directory }}/.ssh/{{ jenkins2_ssh_keys_private_keyname }}', mode: "0600"}
+    - {dst: '{{ jenkins2_home_directory }}/.ssh/{{ jenkins2_ssh_keys_private_keyname }}.pub', mode: "0600"}
+    - {dst: '{{ jenkins2_home_directory }}/.ssh/known_hosts', mode: "0644"}
