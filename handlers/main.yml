@@ -28,7 +28,7 @@
 - name: Restart Jenkins with HTTPS
   systemd:
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true
     name: jenkins
   notify: Wait for Jenkins with HTTPS
   become: true
