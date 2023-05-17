@@ -196,3 +196,18 @@
   notify:
     - Restart Jenkins with HTTPS
   when: jenkins2_https_enabled | bool
+
+- name: Apply Jenkins systemd configuration file and check HTTPS
+  template:
+    src: 'jenkins_system_config/jenkins.service'
+    dest: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  loop:
+    - /etc/systemd/system/jenkins.service
+  become: true
+  notify:
+    - Restart Jenkins with HTTPS
+  when: jenkins2_https_enabled | bool
