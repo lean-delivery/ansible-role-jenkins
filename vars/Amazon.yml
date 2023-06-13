@@ -16,8 +16,8 @@ jenkins_requirements:
 
 jenkins_rpm_repo_key: >-
   {{ (jenkins2_release_line=='stable')
-    | ternary('https://pkg.jenkins.io/redhat-stable/jenkins.io.key',
-              'https://pkg.jenkins.io/redhat/jenkins.io.key') }}
+    | ternary('https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key',
+              'https://pkg.jenkins.io/redhat/jenkins.io-2023.key') }}
 
 jenkins_rpm_repo_url: >-
   {{ (jenkins2_release_line=='stable')

@@ -19,8 +19,8 @@ jenkins_requirements:
 
 jenkins_deb_repo_key: >-
   {{ (jenkins2_release_line=='stable')
-    | ternary('https://pkg.jenkins.io/debian-stable/jenkins.io.key',
-              'https://pkg.jenkins.io/debian/jenkins.io.key') }}
+    | ternary('https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key',
+              'https://pkg.jenkins.io/debian/jenkins.io-2023.key') }}
 jenkins_deb_repo_url: >-
   {{ (jenkins2_release_line=='stable')
     | ternary('deb https://pkg.jenkins.io/debian-stable binary/',
