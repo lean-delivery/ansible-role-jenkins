@@ -53,7 +53,6 @@ import jenkins.model.Jenkins
     '{{ value.iamInstanceProfile }}',
     {{ value.deleteRootOnTermination | lower }},
     {{ value.useEphemeralDevices | lower }},
-    {{ value.useDedicatedTenancy | lower }},
     '{{ value.launchTimeoutStr }}',
     {{ value.associatePublicIp | lower }},
     '{{ value.customDeviceMapping }}',
@@ -67,13 +66,14 @@ import jenkins.model.Jenkins
 
 {% endfor %}
 
-// https://github.com/jenkinsci/ec2-plugin/blob/ec2-1.41/src/main/java/hudson/plugins/ec2/AmazonEC2Cloud.java
+// https://github.com/jenkinsci/ec2-plugin/blob/ec2-2.07/src/main/java/hudson/plugins/ec2/AmazonEC2Cloud.java
 AmazonEC2Cloud amazonEC2Cloud = new AmazonEC2Cloud(
   '{{ jenkins2_ec2_cloud_parameters.cloud_name }}',
   {{ jenkins2_ec2_cloud_parameters.use_instance_profile_for_credentials | lower }},
   '{{ jenkins2_ec2_cloud_parameters.credentials_id }}',
   '{{ jenkins2_ec2_cloud_parameters.region }}',
   '''{{ jenkins2_ec2_cloud_parameters.private_key }}''',
+  '{{ jenkins2_ec2_cloud_parameters.ssh_keys_credentials_id }}',
   '{{ jenkins2_ec2_cloud_parameters.instance_cap_str }}',
   [{{ slaveTemplateList | join(",") }}],
   '{{ jenkins2_ec2_cloud_parameters.role_arn }}',

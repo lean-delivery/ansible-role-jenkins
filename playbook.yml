@@ -1,0 +1,20 @@
+- name: Install and Configure Jenkins
+  hosts: localhost
+  roles:
+    - role: lean_delivery.java
+      java_distribution: zulu
+      transport: fallback
+      java_major_version: 11
+      java_package: jdk
+    - role: ansible-role-jenkins
+      jenkins2_jcasc_config:
+        credentials:
+          system:
+            domainCredentials:
+            - credentials:
+              - aws:
+                  accessKey: 'somekey'
+                  description: "for ec2 plugin to create ec2 for slave instances"
+                  id: "AWS_EC2_CREDS"
+                  scope: GLOBAL
+                  secretKey: 'somepasskey'

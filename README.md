@@ -496,6 +496,7 @@ jenkins2_credentials:
 jenkins2_ec2_cloud_parameters:
   cloud_name: 'AWS_cloud'
   credentials_id: 'AWS_EC2_CREDS'
+  ssh_keys_credentials_id: 'SSH_CREDS'
   instance_cap_str: '2'
   private_key: |
     -----BEGIN RSA PRIVATE KEY-----
@@ -535,7 +536,6 @@ jenkins2_ec2_ami_list:
       - {name: 'Name2', value: 'CI2 Slave'}
     tmpDir: ''
     type: 't2.medium'
-    useDedicatedTenancy: false
     useEphemeralDevices: true
     usePrivateDnsName: true
     userData: ''
@@ -574,7 +574,6 @@ jenkins2_ec2_ami_list:
       - {name: 'Name', value: 'FV Slave'}
     tmpDir: ''
     type: 't2.medium'
-    useDedicatedTenancy: false
     useEphemeralDevices: true
     usePrivateDnsName: true
     userData: ''

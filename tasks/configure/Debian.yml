@@ -39,6 +39,7 @@
 - name: Wait for Jenkins starts
   wait_for:
     path: '{{ jenkins2_home_directory }}/config.xml'
+  become: true
 
 - name: Force all notified handlers to run
   meta: flush_handlers

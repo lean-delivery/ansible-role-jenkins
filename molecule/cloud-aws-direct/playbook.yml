@@ -102,7 +102,6 @@
                 - name: "Env"
                   value: "Jenkins"
                 type: T2Micro
-                useDedicatedTenancy: false
                 useEphemeralDevices: false
                 zone: "us-east-1a"
               - ami: "ami-00ddb0e5626798373"
@@ -142,7 +141,6 @@
                 - name: "Env"
                   value: "Jenkins"
                 type: T2Micro
-                useDedicatedTenancy: false
                 useEphemeralDevices: false
                 zone: "us-east-1a"
               useInstanceProfileForCredentials: false
