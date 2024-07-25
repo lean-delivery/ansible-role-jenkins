@@ -1,0 +1,29 @@
+---
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+env:
+  ANSIBLE_FORCE_COLOR: 1
+jobs:
+  ubuntu-22:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0
+      - name: Install ansible
+        run: |
+          sudo apt-add-repository --yes --update ppa:ansible/ansible
+          sudo apt-get update
+          sudo apt-get install ansible -y
+          ansible --version
+      - name: Run playbook
+        run: |
+          ansible-galaxy install -r requirements.yml
+          cd ..
+          ansible-playbook ansible-role-jenkins/playbook.yml

@@ -1,2 +1,4 @@
 ---
-- src: lean_delivery.java
+- name: lean_delivery.java
+  src: https://github.com/lean-delivery/ansible-role-java
+  version: 7.2.2

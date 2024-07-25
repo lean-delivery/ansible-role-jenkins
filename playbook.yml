@@ -1,0 +1,9 @@
+- name: Install and Configure Jenkins
+  hosts: localhost
+  roles:
+    - role: lean_delivery.java
+      java_distribution: zulu
+      transport: fallback
+      java_major_version: 11
+      java_package: jdk
+    - role: ansible-role-jenkins
