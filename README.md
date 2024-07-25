@@ -535,7 +535,6 @@ jenkins2_ec2_ami_list:
       - {name: 'Name2', value: 'CI2 Slave'}
     tmpDir: ''
     type: 't2.medium'
-    useDedicatedTenancy: false
     useEphemeralDevices: true
     usePrivateDnsName: true
     userData: ''
@@ -574,7 +573,6 @@ jenkins2_ec2_ami_list:
       - {name: 'Name', value: 'FV Slave'}
     tmpDir: ''
     type: 't2.medium'
-    useDedicatedTenancy: false
     useEphemeralDevices: true
     usePrivateDnsName: true
     userData: ''

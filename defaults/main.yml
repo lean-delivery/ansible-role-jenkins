@@ -320,7 +320,6 @@ jenkins2_ec2_ami_list:
       - {name: 'Name2', value: 'CI2 Slave'}
     tmpDir: ''
     type: 't2.medium'
-    useDedicatedTenancy: false
     useEphemeralDevices: true
     usePrivateDnsName: true
     userData: ''
@@ -359,7 +358,6 @@ jenkins2_ec2_ami_list:
       - {name: 'Name', value: 'FV Slave'}
     tmpDir: ''
     type: 't2.medium'
-    useDedicatedTenancy: false
     useEphemeralDevices: true
     usePrivateDnsName: true
     userData: ''
@@ -613,7 +611,6 @@ jenkins2_jcasc_config:
           - name: "Name2"
             value: "CI2 Slave"
           type: T2Medium
-          useDedicatedTenancy: false
           useEphemeralDevices: true
           zone: "us-east-1a,us-east-1b"
         - ami: "ami-BBBBBBBB"
@@ -647,7 +644,6 @@ jenkins2_jcasc_config:
           - name: "Name"
             value: "FV Slave"
           type: T2Medium
-          useDedicatedTenancy: false
           useEphemeralDevices: true
           zone: "us-east-1a,us-east-1b"
         useInstanceProfileForCredentials: false
