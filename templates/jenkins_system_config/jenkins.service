@@ -25,7 +25,7 @@ Group={{ jenkins2_user }}
 
 # Directory where Jenkins stores its configuration and workspaces
 Environment="JENKINS_HOME={{ jenkins2_home_directory }}"
-WorkingDirectory=/var/lib/jenkins
+WorkingDirectory={{ jenkins2_home_directory }}
 
 # Location of the Jenkins WAR
 Environment="JENKINS_WAR=/usr/share/java/jenkins.war"
