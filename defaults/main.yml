@@ -58,17 +58,17 @@ jenkins2_ssh_keys_private_keyname: 'id_rsa'
 jenkins2_ssh_keys_size: 4096
 jenkins2_ssh_keys_inv_slave_groupname: 'jenkins_ssh_slaves'
 
-jenkins2_ssh_keys_slave_group: '{{ groups[jenkins2_ssh_keys_inv_slave_groupname]|default([""])}}'
+jenkins2_ssh_keys_slave_group: '{{ groups[jenkins2_ssh_keys_inv_slave_groupname] | default([""]) }}'
 jenkins2_ssh_keys_slave_hosts: '{%- set users = [] %}
     {%- for host in jenkins2_ssh_keys_slave_group %}
-    {{- users.append(dict(host=host, users=hostvars[host]["jenkins_ssh_user"]|default([]))) }}
+    {{- users.append(dict(host=host, users=hostvars[host]["jenkins_ssh_user"] | default([]))) }}
     {%- endfor %}
     {{- users -}}'
 jenkins2_ssh_keys_slave_ips: '{%- set ips = [] %}{%- for host in jenkins2_ssh_keys_slave_group %}
-    {{- ips.append(dict(host=host, ips=hostvars[host]["ansible_all_ipv4_addresses"]|default([]))) }}
+    {{- ips.append(dict(host=host, ips=hostvars[host]["ansible_all_ipv4_addresses"] | default([]))) }}
     {%- endfor %}
     {{- ips -}}'
-jenkins2_ssh_keys_slave_group_exist: '{{ ((jenkins2_ssh_keys_slave_group)[0]|default(""))  != ""}}'
+jenkins2_ssh_keys_slave_group_exist: '{{ ((jenkins2_ssh_keys_slave_group)[0] | default("")) != "" }}'
 
 # Plugin installation
 jenkins2_updates_url: https://updates.jenkins.io
