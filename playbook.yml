@@ -4,7 +4,7 @@
     - role: lean_delivery.java
       java_distribution: zulu
       transport: fallback
-      java_major_version: 11
+      java_major_version: 17
       java_package: jdk
     - role: ansible-role-jenkins
       jenkins2_jcasc_config:

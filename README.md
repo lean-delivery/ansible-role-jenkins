@@ -29,7 +29,7 @@ Requirements
 ------------
 
  - Minimal Version of the ansible for installation: 2.7
- - **Java 8** [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-java.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-java)
+ - **Java 17**
  - **Supported OS**:
    - CentOS
      - 8
@@ -668,7 +668,7 @@ Example Playbook
   roles:
     - role: lean_delivery.java
       java_distribution: openjdk
-      java_major_version: 11
+      java_major_version: 17
       transport: repositories
     - role: lean_delivery.jenkins
 ```
