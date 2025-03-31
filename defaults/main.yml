@@ -564,9 +564,6 @@ jenkins2_jcasc_config:
             scope: GLOBAL
             username: "bitbucketProjectUser"
   jenkins:
-    agentProtocols:
-    - "JNLP4-connect"
-    - "Ping"
     authorizationStrategy:
       loggedInUsersCanDoAnything:
         allowAnonymousRead: false
