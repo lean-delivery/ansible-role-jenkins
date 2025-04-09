@@ -99,6 +99,15 @@
   until: jenkins_was_installed is succeeded
   become: true
 
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Check jenkins version
+  debug:
+    msg: "The version of the jenkins is {{ ansible_facts.packages['jenkins'][0].version }}"
+  when: "'jenkins' in ansible_facts.packages"
+
 - name: Apply Jenkins configuration file
   template:
     src: 'jenkins_system_config/{{ ansible_os_family }}_configuration.j2'
