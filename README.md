@@ -511,7 +511,6 @@ jenkins2_ec2_cloud_parameters:
 jenkins2_ec2_ami_list:
   ci_ami:
     ami: 'ami-AAAAAAAA'
-    associatePublicIp: false
     connectBySSHProcess: true
     connectUsingPublicIp: false
     customDeviceMapping: ''
@@ -550,7 +549,6 @@ jenkins2_ec2_ami_list:
     t2Unlimited: false
   fv_ami:
     ami: 'ami-BBBBBBBB'
-    associatePublicIp: false
     connectBySSHProcess: true
     connectUsingPublicIp: false
     customDeviceMapping: ''
